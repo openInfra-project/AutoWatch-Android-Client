@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             image_rotate.setAnimation(rotateAnimation)
         }
         Handler().postDelayed({
-            startActivity(Intent(this, Choose_Login::class.java))
+            startActivity(Intent(this, Login::class.java))
         },1000)
     }
 }

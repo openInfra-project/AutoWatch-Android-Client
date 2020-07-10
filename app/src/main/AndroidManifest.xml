@@ -10,9 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".User_SignUp_PopUp" android:theme="@style/Transparent" ></activity>
-        <activity android:name=".Manager_SignUp" />
-        <activity android:name=".Manager_Login" />
-        <activity android:name=".Choose_Login" />
+
         <activity android:name=".SignUp" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
