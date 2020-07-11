@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1A000000"
-    android:padding="32dp"
     android:gravity="center"
     android:orientation="vertical"
+    android:padding="32dp"
     tools:context=".User_SignUp_PopUp">
 
     <LinearLayout
@@ -17,30 +17,32 @@
         android:elevation="10dp"
         android:orientation="vertical"
         android:padding="16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="10"
-            android:layout_height="wrap_content">
+            android:weightSum="10">
+
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="9"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
                 android:gravity="center"
                 android:text="사진선택"
                 android:textColor="#000"
                 android:textSize="36dp" />
+
             <ImageView
                 android:id="@+id/btn_popup_close"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_close_24"/>
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_close_24" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -54,24 +56,52 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="#ced4da"
-                android:weightSum="3"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <ImageView
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_baseline_photo_camera_24" />
 
                 <TextView
-                    android:textSize="36dp"
-                    android:layout_gravity="center"
-                    android:textColor="#000"
-                    android:layout_weight="2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="사진찍기"/>
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="사진찍기"
+                    android:textColor="#000"
+                    android:textSize="36dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_PhotoSelectPopup"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#212529"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_baseline_photo__black_72" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="갤러리"
+                    android:textColor="#fff"
+                    android:textSize="36dp" />
 
 
             </LinearLayout>
@@ -80,109 +110,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#212529"
-                android:weightSum="3"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_baseline_photo__black_72" />
 
-                <TextView
-                    android:textSize="36dp"
-                    android:layout_gravity="center"
-                    android:textColor="#fff"
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="갤러리"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:weightSum="5"
-                android:layout_weight="1">
-                <LinearLayout
-                    android:background="@drawable/normal_borderbox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_photo_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/normal_borderbox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_photo_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/normal_borderbox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_photo_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/normal_borderbox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_photo_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/normal_borderbox"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_photo_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:weightSum="5"
-                android:padding="18dp"
-                android:layout_weight="1">
-                <Button
-                    android:background="@drawable/borderbox_green"
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="18dp"
+                android:weightSum="5">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/borderbox_green"
                     android:text="사진 저장"
-                    android:textSize="32dp"
-                    android:layout_height="match_parent"/>
+                    android:textSize="32dp" />
 
             </LinearLayout>
 

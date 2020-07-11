@@ -1,6 +1,7 @@
 package com.example.antiseptic
 
 import android.media.Image
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -24,5 +25,5 @@ interface SignUpService {
         @Field("Password") Password: String,
         @Field("Name") Name: String,
         @Field("Image") Image: Image
-    ): ArrayList<DataSignUp>
+    ): Call<DataSignUp>
 }
