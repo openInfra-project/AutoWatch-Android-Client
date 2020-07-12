@@ -26,6 +26,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    //imagePicker
+    allprojects {
+        repositories {
+            maven { url "https://jitpack.io" }
+        }
+    }
+    //compile error
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -45,4 +56,9 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     //ViewModels
     implementation "androidx.fragment:fragment-ktx:1.2.4"
+    //image-picker
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.2.0'
+    implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.2.0'
+    // If you have a problem with Glide, please use the same Glide version or simply open an issue
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
 }
