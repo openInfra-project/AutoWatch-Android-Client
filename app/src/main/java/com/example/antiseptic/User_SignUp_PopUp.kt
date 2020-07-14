@@ -1,28 +1,19 @@
 package com.example.antiseptic
 
 import android.app.Activity
-import android.content.ContentUris
-import android.content.Context
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esafirm.imagepicker.features.ImagePicker
-import com.esafirm.imagepicker.features.ImagePickerSavePath
-import com.esafirm.imagepicker.features.ImagePickerView
-
 import kotlinx.android.synthetic.main.activity_user__sign_up__pop_up.*
-import kotlinx.android.synthetic.main.image_item.*
 
 class User_SignUp_PopUp : AppCompatActivity() {
     private val viewModel: DataViewModel by viewModels()
@@ -37,6 +28,16 @@ class User_SignUp_PopUp : AppCompatActivity() {
         btn_PhotoSelectPopup.setOnClickListener {
             onClickGallary()
         }
+        btn_PhotoSavePopup.setOnClickListener {
+            //이미지 uri 객체를 회원가입 페이지로 보내줌.
+            //이부분에서 데이터를 보내주면서 dialog를 띄우는 것도 좋을 듯 .
+            val intent = Intent()
+            intent.putExtra("Image",viewModel.dataImage)
+            setResult(Activity.RESULT_OK,intent)
+            //액티비티 팝업 닫기
+            finish()
+        }
+
 
     }
 
@@ -60,33 +61,25 @@ class User_SignUp_PopUp : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-
             val images = ImagePicker.getImages(data)
-            //image 객체를 uri 로 변환해줌
-            for (i in 0 until images.size) {
-                val item =
-                    ContentUris.withAppendedId(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        images[i].id
-                    )
-                val imagedata = DataImage(Image = item)
-                viewModel.setDataImage(imagedata)
-
-            }
-
-            val adapter =
-                RecycleAdapter(viewModel.dataImage, LayoutInflater.from(this), onClickDelete = {
-                    viewModel.deleteDataImage(it)
-                })
-
-
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            viewModel.LiveDataImage.observe(this, Observer {
-                viewModel.dataImage
-            })
+            //이미지 객체를 바로 ViewModel 으로 보냄.
+            viewModel.setDataImage(images)
         }
+        //adapter 로 연결해줌
+        val adapter =
+            RecycleAdapter(viewModel.dataImage, LayoutInflater.from(this), onClickDelete = {
+                viewModel.deleteDataImage(it)
+            })
+        //recyclerView를 연동해주고 Horizontal 로 설정해줌
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        //이미지데이터 변동사항 체크
+        viewModel.LiveDataImage.observe(this, Observer {
+            viewModel.dataImage
+        })
     }
+
 
 
     private inner class RecycleAdapter(
@@ -108,7 +101,6 @@ class User_SignUp_PopUp : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.image.setImageURI(itemList[position].Image)
-
             holder.image.setOnClickListener {
                 onClickDelete.invoke(position)
             }

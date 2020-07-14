@@ -1,5 +1,6 @@
 package com.example.antiseptic
 
+import android.app.Activity
 import android.content.Intent
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SignUp : AppCompatActivity() {
+    //imagedata 변수는 사진 선택 후 가져오는 데이터를 넣어줄 변수
+    private lateinit var imageData : ArrayList<DataImage>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -55,7 +58,18 @@ class SignUp : AppCompatActivity() {
     }
     //사진 선택
     private fun PhotoSelect() {
-        startActivity(Intent(this, User_SignUp_PopUp::class.java))
+        val intent = Intent(this,User_SignUp_PopUp::class.java)
+        startActivityForResult(intent,200)
+    }
+
+    //사진 선택 후 돌아오는 데이터 받기
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==200) {
+            if(resultCode == Activity.RESULT_OK){
+                data?.getSerializableExtra("Image")
+            }
+        }
     }
 
     //RetrofitClient 에 있는 메소드 사용
