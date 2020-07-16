@@ -7,12 +7,14 @@ import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.io.Serializable
 
-class DataViewModel : ViewModel() {
+class DataViewModel : ViewModel(){
     val data = ArrayList<DataSignUp>()
     var dataImage = ArrayList<DataImage>()
     val LiveData = MutableLiveData<ArrayList<DataSignUp>>()
     val LiveDataImage = MutableLiveData<ArrayList<DataImage>>()
+
 
     fun setDataImage(item : List<com.esafirm.imagepicker.model.Image> ) {
         //중복되어서 붙여지므로 지워주고 시작함.

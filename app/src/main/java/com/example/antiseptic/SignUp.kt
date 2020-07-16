@@ -1,12 +1,14 @@
 package com.example.antiseptic
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -16,10 +18,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Serializable
 
 class SignUp : AppCompatActivity() {
-    //imagedata 변수는 사진 선택 후 가져오는 데이터를 넣어줄 변수
-    private lateinit var imageData : ArrayList<DataImage>
+    //ViewModel 직렬화를 할 수 없기에
+    //imagedata 변수는 사진 선택 후 가져오는 데이터를 넣어줄 임의로 만들어준 변수
+    private lateinit var imageData: ArrayList<DataImage>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -33,19 +37,19 @@ class SignUp : AppCompatActivity() {
         }
         //회원가입
         btn_enter_signup.setOnClickListener {
-//            if (edit_email.text.toString() != null && edit_password.text.toString() != null && edit_name.text.toString() != null) {
-//                //서버로 데이터를 보내줌
-//                senddata(
-//                    edit_email.text.toString(),
-//                    edit_password.text.toString(),
-//                    edit_name.text.toString()
-//                //이미지 부분 여기에 적기
-//                )
+            if (edit_email.text.toString() != null && edit_password.text.toString() != null && edit_name.text.toString() != null && imageData != null) {
+                //서버로 데이터를 보내줌
+                senddata(
+                    edit_email.text.toString(),
+                    edit_password.text.toString(),
+                    edit_name.text.toString(),
+                    imageData
+                    //이미지 부분 여기에 적기
+                )
 
-
-//            } else {
-//                Toast.makeText(this, "빈칸없이 입력해주세요", Toast.LENGTH_LONG).show()
-//            }
+            } else {
+                Toast.makeText(this, "빈칸없이 입력해주세요", Toast.LENGTH_LONG).show()
+            }
         }
 
 
@@ -56,31 +60,46 @@ class SignUp : AppCompatActivity() {
     private fun GoLogin() {
         startActivity(Intent(this, Login::class.java))
     }
+
     //사진 선택
     private fun PhotoSelect() {
-        val intent = Intent(this,User_SignUp_PopUp::class.java)
-        startActivityForResult(intent,200)
+        val intent = Intent(this, User_SignUp_PopUp::class.java)
+        startActivityForResult(intent, 200)
     }
 
     //사진 선택 후 돌아오는 데이터 받기
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==200) {
-            if(resultCode == Activity.RESULT_OK){
-                data?.getSerializableExtra("Image")
+        if (requestCode == 200) {
+            if (resultCode == Activity.RESULT_OK) {
+                imageData = data?.getSerializableExtra("Image") as ArrayList<DataImage>
+                text_goLogin.setText(""+imageData)
             }
+        } else {
+
         }
     }
 
+
     //RetrofitClient 에 있는 메소드 사용
-    private fun senddata(email: String, password: String, name: String, image: Image) {
+    private fun senddata(
+        email: String,
+        password: String,
+        name: String,
+        image: ArrayList<DataImage>
+    ) {
         val retrofit: RetrofitClient = RetrofitClient
+        //업로드 중이라는 Dialog 띄어줌
+        val progressDialog: ProgressDialog = ProgressDialog(this)
+        progressDialog.setTitle("업로드중...")
+        progressDialog.show()
         retrofit.signupservice.requestSignUp(
             email,
             password,
             name,
             image//이미지 데이터 여기에 넣기
-        ).enqueue(object  : Callback<DataSignUp>{
+        ).enqueue(object : Callback<DataSignUp> {
             override fun onFailure(call: Call<DataSignUp>, t: Throwable) {
                 //실패시 작업 -> 간단하게 Dialog 띄어주기
             }

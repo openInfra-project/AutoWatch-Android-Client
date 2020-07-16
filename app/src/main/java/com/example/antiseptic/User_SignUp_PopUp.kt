@@ -2,21 +2,29 @@ package com.example.antiseptic
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.esafirm.imagepicker.features.ImagePicker
+import com.esafirm.imagepicker.model.Image
 import kotlinx.android.synthetic.main.activity_user__sign_up__pop_up.*
+import java.io.Serializable
 
 class User_SignUp_PopUp : AppCompatActivity() {
     private val viewModel: DataViewModel by viewModels()
+    //images
+    private lateinit var images : List<Image>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user__sign_up__pop_up)
@@ -30,12 +38,19 @@ class User_SignUp_PopUp : AppCompatActivity() {
         }
         btn_PhotoSavePopup.setOnClickListener {
             //이미지 uri 객체를 회원가입 페이지로 보내줌.
-            //이부분에서 데이터를 보내주면서 dialog를 띄우는 것도 좋을 듯 .
+            //이부분에서 데이터를 보내주면서 dialog를 띄우는 것도 좋을 듯.
+            // ViewModel 의 dataImage가 직렬화가 되어야 하는 문제점.
             val intent = Intent()
-            intent.putExtra("Image",viewModel.dataImage)
-            setResult(Activity.RESULT_OK,intent)
+            val data = images as Serializable
+            var bundle =Bundle()
+            bundle.putSerializable("Image",data)
+            intent.putExtras(bundle)
+            setResult(Activity.RESULT_OK, intent)
             //액티비티 팝업 닫기
             finish()
+
+
+
         }
 
 
@@ -61,7 +76,7 @@ class User_SignUp_PopUp : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-            val images = ImagePicker.getImages(data)
+            images = ImagePicker.getImages(data)
             //이미지 객체를 바로 ViewModel 으로 보냄.
             viewModel.setDataImage(images)
         }
@@ -73,13 +88,12 @@ class User_SignUp_PopUp : AppCompatActivity() {
         //recyclerView를 연동해주고 Horizontal 로 설정해줌
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(this,5)
         //이미지데이터 변동사항 체크
         viewModel.LiveDataImage.observe(this, Observer {
             viewModel.dataImage
         })
     }
-
 
 
     private inner class RecycleAdapter(
@@ -107,5 +121,7 @@ class User_SignUp_PopUp : AppCompatActivity() {
         }
     }
 }
+
+
 
 

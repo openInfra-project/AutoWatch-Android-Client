@@ -11,7 +11,7 @@ object RetrofitClient {
         .baseUrl("aaaa")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    val signupservice :SignUpService = retrofit.create(SignUpService::class.java)
+    val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
 
 }
 
@@ -24,6 +24,6 @@ interface SignUpService {
         @Field("Email") Email: String,
         @Field("Password") Password: String,
         @Field("Name") Name: String,
-        @Field("Image") Image: Image
+        @Field("Image") Image: ArrayList<DataImage>
     ): Call<DataSignUp>
 }

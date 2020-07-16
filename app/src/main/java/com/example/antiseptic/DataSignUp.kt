@@ -7,5 +7,5 @@ class DataSignUp(
     val email : String,
     val password: String,
     val name : String,
-    val image : Image
+    val image : ArrayList<DataImage>
 ):Serializable
