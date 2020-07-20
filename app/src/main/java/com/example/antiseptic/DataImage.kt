@@ -3,6 +3,6 @@ package com.example.antiseptic
 import android.net.Uri
 import java.io.Serializable
 
-class DataImage(
+data class DataImage(
     val Image: Uri
 ):Serializable

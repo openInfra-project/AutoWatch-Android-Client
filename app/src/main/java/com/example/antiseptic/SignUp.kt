@@ -45,6 +45,8 @@ class SignUp : AppCompatActivity() {
                     edit_name.text.toString(),
                     imageData
                     //이미지 부분 여기에 적기
+                //이미지를 imagepicker 객체로 보내야 하는지 혹은
+                //uri 로 변환해서 보내야 하는지
                 )
 
             } else {
@@ -89,12 +91,12 @@ class SignUp : AppCompatActivity() {
         name: String,
         image: ArrayList<DataImage>
     ) {
-        val retrofit: RetrofitClient = RetrofitClient
+
         //업로드 중이라는 Dialog 띄어줌
         val progressDialog: ProgressDialog = ProgressDialog(this)
         progressDialog.setTitle("업로드중...")
         progressDialog.show()
-        retrofit.signupservice.requestSignUp(
+        RetrofitClient.signupservice.requestSignUp(
             email,
             password,
             name,
