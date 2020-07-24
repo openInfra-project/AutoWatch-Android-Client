@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 object RetrofitClient {
     val retrofit = Retrofit.Builder()
-        .baseUrl("aaaa")
+        .baseUrl("https://b7c3be95402b.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -17,13 +17,14 @@ object RetrofitClient {
 
 //서버로 보내는 INPUT데이터
 interface SignUpService {
-    @FormUrlEncoded
     //베이스 URL 을 제외한 경로
-    @POST("aasdasd")
+    @FormUrlEncoded
+    @POST("/app_signup")
     fun requestSignUp(
-        @Field("Email") Email: String,
-        @Field("Password") Password: String,
-        @Field("Name") Name: String,
-        @Field("Image") Image: ArrayList<DataImage>
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("name") name: String
+        //@Field("Image") Image: ArrayList<taImage>
     ): Call<DataSignUp>
+
 }

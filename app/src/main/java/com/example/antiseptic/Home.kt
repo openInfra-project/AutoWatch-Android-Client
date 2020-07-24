@@ -25,10 +25,12 @@ class Home : AppCompatActivity() {
             homeAnimation(it = its)
 
         }
+        //도움말 버튼 애니메이션
         val animation  = AnimationUtils.loadAnimation(this,R.anim.home_highlight)
         image_home_highlight.startAnimation(animation)
         val animationbackground = AnimationUtils.loadAnimation(this,R.anim.home_highlight_background)
         Linear_background.startAnimation(animationbackground)
+        //도움말 Dialog 여기서 구현.
     }
 
     //버튼클릭시 애니메이션 효과
