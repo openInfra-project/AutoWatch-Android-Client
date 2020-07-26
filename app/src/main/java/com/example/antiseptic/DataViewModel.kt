@@ -37,9 +37,9 @@ class DataViewModel : ViewModel(){
 //        LiveDataImage.value = dataImage
 
     }
-//    //fun setData(email : String,password:String,name:String) {
-//        val items = DataSignUp(email,password,name)
-//        data.add(items)
-//        LiveData.value=data
-//    }
+    fun setData(item :DataSignUp){
+        data.add(item)
+        LiveData.value=data
+    }
+
 }

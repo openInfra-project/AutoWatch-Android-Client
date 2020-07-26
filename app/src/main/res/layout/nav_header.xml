@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 슬라이딩 드로어로 인식되려면 gravity 속성이 있어야함.!-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="#f1f3f5"
+    android:orientation="horizontal"
+    tools:context=".Nav"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_weight="8"
+        android:background="#ffffff"
+        android:elevation="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_nav_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="환영합니다."
+                android:textColor="#000"
+                android:textSize="24dp" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/text_nav_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="김준영"
+                android:textColor="#000" />
+            <Button
+                android:visibility="invisible"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:id="@+id/btn_nav_visible"
+                android:textSize="24dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/login_borderbox"
+                android:layout_height="wrap_content"
+                android:text="로그인 하러가기"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_nav_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/btn_nav_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그아웃"
+                android:textColor="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="회원 탈퇴"
+                android:textColor="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="사용자 정보 수정"
+                android:textColor="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="이미지 변경하기"
+                android:textColor="#000" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_nav_close"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_baseline_close_24" />
+
+
+</LinearLayout>

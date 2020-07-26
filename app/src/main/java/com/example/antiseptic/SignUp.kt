@@ -12,6 +12,7 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.antiseptic.RetrofitClient.retrofit
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
@@ -32,6 +33,7 @@ class SignUp : AppCompatActivity() {
     //ViewModel 직렬화를 할 수 없기에
     //imagedata 변수는 사진 선택 후 가져오는 데이터를 넣어줄 임의로 만들어준 변수
     private lateinit var imageData: ArrayList<DataImage>
+    private val viewModel:DataViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -105,6 +107,9 @@ class SignUp : AppCompatActivity() {
     ) {
 
         //업로드 중이라는 Dialog 띄어줌
+        val progressDialog: ProgressDialog = ProgressDialog(this)
+        progressDialog.setTitle("업로드중...")
+        progressDialog.show()
 
         RetrofitClient.signupservice.requestSignUp(
             email,
@@ -116,19 +121,20 @@ class SignUp : AppCompatActivity() {
                 //실패시 작업 -> 간단하게 Dialog 띄어주기
                 Toast.makeText(
                     applicationContext,
-                    "Fail" + email + password + name,
+                    "회원가입 실패",
                     Toast.LENGTH_LONG
                 ).show()
             }
 
             override fun onResponse(call: Call<DataSignUp>, response: Response<DataSignUp>) {
-                //성공시 작업 -> 데이터를 가져와서 ViewModel 에 setdata에 넣어주는게 좋을듯.
-                // ->ViewModel 의 데이터를 Main에서(getdata) 가져온 다음 자동으로 Home 으로 넘어감.
-                Toast.makeText(applicationContext, "Success" + email, Toast.LENGTH_LONG).show()
+                text_goLogin.setText(""+response.body())
+                //데이터를 받아서 저장해줌.
+                viewModel.setData(response.body()!!)
+                Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
+                startActivity(Intent(applicationContext,Home::class.java))
+
             }
         })
-        val progressDialog: ProgressDialog = ProgressDialog(this)
-        progressDialog.setTitle("업로드중...")
-        progressDialog.show()
+
     }
 }

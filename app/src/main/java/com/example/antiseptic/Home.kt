@@ -3,14 +3,15 @@ package com.example.antiseptic
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
-import androidx.core.view.isVisible
+import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.nav_header.*
 
 class Home : AppCompatActivity() {
     private var its: Boolean = true
+    private val viewModel : DataViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -31,6 +32,18 @@ class Home : AppCompatActivity() {
         val animationbackground = AnimationUtils.loadAnimation(this,R.anim.home_highlight_background)
         Linear_background.startAnimation(animationbackground)
         //도움말 Dialog 여기서 구현.
+        //menu 애니메이션
+        btn_home_menu.setOnClickListener {
+            drawer_view.openDrawer(nav_view)
+        }
+        btn_nav_close.setOnClickListener {
+            drawer_view.closeDrawers()
+        }
+        drawer_view.setOnTouchListener { v, event -> true}
+
+
+
+
     }
 
     //버튼클릭시 애니메이션 효과
