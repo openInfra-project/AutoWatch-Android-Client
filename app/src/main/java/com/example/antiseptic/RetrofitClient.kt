@@ -27,7 +27,18 @@ interface SignUpService {
         @Field("name") name: String
         //@Field("Image") Image: ArrayList<DataImage>
     ): Call<DataSignUp>
+
     //방 생성 POST 요청
     //방 입장 POST 요청
+    @POST("/app_login")
+    fun requestLoginIn(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<Int>
+    @DELETE("/app_login")
+    fun requestDelete(
+        @Field("email") email: String
+    ):Call<Int>
+
 
 }

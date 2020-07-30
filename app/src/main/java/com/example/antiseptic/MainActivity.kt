@@ -21,11 +21,11 @@ class MainActivity : AppCompatActivity() {
         }
         //만약 로그인을 했었다면 바로 Home 으로 이동.
         Handler().postDelayed({
-            if(viewModel.data.isEmpty()){
-                startActivity(Intent(this, Login::class.java))
-            }else {
-                startActivity(Intent(this, Home::class.java))
-            }
+                if(viewModel.data.isEmpty()){
+                    startActivity(Intent(this, Login::class.java))
+                }else {
+                    startActivity(Intent(this, Home::class.java))
+                }
 
         },1000)
     }
