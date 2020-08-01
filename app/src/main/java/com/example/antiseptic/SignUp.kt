@@ -32,8 +32,8 @@ import java.net.URLEncoder.*
 class SignUp : AppCompatActivity() {
     //ViewModel 직렬화를 할 수 없기에
     //imagedata 변수는 사진 선택 후 가져오는 데이터를 넣어줄 임의로 만들어준 변수
-    private lateinit var imageData: ArrayList<DataImage>
-    private val viewModel:DataViewModel by viewModels()
+    private lateinit var imageData: List<com.esafirm.imagepicker.model.Image>
+    private val viewModel: DataViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -47,16 +47,13 @@ class SignUp : AppCompatActivity() {
         }
         //회원가입
         btn_enter_signup.setOnClickListener {
-            if (edit_email.text.toString() != null && edit_password.text.toString() != null && edit_name.text.toString() != null /*&& imageData != null*/) {
+            if (edit_email.text.toString() != null && edit_password.text.toString() != null && edit_name.text.toString() != null && imageData != null) {
                 //서버로 데이터를 보내줌
                 senddata(
                     edit_email.text.toString(),
                     edit_password.text.toString(),
-                    edit_name.text.toString()
-                    //imageData
-                    //이미지 부분 여기에 적기
-                    //이미지를 imagepicker 객체로 보내야 하는지 혹은
-                    //uri 로 변환해서 보내야 하는지
+                    edit_name.text.toString(),
+                    viewModel.dataImage
                 )
 
             } else {
@@ -70,11 +67,9 @@ class SignUp : AppCompatActivity() {
     }
 
 
-
     //로그인 하러 가기
     private fun GoLogin() {
         startActivity(Intent(this, Login::class.java))
-
     }
 
     //사진 선택
@@ -84,13 +79,13 @@ class SignUp : AppCompatActivity() {
     }
 
     //사진 선택 후 돌아오는 데이터 받기
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 200) {
             if (resultCode == Activity.RESULT_OK) {
-                imageData = data?.getSerializableExtra("Image") as ArrayList<DataImage>
-                text_goLogin.setText("" + imageData)
+                imageData=data?.getSerializableExtra("image") as List<com.esafirm.imagepicker.model.Image>
+                viewModel.setDataImage(imageData)
+                text_goLogin.setText("" + viewModel.dataImage)
             }
         } else {
 
@@ -102,8 +97,8 @@ class SignUp : AppCompatActivity() {
     private fun senddata(
         email: String,
         password: String,
-        name: String
-        // image: ArrayList<DataImage>
+        name: String,
+        image: ArrayList<DataImage>
     ) {
 
         //업로드 중이라는 Dialog 띄어줌
@@ -114,7 +109,8 @@ class SignUp : AppCompatActivity() {
         RetrofitClient.signupservice.requestSignUp(
             email,
             password,
-            name
+            name,
+            image
             //image//이미지 데이터 여기에 넣기
         ).enqueue(object : Callback<DataSignUp> {
             override fun onFailure(call: Call<DataSignUp>, t: Throwable) {
@@ -127,11 +123,11 @@ class SignUp : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<DataSignUp>, response: Response<DataSignUp>) {
-                text_goLogin.setText(""+response.body())
+                text_goLogin.setText("" + response.body())
                 //데이터를 받아서 저장해줌.
                 viewModel.setData(response.body()!!)
-                Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
-                startActivity(Intent(applicationContext,Home::class.java))
+                //Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
+                //startActivity(Intent(applicationContext,Home::class.java))
 
             }
         })

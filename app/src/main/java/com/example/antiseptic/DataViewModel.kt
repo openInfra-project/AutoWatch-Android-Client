@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 class DataViewModel : ViewModel(){
     val data = ArrayList<DataSignUp>()
     var dataImage = ArrayList<DataImage>()
-    val tutodata=ArrayList<TutorialData>()
     val LiveData = MutableLiveData<ArrayList<DataSignUp>>()
     val LiveDataImage = MutableLiveData<ArrayList<DataImage>>()
 
@@ -38,11 +37,6 @@ class DataViewModel : ViewModel(){
         data.add(item)
         LiveData.value=data
     }
-    fun gettutorialData() {
-        val a = TutorialData("관리자","관리자 튜토리얼",R.drawable.ice1,R.drawable.ic_baseline_keyboard_arrow_right_24)
-        val b = TutorialData("사용자","사용자 튜토리얼",R.drawable.ice2,R.drawable.ic_baseline_keyboard_arrow_right_24)
-        tutodata.add(a)
-        tutodata.add(b)
-    }
+
 
 }

@@ -38,7 +38,7 @@ class Login : AppCompatActivity() {
                 edit_login_password.text.toString()
             ).enqueue(object : Callback<Int> {
                 override fun onFailure(call: Call<Int>, t: Throwable) {
-
+                    Toast.makeText(applicationContext,"통신 실패",Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {

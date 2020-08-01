@@ -38,12 +38,11 @@ class User_SignUp_PopUp : AppCompatActivity() {
         }
         btn_PhotoSavePopup.setOnClickListener {
             //이미지 uri 객체를 회원가입 페이지로 보내줌.
-            //이부분에서 데이터를 보내주면서 dialog를 띄우는 것도 좋을 듯.
             // ViewModel 의 dataImage가 직렬화가 되어야 하는 문제점.
             val intent = Intent()
             val data = images as Serializable
             var bundle =Bundle()
-            bundle.putSerializable("Image",data)
+            bundle.putSerializable("image",data)
             intent.putExtras(bundle)
             setResult(Activity.RESULT_OK, intent)
             //액티비티 팝업 닫기

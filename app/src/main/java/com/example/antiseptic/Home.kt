@@ -1,6 +1,7 @@
 package com.example.antiseptic
 
 import android.content.Intent
+import android.drm.DrmStore
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,17 +10,24 @@ import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header.*
+import me.piruin.quickaction.ActionItem
+import me.piruin.quickaction.QuickAction
+import me.piruin.quickaction.QuickIntentAction
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import rx.functions.Action
 
 class Home : AppCompatActivity() {
     private var its: Boolean = true
     private val viewModel : DataViewModel by viewModels()
+    private val QuickAction : QuickAction?=null
+    private val QuickIntent : QuickAction?=null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -71,20 +79,11 @@ class Home : AppCompatActivity() {
         viewModel.LiveData.observe(this, Observer {
             viewModel.data
         })
-        //RecyclerView 데이터 가져오기
-        viewModel.gettutorialData()
-        val adapter = RecyclerAdapter(viewModel.tutodata, LayoutInflater.from(this),onClick = {
-            if(it==0) {
-                startActivity(Intent(this,ManagerTutorial::class.java))
-            }else {
-                startActivity(Intent(this,UserTutorial::class.java))
-            }
-        })
-        recycler_view.adapter = adapter
-        recycler_view.layoutManager=LinearLayoutManager(this)
 
 
-
+        frame_highlight.setOnClickListener{
+            quickActivity()
+        }
 
     }
 
@@ -153,6 +152,27 @@ class Home : AppCompatActivity() {
             }
         })
 
+    }
+    fun quickActivity() {
+        QuickAction?.setColor(999)
+        QuickAction?.setTextColor(333)
+        val item = ActionItem(1,"gdasdasd")
+        val quickAction = QuickAction(this,me.piruin.quickaction.QuickAction.VERTICAL)
+        quickAction.setColorRes(R.color.colorPrimary)
+        quickAction.setTextColorRes(R.color.colorAccent)
+        quickAction.addActionItem(item)
+        quickAction.setOnActionItemClickListener(object: QuickAction.OnActionItemClickListener {
+            override fun onItemClick(item: ActionItem?) {
+
+            }
+        })
+        val intent = Intent()
+        intent.setAction(Intent.ACTION_SEND)
+        val quickIntent = QuickIntentAction(this)
+            .setActivityIntent(intent)
+            .create()
+        quickIntent.setAnimStyle(me.piruin.quickaction.QuickAction.Animation.GROW_FROM_CENTER)
+        quickAction.show(frame_highlight)
     }
 
 

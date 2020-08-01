@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background=""
+    android:background="@color/colorPrimary"
     android:padding="24dp"
     tools:context=".Login">
 
@@ -16,12 +16,12 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:padding="8dp"
             android:layout_width="300dp"
-            android:elevation="10dp"
-            android:background="#fff"
             android:layout_height="500dp"
-            android:orientation="vertical">
+            android:background="#3c5b9a"
+            android:elevation="30dp"
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -34,6 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Login"
+
+                android:textColor="#fff"
                 android:textSize="36dp" />
 
             <LinearLayout
@@ -97,7 +99,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
-                android:text="회원가입 하러가기" />
+                android:text="회원가입 하러가기"
+                android:textColor="#fff" />
+
 
             <Button
                 android:id="@+id/btn_login_enter"
@@ -105,9 +109,12 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="18dp"
-                android:background="#f1f2f5"
+                android:background="#fff"
                 android:text="방 입장"
+                android:textColor="#000"
                 android:textSize="24dp" />
+
+
         </LinearLayout>
 
     </LinearLayout>
