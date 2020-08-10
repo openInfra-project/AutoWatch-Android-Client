@@ -36,24 +36,27 @@ class Login : AppCompatActivity() {
             RetrofitClient.signupservice.requestLoginIn(
                 edit_login_email.text.toString(),
                 edit_login_password.text.toString()
-            ).enqueue(object : Callback<Int> {
-                override fun onFailure(call: Call<Int>, t: Throwable) {
+            ).enqueue(object : Callback<DataSignUp> {
+                override fun onFailure(call: Call<DataSignUp>, t: Throwable) {
                     Toast.makeText(applicationContext,"통신 실패",Toast.LENGTH_SHORT).show()
+                    text_goSignUp.setText(""+t.message)
                 }
 
-                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                override fun onResponse(call: Call<DataSignUp>, response: Response<DataSignUp>) {
                     //로그인 성공시 홈으로 이동
-                    if (response.body() == 200) {
-                        startActivity(Intent(applicationContext, Home::class.java))
-                    } else {
-                        Toast.makeText(applicationContext, "로그인 정보가 일치하지 않습니다", Toast.LENGTH_SHORT)
-                            .show()
-
-                    }
+                    text_goSignUp.setText(""+response.body())
+//                    if (response.body()) {
+//                        startActivity(Intent(applicationContext, Home::class.java))
+//                    } else {
+//                        Toast.makeText(applicationContext, "로그인 정보가 일치하지 않습니다", Toast.LENGTH_SHORT)
+//                            .show()
+//                        text_goSignUp.setText(""+response.body())
+//
+//                    }
                 }
             })
 
-            startActivity(Intent(this, Home::class.java))
+
         } else {
             Toast.makeText(this, "이메일과 패스워드를 정확히 기입해주세요", Toast.LENGTH_SHORT).show()
         }

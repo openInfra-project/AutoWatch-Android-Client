@@ -1,6 +1,8 @@
 package com.example.antiseptic
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.drm.DrmStore
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,15 +28,17 @@ import rx.functions.Action
 class Home : AppCompatActivity() {
     private var its: Boolean = true
     private val viewModel : DataViewModel by viewModels()
+    val sharedPreferences=getSharedPreferences("sp1", Context.MODE_PRIVATE)
+    val value= sharedPreferences.getString("email",null)
+    val editor:SharedPreferences.Editor=sharedPreferences.edit()
     private val QuickAction : QuickAction?=null
     private val QuickIntent : QuickAction?=null
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         code_visible.visibility = View.GONE
         //로그아웃시
-        if(viewModel.data.isEmpty()) {
+        if(value==null) {
             logout()
         }else {
             login()
@@ -46,6 +50,9 @@ class Home : AppCompatActivity() {
         //방입장 버튼 클릭시
         btn_home_join.setOnClickListener {
             homeAnimation(it = its)
+            btn_home_inner.setOnClickListener {
+                startActivity(Intent(this,Room::class.java))
+            }
 
         }
         //도움말 버튼 애니메이션
@@ -63,7 +70,7 @@ class Home : AppCompatActivity() {
         }
         //로그아웃
         btn_nav_logout.setOnClickListener {
-            viewModel.data.clear()
+            editor.remove("email")
             startActivity(Intent(this,Home::class.java))
         }
         //로그인하러 가기
@@ -76,9 +83,6 @@ class Home : AppCompatActivity() {
         }
 
         drawer_view.setOnTouchListener { v, event -> true}
-        viewModel.LiveData.observe(this, Observer {
-            viewModel.data
-        })
 
 
         frame_highlight.setOnClickListener{
@@ -128,7 +132,7 @@ class Home : AppCompatActivity() {
     fun login() {
         //로그인시 화면
         text_nav_login.setText("환영합니다")
-        text_nav_name.setText(""+viewModel.data[0].name)
+        text_nav_name.setText(""+value+"님")
         //로그아웃 시 다시 Home 으로 이동 후 바뀐 nav 보여줌
         linear_nav_login.visibility=View.VISIBLE
         btn_nav_visible.visibility=View.GONE
@@ -156,7 +160,7 @@ class Home : AppCompatActivity() {
     fun quickActivity() {
         QuickAction?.setColor(999)
         QuickAction?.setTextColor(333)
-        val item = ActionItem(1,"gdasdasd")
+        val item = ActionItem(1,"튜토리얼을 뭘적지 ??")
         val quickAction = QuickAction(this,me.piruin.quickaction.QuickAction.VERTICAL)
         quickAction.setColorRes(R.color.colorPrimary)
         quickAction.setTextColorRes(R.color.colorAccent)

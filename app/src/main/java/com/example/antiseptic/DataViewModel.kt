@@ -1,13 +1,26 @@
 package com.example.antiseptic
 
+import android.content.ContentProvider
+import android.content.ContentQueryMap
+import android.content.ContentResolver
 import android.content.ContentUris
 import android.provider.MediaStore
+import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.esafirm.imagepicker.features.fileloader.ImageFileLoader
+import com.esafirm.imagepicker.model.Image
+import okhttp3.internal.io.FileSystem
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStream
+import javax.xml.transform.URIResolver
 
 class DataViewModel : ViewModel(){
     val data = ArrayList<DataSignUp>()
     var dataImage = ArrayList<DataImage>()
+    var listimage=ArrayList<File>()
     val LiveData = MutableLiveData<ArrayList<DataSignUp>>()
     val LiveDataImage = MutableLiveData<ArrayList<DataImage>>()
 
@@ -15,6 +28,7 @@ class DataViewModel : ViewModel(){
     fun setDataImage(item : List<com.esafirm.imagepicker.model.Image> ) {
         //중복되어서 붙여지므로 지워주고 시작함.
         dataImage.clear()
+        listimage.clear()
         //이미지 객체를 가져와서 uri 형태로 변환&대입.
         for (i in 0 until item.size) {
             val items =
@@ -22,8 +36,13 @@ class DataViewModel : ViewModel(){
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     item[i].id
                 )
+
             val imagedata = DataImage(Image = items)
             dataImage.add(imagedata)
+            //이미지 전송용
+            val a = File(item[i].path)
+            listimage.add(a)
+
         }
         LiveDataImage.value=dataImage
     }

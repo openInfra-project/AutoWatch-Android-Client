@@ -1,6 +1,7 @@
 package com.example.antiseptic
 
-import android.media.Image
+import okhttp3.MultipartBody
+import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,7 +10,7 @@ import retrofit2.http.*
 object RetrofitClient {
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://eada5ac69c33.ngrok.io")
+        .baseUrl("https://96c9caca910c.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -23,17 +24,22 @@ interface SignUpService {
     fun requestSignUp(
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("name") name: String,
-        @Field("image") image: ArrayList<DataImage>
+        @Field("name") name: String
     ): Call<DataSignUp>
+    @Multipart
+    @POST("/app_signup")
+    fun requestImage(
+        @Part image : MultipartBody.Part
+    ): Call<DataImage2>
 
     //방 생성 POST 요청
     //방 입장 POST 요청
+    @FormUrlEncoded
     @POST("/app_login")
     fun requestLoginIn(
         @Field("email") email: String,
         @Field("password") password: String
-    ): Call<Int>
+    ): Call<DataSignUp>
     @DELETE("/app_login")
     fun requestDelete(
         @Field("email") email: String

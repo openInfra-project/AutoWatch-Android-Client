@@ -6,6 +6,6 @@ import java.io.Serializable
 data class DataSignUp(
     val email : String,
     val password: String,
-    val name : String,
-   val image : ArrayList<DataImage>
+    val name : String
+
 ):Serializable
