@@ -1,11 +1,14 @@
 package com.example.antiseptic
 
+import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.drm.DrmStore
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -16,10 +19,15 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.nav_header.*
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import me.piruin.quickaction.QuickIntentAction
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,21 +36,34 @@ import rx.functions.Action
 class Home : AppCompatActivity() {
     private var its: Boolean = true
     private val viewModel : DataViewModel by viewModels()
-    val sharedPreferences=getSharedPreferences("sp1", Context.MODE_PRIVATE)
-    val value= sharedPreferences.getString("email",null)
-    val editor:SharedPreferences.Editor=sharedPreferences.edit()
+    private lateinit var imageData: List<com.esafirm.imagepicker.model.Image>
+    private lateinit var body: MultipartBody.Part
     private val QuickAction : QuickAction?=null
     private val QuickIntent : QuickAction?=null
+    private var dbemail : String?=null
+    private var dbpassword : String?=null
+    private var dbname : String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        val loginDB = loginDB(context = applicationContext)
         code_visible.visibility = View.GONE
-        //로그아웃시
-        if(value==null) {
-            logout()
+        val dbjson : JSONObject = loginDB.getloginDB()
+        if(dbjson.length()>0) {
+            dbemail = dbjson.getString("email")?:null
+            dbpassword = dbjson.getString("password")?:null
+            dbname = dbjson.getString("name")?:null
         }else {
-            login()
+
         }
+
+
+        if(dbemail!=null&& dbpassword!=null && dbname!=null) {
+            login()
+        }else {
+        }
+
+
         //뒤로가기 버튼
         btn_close_Home.setOnClickListener {
             onBackPressed()
@@ -70,7 +91,8 @@ class Home : AppCompatActivity() {
         }
         //로그아웃
         btn_nav_logout.setOnClickListener {
-            editor.remove("email")
+            loginDB.deleteDB()
+            logout()
             startActivity(Intent(this,Home::class.java))
         }
         //로그인하러 가기
@@ -88,8 +110,82 @@ class Home : AppCompatActivity() {
         frame_highlight.setOnClickListener{
             quickActivity()
         }
+        //사진선택기능
+        btn_home_changeimage.setOnClickListener {
+            PhotoSelect()
+        }
+
 
     }
+    fun logout() {
+        text_nav_login.setText("로그인하러가기")
+        text_nav_name.visibility=View.GONE
+        linear_nav_login.visibility=View.GONE
+        btn_nav_visible.visibility=View.VISIBLE
+    }
+    fun login() {
+        //로그인시 화면
+        text_nav_login.setText("환영합니다")
+        text_nav_name.setText(""+dbemail+"님")
+        //로그아웃 시 다시 Home 으로 이동 후 바뀐 nav 보여줌
+        linear_nav_login.visibility=View.VISIBLE
+        btn_nav_visible.visibility=View.GONE
+
+    }
+    //사진 선택
+    private fun PhotoSelect() {
+        val intent = Intent(this, User_SignUp_PopUp::class.java)
+        startActivityForResult(intent, 200)
+    }
+
+    //사진 선택 후 돌아오는 데이터 받기
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 200) {
+            if (resultCode == Activity.RESULT_OK) {
+                imageData =
+                    data?.getSerializableExtra("image") as List<com.esafirm.imagepicker.model.Image>
+                Toast.makeText(this, "" + imageData, Toast.LENGTH_SHORT).show()
+                viewModel.setDataImage(imageData)
+               // text_goLogin.setText("" + viewModel.listimage)
+                //일단 리스트에 있는 파일 1개를 가져옴 [0]
+                val a: RequestBody =
+                    RequestBody.create(MediaType.parse("image/jpeg"), viewModel.listimage[0])
+                body = MultipartBody.Part.createFormData("image",
+                    (viewModel.data+".jpg").toString(),a)
+                btn_home_changeimage.setText(""+body)
+                imageretro(body)
+
+            }
+        } else {
+
+        }
+    }
+    fun imageretro(item:MultipartBody.Part) {
+        val progressDialog: ProgressDialog = ProgressDialog(this)
+        progressDialog.setTitle("업로드중...")
+        progressDialog.show()
+        RetrofitClient.signupservice.requestImage(item).enqueue(object : Callback<DataImage2> {
+            override fun onFailure(call: Call<DataImage2>, t: Throwable) {
+                Toast.makeText(
+                    applicationContext,
+                    "회원가입 실패",
+                    Toast.LENGTH_LONG
+                ).show()
+                text_goLogin.setText("" + t.message)
+            }
+
+            override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
+                Toast.makeText(
+                    applicationContext,
+                    "성공",
+                    Toast.LENGTH_LONG
+                ).show()
+                text_goLogin.setText("성공+"+response.body())
+            }
+        })
+    }
+
 
     //버튼클릭시 애니메이션 효과
     fun homeAnimation(it: Boolean) {
@@ -122,25 +218,10 @@ class Home : AppCompatActivity() {
             its = true
         }
     }
-    fun logout() {
-        text_nav_login.setText("로그인하러가기")
 
-        text_nav_name.visibility=View.GONE
-        linear_nav_login.visibility=View.GONE
-        btn_nav_visible.visibility=View.VISIBLE
-    }
-    fun login() {
-        //로그인시 화면
-        text_nav_login.setText("환영합니다")
-        text_nav_name.setText(""+value+"님")
-        //로그아웃 시 다시 Home 으로 이동 후 바뀐 nav 보여줌
-        linear_nav_login.visibility=View.VISIBLE
-        btn_nav_visible.visibility=View.GONE
-
-    }
     fun deleteUser() {
         //dialog 로 확인메세지 한번 표시해주기
-        RetrofitClient.signupservice.requestDelete(viewModel.data[0].email).enqueue(object:Callback<Int> {
+        RetrofitClient.signupservice.requestDelete(dbemail!!).enqueue(object:Callback<Int> {
             override fun onFailure(call: Call<Int>, t: Throwable) {
 
             }

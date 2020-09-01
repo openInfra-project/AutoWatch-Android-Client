@@ -18,11 +18,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Room"></activity>
         <activity android:name=".ManagerTutorial" />
-        <activity android:name=".Home"></activity>
+        <activity android:name=".Home">
+
+        </activity>
         <activity
             android:name=".User_SignUp_PopUp"
             android:theme="@style/Transparent" />
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".SignUp">
+
+        </activity>
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

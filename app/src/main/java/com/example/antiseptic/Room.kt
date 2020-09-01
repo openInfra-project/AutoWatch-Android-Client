@@ -17,9 +17,9 @@ class Room : AppCompatActivity() {
     val port = 9000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_room)
-        Handler = Handler()
-        try {
+            setContentView(R.layout.activity_room)
+            Handler = Handler()
+            try {
             setSocket(ip, port)
         } catch (e: IOException) {
             e.printStackTrace()

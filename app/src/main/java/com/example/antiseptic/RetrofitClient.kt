@@ -10,7 +10,7 @@ import retrofit2.http.*
 object RetrofitClient {
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://96c9caca910c.ngrok.io")
+        .baseUrl("https://a5065a59036a.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -27,7 +27,7 @@ interface SignUpService {
         @Field("name") name: String
     ): Call<DataSignUp>
     @Multipart
-    @POST("/app_signup")
+    @POST("/app_image")
     fun requestImage(
         @Part image : MultipartBody.Part
     ): Call<DataImage2>
@@ -40,7 +40,8 @@ interface SignUpService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Call<DataSignUp>
-    @DELETE("/app_login")
+    @FormUrlEncoded
+    @POST("/app_delete")
     fun requestDelete(
         @Field("email") email: String
     ):Call<Int>

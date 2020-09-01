@@ -1,16 +1,18 @@
 package com.example.antiseptic
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class Login : AppCompatActivity() {
+    private val viewModel: DataViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -32,7 +34,11 @@ class Login : AppCompatActivity() {
 
     //로그인
     private fun login() {
+
         if (edit_login_email.text.toString() != null && edit_login_password.text.toString() != null) {
+            val progressDialog: ProgressDialog = ProgressDialog(this)
+            progressDialog.setTitle("업로드중...")
+            progressDialog.show()
             RetrofitClient.signupservice.requestLoginIn(
                 edit_login_email.text.toString(),
                 edit_login_password.text.toString()
@@ -44,15 +50,17 @@ class Login : AppCompatActivity() {
 
                 override fun onResponse(call: Call<DataSignUp>, response: Response<DataSignUp>) {
                     //로그인 성공시 홈으로 이동
-                    text_goSignUp.setText(""+response.body())
-//                    if (response.body()) {
-//                        startActivity(Intent(applicationContext, Home::class.java))
-//                    } else {
-//                        Toast.makeText(applicationContext, "로그인 정보가 일치하지 않습니다", Toast.LENGTH_SHORT)
-//                            .show()
-//                        text_goSignUp.setText(""+response.body())
-//
-//                    }
+                    val body = response.body()
+                    if(response.body()?.name!="Fail") {
+                        val loginDB = loginDB(context = applicationContext)
+                        loginDB.insertDB(body!!.email,body!!.password,body!!.name)
+                        Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
+                        startActivity(Intent(applicationContext, Home::class.java))
+                    }else {
+                        Toast.makeText(applicationContext, "이메일 및 패스워드가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+                        progressDialog.cancel()
+                    }
+
                 }
             })
 
