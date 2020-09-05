@@ -2,22 +2,14 @@ package com.example.antiseptic
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.drm.DrmStore
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.app.NotificationCompat
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.nav_header.*
@@ -31,7 +23,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import rx.functions.Action
 
 class Home : AppCompatActivity() {
     private var its: Boolean = true
@@ -61,6 +52,7 @@ class Home : AppCompatActivity() {
         if(dbemail!=null&& dbpassword!=null && dbname!=null) {
             login()
         }else {
+            logout()
         }
 
 
@@ -72,7 +64,7 @@ class Home : AppCompatActivity() {
         btn_home_join.setOnClickListener {
             homeAnimation(it = its)
             btn_home_inner.setOnClickListener {
-                startActivity(Intent(this,Room::class.java))
+                //startActivity(Intent(this,Room::class.java))
             }
 
         }
@@ -114,6 +106,9 @@ class Home : AppCompatActivity() {
         btn_home_changeimage.setOnClickListener {
             PhotoSelect()
         }
+        btn_home_create.setOnClickListener {
+            startActivity(Intent(this,ManagerRoomPopUp::class.java))
+        }
 
 
     }
@@ -126,11 +121,10 @@ class Home : AppCompatActivity() {
     fun login() {
         //로그인시 화면
         text_nav_login.setText("환영합니다")
-        text_nav_name.setText(""+dbemail+"님")
+        text_nav_name.setText(""+dbname+"님")
         //로그아웃 시 다시 Home 으로 이동 후 바뀐 nav 보여줌
         linear_nav_login.visibility=View.VISIBLE
         btn_nav_visible.visibility=View.GONE
-
     }
     //사진 선택
     private fun PhotoSelect() {
@@ -152,7 +146,7 @@ class Home : AppCompatActivity() {
                 val a: RequestBody =
                     RequestBody.create(MediaType.parse("image/jpeg"), viewModel.listimage[0])
                 body = MultipartBody.Part.createFormData("image",
-                    (viewModel.data+".jpg").toString(),a)
+                    (dbemail+".jpg"),a)
                 btn_home_changeimage.setText(""+body)
                 imageretro(body)
 
@@ -167,6 +161,7 @@ class Home : AppCompatActivity() {
         progressDialog.show()
         RetrofitClient.signupservice.requestImage(item).enqueue(object : Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
+                progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
                     "회원가입 실패",
@@ -181,7 +176,10 @@ class Home : AppCompatActivity() {
                     "성공",
                     Toast.LENGTH_LONG
                 ).show()
-                text_goLogin.setText("성공+"+response.body())
+                if(response.body()!=null){
+                    Toast.makeText(applicationContext,""+response.body().toString(),Toast.LENGTH_LONG).show()
+                    progressDialog.cancel()
+                }
             }
         })
     }

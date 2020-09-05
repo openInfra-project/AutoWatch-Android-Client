@@ -1,7 +1,7 @@
 package com.example.antiseptic
 
 import okhttp3.MultipartBody
-import okhttp3.Response
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,7 +10,7 @@ import retrofit2.http.*
 object RetrofitClient {
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://a5065a59036a.ngrok.io")
+        .baseUrl("https://007f2ef8df0a.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -29,7 +29,7 @@ interface SignUpService {
     @Multipart
     @POST("/app_image")
     fun requestImage(
-        @Part image : MultipartBody.Part
+        @Part image: MultipartBody.Part
     ): Call<DataImage2>
 
     //방 생성 POST 요청

@@ -45,7 +45,6 @@ class Login : AppCompatActivity() {
             ).enqueue(object : Callback<DataSignUp> {
                 override fun onFailure(call: Call<DataSignUp>, t: Throwable) {
                     Toast.makeText(applicationContext,"통신 실패",Toast.LENGTH_SHORT).show()
-                    text_goSignUp.setText(""+t.message)
                 }
 
                 override fun onResponse(call: Call<DataSignUp>, response: Response<DataSignUp>) {

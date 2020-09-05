@@ -80,17 +80,18 @@ class SignUp : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<DataSignUp>, response: Response<DataSignUp>) {
-                text_goLogin.setText("" + response.body())
                 //데이터를 받아서 저장해줌.
 
-                if (response.body() !== null) {
-                    val body = response.body()
+                val body = response.body()
+                if(response.body()?.name!="Fail") {
                     val loginDB = loginDB(context = applicationContext)
-                    loginDB.insertDB(body!!.email, body!!.password, body!!.name)
+                    loginDB.insertDB(body!!.email,body!!.password,body!!.name)
                     Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
                     startActivity(Intent(applicationContext, Home::class.java))
-                } else {
-
+                    progressDialog.cancel()
+                }else {
+                    Toast.makeText(applicationContext, "이메일이 중복됩니다", Toast.LENGTH_SHORT).show()
+                    progressDialog.cancel()
                 }
 
             }
