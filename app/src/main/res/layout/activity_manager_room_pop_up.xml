@@ -7,12 +7,13 @@
     android:background="#1A000000"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="32dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp"
     tools:context=".ManagerRoomPopUp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent"
         android:background="#fff"
         android:elevation="10dp"
         android:orientation="vertical"
@@ -69,24 +70,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:weightSum="100"
                 android:background="@drawable/login_borderbox"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="15"
                     android:layout_marginLeft="6dp"
-                    android:text="방이름" />
+                    android:text="방이름"
+                    android:layout_marginStart="6dp" />
 
                 <EditText
+                    android:layout_weight="60"
                     android:id="@+id/edit_manager_roomname"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="6dp"
                     android:background="@null"
                     android:textColorHint="#000" />
+                <Button
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:layout_width="0dp"
+                    android:layout_weight="25"
+                    android:layout_marginRight="6dp"
+                    android:layout_height="wrap_content"
+                    android:text="중복체크"
+                    android:layout_marginEnd="6dp" />
             </LinearLayout>
 
             <LinearLayout

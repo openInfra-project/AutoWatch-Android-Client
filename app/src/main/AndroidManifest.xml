@@ -27,24 +27,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ManagerRoomPopUp"></activity>
+        <activity
+            android:name=".DeleteDialog"
+            android:theme="@style/Transparent"></activity>
+        <activity
+            android:name=".UserInfo"
+            android:theme="@style/Transparent" />
+        <activity android:name=".ManagerRoomPopUp" />
         <activity android:name=".Room" />
         <activity android:name=".ManagerTutorial" />
         <activity android:name=".Home">
+        </activity>
+        <activity
+            android:name=".User_SignUp_PopUp"
+            android:theme="@style/Transparent" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".Login" />
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".User_SignUp_PopUp"
-            android:theme="@style/Transparent" />
-        <activity android:name=".SignUp"></activity>
-        <activity android:name=".Login">
-
-        </activity>
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
