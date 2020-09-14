@@ -1,21 +1,10 @@
-package com.example.antiseptic
+package com.example.antiseptic.data
 
-import android.content.ContentProvider
-import android.content.ContentQueryMap
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.provider.MediaStore
-import androidx.core.content.FileProvider
-import androidx.core.net.toFile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.esafirm.imagepicker.features.fileloader.ImageFileLoader
-import com.esafirm.imagepicker.model.Image
-import okhttp3.internal.io.FileSystem
 import java.io.File
-import java.io.FileInputStream
-import java.io.InputStream
-import javax.xml.transform.URIResolver
 
 class DataViewModel : ViewModel(){
     val data = ArrayList<DataSignUp>()
@@ -52,7 +41,7 @@ class DataViewModel : ViewModel(){
 //        LiveDataImage.value = dataImage
 
     }
-    fun setData(item :DataSignUp){
+    fun setData(item : DataSignUp){
         data.add(item)
         LiveData.value=data
     }

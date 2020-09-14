@@ -68,6 +68,7 @@ dependencies {
     implementation "androidx.drawerlayout:drawerlayout:1.1.0"
     //Quick Action
     implementation 'com.github.piruin:quickaction:2.4.3'
+    implementation 'com.android.support:appcompat-v7:X.X.X'
 
 
 

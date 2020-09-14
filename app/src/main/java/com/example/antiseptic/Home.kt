@@ -12,7 +12,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_delete_dialog.*
+import com.example.antiseptic.data.DataImage2
+import com.example.antiseptic.data.DataViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header.*
 import me.piruin.quickaction.ActionItem
@@ -59,9 +60,6 @@ class Home : AppCompatActivity() {
 
 
         //뒤로가기 버튼
-        btn_close_Home.setOnClickListener {
-            onBackPressed()
-        }
         //방입장 버튼 클릭시
         btn_home_join.setOnClickListener {
             homeAnimation(it = its)
@@ -226,7 +224,7 @@ class Home : AppCompatActivity() {
                 0F,
                 0F,
                 0F,
-                -40F
+                -20F
             )
             animation.duration = 500
             animation.fillAfter = true

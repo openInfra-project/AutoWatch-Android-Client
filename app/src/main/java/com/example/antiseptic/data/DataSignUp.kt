@@ -1,4 +1,4 @@
-package com.example.antiseptic
+package com.example.antiseptic.data
 
 import android.media.Image
 import java.io.Serializable

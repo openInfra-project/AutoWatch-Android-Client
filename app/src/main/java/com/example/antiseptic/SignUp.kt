@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.antiseptic.data.DataSignUp
+import com.example.antiseptic.data.DataViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

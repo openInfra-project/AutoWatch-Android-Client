@@ -1,7 +1,9 @@
 package com.example.antiseptic
 
+import com.example.antiseptic.data.DataImage2
+import com.example.antiseptic.data.DataRoomNumber
+import com.example.antiseptic.data.DataSignUp
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,6 +54,11 @@ interface SignUpService {
         @Field("email") email: String,
         @Field("name") name: String
     ):Call<DataSignUp>
+    @FormUrlEncoded
+    @POST("/room_number")
+    fun requestRoomNumber(
+        @Field("number") number:String
+    ):Call<DataRoomNumber>
 
 
 }

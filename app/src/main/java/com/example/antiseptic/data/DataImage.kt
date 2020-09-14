@@ -1,4 +1,4 @@
-package com.example.antiseptic
+package com.example.antiseptic.data
 
 import android.net.Uri
 import java.io.Serializable

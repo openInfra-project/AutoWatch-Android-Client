@@ -1,4 +1,4 @@
-package com.example.antiseptic
+package com.example.antiseptic.data
 
 import java.io.File
 import java.io.Serializable
