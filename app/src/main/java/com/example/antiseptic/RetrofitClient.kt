@@ -1,9 +1,9 @@
 package com.example.antiseptic
 
-import com.example.antiseptic.data.DataImage2
-import com.example.antiseptic.data.DataRoomNumber
-import com.example.antiseptic.data.DataSignUp
+import com.example.antiseptic.data.*
+import com.google.gson.annotations.Expose
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,7 +12,7 @@ import retrofit2.http.*
 object RetrofitClient {
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://a51bca95b705.ngrok.io")
+        .baseUrl("https://1c7d7901512d.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -55,10 +55,27 @@ interface SignUpService {
         @Field("name") name: String
     ):Call<DataSignUp>
     @FormUrlEncoded
-    @POST("/room_number")
+    @POST("home/app_roomnumber")
     fun requestRoomNumber(
-        @Field("number") number:String
+        @Field("roomname") roomname:String
     ):Call<DataRoomNumber>
+    @Multipart
+    @POST("home/app_makeroom")
+    fun requestMakeRoom(
+        @Part files: MultipartBody.Part,
+        @Part("name") name : RequestBody,
+        @Part("pass")  pass : RequestBody,
+        @Part("admin")  admin : RequestBody,
+        @Part("checkbox")  checkbox : RequestBody
+    ): Call<DataMakeRoom>
+    @FormUrlEncoded
+    @POST("home/app_makemyroom")
+    fun requestRoomNumberPass(
+        @Field("roomname") roomname:String,
+        @Field("password") password:String,
+        @Field("admin") admin:String,
+        @Field("checkbox") checkbox:String
+    ):Call<DataRoomNamePass>
 
 
 }

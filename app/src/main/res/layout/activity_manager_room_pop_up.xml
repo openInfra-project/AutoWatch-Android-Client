@@ -8,7 +8,7 @@
     android:background="#3c5b9a"
     android:fitsSystemWindows="true"
     android:orientation="horizontal"
-    tools:context=".Home"
+    tools:context=".ManagerRoomPopUp"
     tools:openDrawer="end">
     <ScrollView
         android:layout_width="match_parent"
@@ -111,6 +111,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="방 이름과 방비번을 필수적으로 입력해주세요." />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="명단제출은 필수가 아닙니다." />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -207,10 +212,11 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <Button
+                                android:id="@+id/btn_manageroom_getfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/home_borderbox"
-                                android:text="명단제출"
+                                android:text="명단 가져오기"
                                 android:textColor="#fff"
                                 android:theme="@style/MyButton" />
                             <Button
@@ -218,9 +224,22 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/login_borderbox"
-                                android:text="명단업로드"
+                                android:text="명단 양식 다운로드"
                                 android:textColor="#000"
                                 android:theme="@style/MyButton" />
+                            <LinearLayout
+                                android:padding="6dp"
+                                android:layout_marginTop="12dp"
+                                android:background="@drawable/login_borderbox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/text_makeroom_cell"
+                                    android:textColor="#000"
+                                    android:layout_width="wrap_content"
+                                    android:text="명단을 가져와주세요"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -235,22 +254,27 @@
                                     android:orientation="vertical">
 
                                     <CheckBox
+                                        android:id="@+id/checkbox1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="명단 속 회원 얼굴인식"/>
                                     <CheckBox
+                                        android:id="@+id/checkbox2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="특정 프로그램 차단"/>
                                     <CheckBox
+                                        android:id="@+id/checkbox3"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="WEB 키보드 사용 금지"/>
                                     <CheckBox
+                                        android:id="@+id/checkbox4"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="APP 움직임 감지"/>
                                     <CheckBox
+                                        android:id="@+id/checkbox5"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="명단 속 회원 얼굴인식"/>
@@ -265,6 +289,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_manageroom_makeroom"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"

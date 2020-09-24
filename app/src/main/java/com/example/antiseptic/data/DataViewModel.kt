@@ -25,7 +25,6 @@ class DataViewModel : ViewModel(){
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     item[i].id
                 )
-
             val imagedata = DataImage(Image = items)
             dataImage.add(imagedata)
             //이미지 전송용

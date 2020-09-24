@@ -186,9 +186,7 @@ class Home : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 text_nav_name.setText("" + t.message)
-
             }
-
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
                 progressDialog.cancel()
                 Toast.makeText(
