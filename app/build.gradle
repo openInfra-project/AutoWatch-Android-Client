@@ -71,7 +71,8 @@ dependencies {
     //Quick Action
     implementation 'com.github.piruin:quickaction:2.4.3'
     implementation 'com.android.support:appcompat-v7:X.X.X'
-    //file picker
+    //lottie
+    implementation 'com.airbnb.android:lottie:3.4.2'
 
 
 

@@ -2,9 +2,13 @@ package com.example.antiseptic
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
@@ -26,6 +30,8 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+
 
 class Home : AppCompatActivity() {
     private var its: Boolean = true
@@ -63,10 +69,9 @@ class Home : AppCompatActivity() {
         //방입장 버튼 클릭시
         btn_home_join.setOnClickListener {
             homeAnimation(it = its)
-            btn_home_inner.setOnClickListener {
-                //startActivity(Intent(this,Room::class.java))
-            }
-
+        }
+        btn_home_inner.setOnClickListener {
+            startActivity(Intent(this,Room::class.java))
         }
         //도움말 버튼 애니메이션
         val animation = AnimationUtils.loadAnimation(this, R.anim.home_highlight)
@@ -171,6 +176,7 @@ class Home : AppCompatActivity() {
 
         }
     }
+
 
 
     fun imageretro(item: MultipartBody.Part) {

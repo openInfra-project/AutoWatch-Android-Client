@@ -1,10 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".Room">
+    <LinearLayout
+        android:background="#3c5b9a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp"
+        android:paddingRight="12dp">
+        <ImageView
+            android:id="@+id/btn_room_backpress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/room_sendlottie"
+                android:layout_gravity="center"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:lottie_fileName="room_rocket.json"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:layout_height="match_parent">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/room_secondrocket_lottie"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="secondrocket.json"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <SurfaceView
+            android:id="@+id/sv_viewFinder"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/room_countlottie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_fileName="count.json"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="true"/>
+        <ImageView
+            android:layout_marginTop="24dp"
+            android:id="@+id/iv_preview"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            />
+        <Button
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_shutter"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:textSize="24dp"
+            android:textColor="#fff"
+            android:background="@drawable/home_hightlight_background"
+            android:text="Shutter" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

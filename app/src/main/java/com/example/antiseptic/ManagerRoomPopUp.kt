@@ -193,7 +193,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 filepath = data.data
-                text_makeroom_cell.setText("" + filepath)
+                text_makeroom_cell.setText("회원명단목록")
                 filepath?.let { uploadFile(it) }
                 checkbox1.isChecked = true
             }
@@ -205,7 +205,6 @@ class ManagerRoomPopUp : AppCompatActivity() {
         val requestFile =
             RequestBody.create(MediaType.parse(contentResolver.getType(fileUri)), file)
         body = MultipartBody.Part.createFormData("files", file.name, requestFile)
-        Toast.makeText(this,""+mychecked.toString(),Toast.LENGTH_LONG).show()
 
 
     }
@@ -223,7 +222,6 @@ class ManagerRoomPopUp : AppCompatActivity() {
         val description4 =
             RequestBody.create(
                 okhttp3.MultipartBody.FORM, checkbox.toString())
-        text_makeroom_cell.setText(""+body)
         if(body!=null) {
             RetrofitClient.signupservice.requestMakeRoom(body!!,description,description2,description3,description4)
                 .enqueue(object :

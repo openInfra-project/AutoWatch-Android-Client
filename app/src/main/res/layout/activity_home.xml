@@ -88,18 +88,33 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:visibility="invisible">
-
-                <EditText
-                    android:id="@+id/edit_join"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="#fff"
-                    android:textColor="#fff"
-                    android:backgroundTint="#fff"
-                    android:layout_gravity="center"
-                    android:hint="방 이름을 입력해주세요" />
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/edit_join"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="#fff"
+                        android:textColor="#fff"
+                        android:backgroundTint="#fff"
+                        android:layout_gravity="center"
+                        android:hint="방 이름을 입력해주세요" />
+                    <EditText
+                        android:id="@+id/edit_join_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="#fff"
+                        android:textColor="#fff"
+                        android:backgroundTint="#fff"
+                        android:layout_gravity="center"
+                        android:hint="방 이름을 입력해주세요" />
+                </LinearLayout>
+
 
                 <Button
+                    android:gravity="center"
                     android:id="@+id/btn_home_inner"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
