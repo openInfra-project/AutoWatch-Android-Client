@@ -1,5 +1,6 @@
 package com.example.antiseptic
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
@@ -17,8 +18,11 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.antiseptic.data.DataImage2
+import com.example.antiseptic.data.DataRoomNumber
 import com.example.antiseptic.data.DataViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.drawer_view
+import kotlinx.android.synthetic.main.activity_manager_room_pop_up.*
 import kotlinx.android.synthetic.main.nav_header.*
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
@@ -30,7 +34,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
 
 
 class Home : AppCompatActivity() {
@@ -71,7 +74,9 @@ class Home : AppCompatActivity() {
             homeAnimation(it = its)
         }
         btn_home_inner.setOnClickListener {
-            startActivity(Intent(this,Room::class.java))
+            if (edit_join_roomname.text.toString() != null && edit_join_password.text.toString() != null) {
+                enterroom(edit_join_roomname.text.toString(), edit_join_password.text.toString())
+            }
         }
         //도움말 버튼 애니메이션
         val animation = AnimationUtils.loadAnimation(this, R.anim.home_highlight)
@@ -86,6 +91,10 @@ class Home : AppCompatActivity() {
         }
         btn_nav_close.setOnClickListener {
             drawer_view.closeDrawers()
+        }
+        //방목록
+        btn_nav_room.setOnClickListener {
+            startActivity(Intent(this, NavRoom::class.java))
         }
         //nav 학생정보입력
         btn_nav_info.setOnClickListener {
@@ -126,6 +135,71 @@ class Home : AppCompatActivity() {
         }
 
 
+    }
+
+    fun enterroom(roomname: String, password: String) {
+        RetrofitClient.signupservice.requestenterroom(roomname, password)
+            .enqueue(object :
+                retrofit2.Callback<DataRoomNumber> {
+                override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {
+                    Toast.makeText(
+                        applicationContext,
+                        "전송 실패"+t.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                override fun onResponse(
+                    call: Call<DataRoomNumber>,
+                    response: Response<DataRoomNumber>
+                ) {
+                    Toast.makeText(
+                        applicationContext,
+                        "입장"+response.body(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    val body = response.body()
+                    //1번이면 얼굴인식 후 방입장
+                    //2번이면 바로 방입장
+                    //3번이면 방이 없음.
+                    if(body!=null) {
+                        btn_home_inner.setText(""+body.roomname)
+                        if(body.roomname=="1") {
+                            Toast.makeText(
+                                applicationContext,
+                                "얼굴 인식 페이지로 이동합니다.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            startActivity(Intent(applicationContext, Room::class.java))
+                        }else if(body.roomname=="2"){
+                            //바로 방입장
+                            Toast.makeText(
+                                applicationContext,
+                                "방 입장합니다",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }else if(body.roomname=="None") {
+                            Toast.makeText(
+                                applicationContext,
+                                "방이 존재하지 않거나 비번이 틀립니다.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }else {
+                            Toast.makeText(
+                                applicationContext,
+                                "?",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }else {
+                        Toast.makeText(
+                            applicationContext,
+                            "실패"+response.body(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                }
+            })
     }
 
     fun logout() {
@@ -178,7 +252,6 @@ class Home : AppCompatActivity() {
     }
 
 
-
     fun imageretro(item: MultipartBody.Part) {
         val progressDialog: ProgressDialog = ProgressDialog(this)
         progressDialog.setTitle("업로드중...")
@@ -188,19 +261,18 @@ class Home : AppCompatActivity() {
                 progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "회원가입 실패",
+                    "통신 실패",
                     Toast.LENGTH_LONG
                 ).show()
-                text_nav_name.setText("" + t.message)
             }
+
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
                 progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "성공",
+                    "변경 완료",
                     Toast.LENGTH_LONG
                 ).show()
-                text_nav_name.setText("" + response.body())
 
             }
         })

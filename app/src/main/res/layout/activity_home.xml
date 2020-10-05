@@ -90,26 +90,28 @@
                 android:visibility="invisible">
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:background="@drawable/home_borderbox"
+                    android:backgroundTint="#fff"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <EditText
-                        android:id="@+id/edit_join"
+                        android:id="@+id/edit_join_roomname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColorHint="#fff"
-                        android:textColor="#fff"
-                        android:backgroundTint="#fff"
+                        android:textColorHint="#333"
+                        android:textColor="#333"
+                        android:backgroundTint="#333"
                         android:layout_gravity="center"
                         android:hint="방 이름을 입력해주세요" />
                     <EditText
                         android:id="@+id/edit_join_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColorHint="#fff"
-                        android:textColor="#fff"
-                        android:backgroundTint="#fff"
+                        android:textColorHint="#333"
+                        android:textColor="#333"
+                        android:backgroundTint="#333"
                         android:layout_gravity="center"
-                        android:hint="방 이름을 입력해주세요" />
+                        android:hint="비밀번호를 입력해주세요" />
                 </LinearLayout>
 
 
@@ -117,11 +119,11 @@
                     android:gravity="center"
                     android:id="@+id/btn_home_inner"
                     android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:layout_gravity="center"
-                    android:textColor="#fff"
-                    android:background="@null"
+                    android:textColor="#333"
+                    android:background="@drawable/login_borderbox"
                     android:text="입장"
                     android:textSize="16dp" />
 

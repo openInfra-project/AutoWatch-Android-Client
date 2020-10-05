@@ -3,9 +3,9 @@ package com.example.antiseptic
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class ManagerTutorial : AppCompatActivity() {
+class EnterMyRoom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manager_tutorial)
+        setContentView(R.layout.activity_enter_my_room)
     }
 }

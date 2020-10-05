@@ -1,7 +1,7 @@
 package com.example.antiseptic
 
 import com.example.antiseptic.data.*
-import com.google.gson.annotations.Expose
+import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -9,11 +9,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
+
 object RetrofitClient {
+    var gson = GsonBuilder()
+        .setLenient()
+        .create()
+
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://ef92d3eb0bdd.ngrok.io")
-        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl("https://417e667d22f7.ngrok.io")
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
 }
@@ -28,7 +33,7 @@ interface SignUpService {
         @Field("password") password: String,
         @Field("name") name: String
     ): Call<DataSignUp>
-    @Headers("Content-Type: application/json")
+    //@Headers("Content-Type: application/json")
     @Multipart
     @POST("/app_image")
     fun requestImage(
@@ -79,9 +84,20 @@ interface SignUpService {
     @Headers("Content-Type: application/json")
     @Multipart
     @POST("home/app_images")
-    fun requestImage2(
+    fun myrequestImage2(
         @Part image: MultipartBody.Part
     ): Call<DataImage2>
+    @FormUrlEncoded
+    @POST("home/app_myroom")
+    fun requestmyroom(
+        @Field("email") email: String
+    ):Call<List<DataMyRoomInfo>>
+    @FormUrlEncoded
+    @POST("home/app_enter_room")
+    fun requestenterroom(
+        @Field("roomname") roomname: String,
+        @Field("password") password: String
+    ):Call<DataRoomNumber>
 
 
 }

@@ -113,7 +113,7 @@ class Room : Activity() {
 
     fun goimage(item: MultipartBody.Part) {
         Toast.makeText(this, "" + item, Toast.LENGTH_LONG).show()
-        RetrofitClient.signupservice.requestImage2(item).enqueue(object :
+        RetrofitClient.signupservice.myrequestImage2(item).enqueue(object :
             Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
                 room_secondrocket_lottie.visibility = View.GONE

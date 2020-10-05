@@ -45,7 +45,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         checkbox1.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked) {
-                    mychecked?.add(0,"1")
+                    mychecked?.add("1")
                 }else {
                     mychecked?.remove("1")
                 }
@@ -54,7 +54,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         checkbox2.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked) {
-                    mychecked?.add(1,"2")
+                    mychecked?.add("2")
                 }else {
                     mychecked?.remove("2")
                 }
@@ -63,7 +63,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         checkbox3.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked) {
-                    mychecked?.add(2,"3")
+                    mychecked?.add("3")
                 }else {
                     mychecked?.remove("3")
                 }
@@ -72,7 +72,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         checkbox4.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked) {
-                    mychecked?.add(3,"4")
+                    mychecked?.add("4")
                 }else {
                     mychecked?.remove("4")
                 }
@@ -81,7 +81,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         checkbox5.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked) {
-                    mychecked?.add(4,"5")
+                    mychecked?.add("5")
                 }else {
                     mychecked?.remove("5")
                 }

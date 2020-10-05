@@ -4,5 +4,5 @@ import java.io.File
 import java.io.Serializable
 
 data class DataImage2(
-    val image:File
+    val image:String
 ):Serializable
