@@ -1,11 +1,19 @@
 package com.example.antiseptic
 
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
+import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import com.example.antiseptic.data.DataSignUp
 import com.example.antiseptic.data.DataViewModel
 import kotlinx.android.synthetic.main.activity_login.*
@@ -15,6 +23,7 @@ import retrofit2.Response
 
 class Login : AppCompatActivity() {
     private val viewModel: DataViewModel by viewModels()
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -71,4 +80,5 @@ class Login : AppCompatActivity() {
         }
 
     }
+
 }

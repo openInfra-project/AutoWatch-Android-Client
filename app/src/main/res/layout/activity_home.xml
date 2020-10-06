@@ -141,6 +141,17 @@
                 android:text="방 만들기"
                 android:textColor="#000"
                 android:textSize="32dp" />
+            <Button
+                android:id="@+id/testtest"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#fff"
+                android:background="@drawable/roomenter_box"
+                android:elevation="10dp"
+                android:text="ㄱㄱㄱㄱ"
+                android:textColor="#000"
+                android:textSize="32dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

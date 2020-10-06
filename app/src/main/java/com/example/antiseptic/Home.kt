@@ -1,16 +1,21 @@
 package com.example.antiseptic
 
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
+import android.util.Log
 import android.view.View
+import android.view.accessibility.AccessibilityManager
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.Toast
@@ -46,6 +51,7 @@ class Home : AppCompatActivity() {
     private var dbemail: String? = null
     private var dbpassword: String? = null
     private var dbname: String? = null
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -65,6 +71,10 @@ class Home : AppCompatActivity() {
             login()
         } else {
             logout()
+        }
+        //테스트
+        testtest.setOnClickListener {
+            startActivity(Intent(this,EnterMyRoom::class.java))
         }
 
 
