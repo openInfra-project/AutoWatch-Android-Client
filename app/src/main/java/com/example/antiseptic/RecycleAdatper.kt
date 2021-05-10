@@ -40,5 +40,6 @@ class RecyclerAdapter(
         holder.linear.setOnClickListener {
             onClick.invoke(itemList[position])
         }
+
     }
 }

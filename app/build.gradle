@@ -33,6 +33,7 @@ android {
             maven { url "https://jitpack.io" }
         }
     }
+
     //compile error
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -73,6 +74,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:X.X.X'
     //lottie
     implementation 'com.airbnb.android:lottie:3.4.2'
+
 
 
 

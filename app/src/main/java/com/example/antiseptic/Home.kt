@@ -124,6 +124,7 @@ class Home : AppCompatActivity() {
         btn_home_deleteuser.setOnClickListener {
             val custom = DeleteDialog(context = this)
             custom.show()
+            startActivity(Intent(this,Login::class.java))
         }
 
 
