@@ -21,26 +21,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="24dp"
+            android:paddingLeft="18dp"
             android:paddingTop="12dp"
-            android:paddingRight="24dp">
+            android:paddingRight="18dp">
 
             <ImageView
                 android:id="@+id/btn_home_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_baseline_menu_24" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/ic_baseline_person_outline_24" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right">
-
-
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/btn_myroom"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/door_outline" />
 
 
         </LinearLayout>
@@ -53,105 +55,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/baefont"
-                android:text="종류를 선택하세요"
-                android:textColor="#000"
-                android:textFontWeight="100"
-                android:textSize="32dp" />
 
             <Button
                 android:id="@+id/btn_home_join"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="#fff"
-                android:background="@drawable/roomenter_box"
-                android:elevation="10dp"
-                android:theme="@style/MyButton"
-                android:text="방 입장"
-                android:textColor="#000"
-                android:textSize="32dp" />
-
-            <LinearLayout
-                android:id="@+id/code_visible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_height="170dp"
+                android:layout_marginTop="40dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:visibility="invisible">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="@drawable/home_borderbox"
-                    android:backgroundTint="#fff"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/edit_join_roomname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="#333"
-                        android:textColor="#333"
-                        android:backgroundTint="#333"
-                        android:layout_gravity="center"
-                        android:hint="방 이름을 입력해주세요" />
-                    <EditText
-                        android:id="@+id/edit_join_password"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="#333"
-                        android:textColor="#333"
-                        android:backgroundTint="#333"
-                        android:layout_gravity="center"
-                        android:hint="비밀번호를 입력해주세요" />
-                </LinearLayout>
+                android:background="@drawable/enterroom"/>
 
-
-                <Button
-                    android:gravity="center"
-                    android:id="@+id/btn_home_inner"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center"
-                    android:textColor="#333"
-                    android:background="@drawable/login_borderbox"
-                    android:text="입장"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
 
 
             <Button
                 android:id="@+id/btn_home_create"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="#fff"
-                android:background="@drawable/roomenter_box"
-                android:elevation="10dp"
-                android:text="방 만들기"
-                android:textColor="#000"
-                android:textSize="32dp" />
-            <Button
-                android:id="@+id/testtest"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="#fff"
-                android:background="@drawable/roomenter_box"
-                android:elevation="10dp"
-                android:text="ㄱㄱㄱㄱ"
-                android:textColor="#000"
-                android:textSize="32dp" />
+                android:layout_width="300dp"
+                android:layout_height="170dp"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/makeroom"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,6 +91,7 @@
                         android:id="@+id/frame_highlight"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:layout_marginTop="40dp"
                         android:layout_gravity="bottom">
 
                         <LinearLayout
@@ -201,7 +128,10 @@
         </LinearLayout>
     </LinearLayout>
 
-   <include layout="@layout/nav_header" />
+
+   <include layout="@layout/nav_userheader" />
+    <include layout="@layout/nav_roomheader" />
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

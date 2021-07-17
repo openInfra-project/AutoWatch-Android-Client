@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.antiseptic">
+    package="com.autowatch.antiseptic">
     <!-- camera, gallery -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -31,7 +31,7 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".Accessibility"
+            android:name="com.autowatch.antiseptic.Accessibility"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -42,25 +42,18 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <activity android:name=".EnterMyRoom" />
-        <activity android:name=".NavRoom" />
+        <activity android:name="com.autowatch.antiseptic.EnterMyRoom" />
+        <activity android:name="com.autowatch.antiseptic.NavRoom" />
         <activity
-            android:name=".DeleteDialog"
+            android:name="com.autowatch.antiseptic.DeleteDialog"
             android:theme="@style/Transparent"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".UserInfo"
+            android:name="com.autowatch.antiseptic.UserInfo"
             android:theme="@style/Transparent" />
-        <activity android:name=".ManagerRoomPopUp" />
-        <activity android:name=".Room" />
-        <activity android:name=".Home">
-
-        </activity>
-        <activity
-            android:name=".User_SignUp_PopUp"
-            android:theme="@style/Transparent" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".Login">
+        <activity android:name="com.autowatch.antiseptic.ManagerRoomPopUp" />
+        <activity android:name="com.autowatch.antiseptic.Room" />
+        <activity android:name="com.autowatch.antiseptic.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +61,15 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name="com.autowatch.antiseptic.User_SignUp_PopUp"
+            android:theme="@style/Transparent" />
+        <activity android:name="com.autowatch.antiseptic.SignUp" />
+        <activity android:name="com.autowatch.antiseptic.Login">
+
+
+        </activity>
+        <activity android:name="com.autowatch.antiseptic.MainActivity" />
     </application>
 
 </manifest>

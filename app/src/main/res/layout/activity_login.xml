@@ -126,15 +126,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/text_goSignUp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:text="회원가입 하러가기"
-                    android:textColor="#fff" />
-
 
                 <Button
                     android:id="@+id/btn_login_enter"
@@ -144,6 +135,18 @@
                     android:layout_marginTop="24dp"
                     android:background="@drawable/loginbuttonbox"
                     android:text="Login"
+                    android:textColor="#fff"
+                    android:textSize="24dp" />
+
+
+                <Button
+                    android:id="@+id/btn_goSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/loginbuttonbox"
+                    android:text="Sign Up"
                     android:textColor="#fff"
                     android:textSize="24dp" />
             </LinearLayout>
