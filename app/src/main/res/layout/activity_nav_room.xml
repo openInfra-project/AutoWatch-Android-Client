@@ -41,7 +41,7 @@
                         android:textColor="#fff"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="방 목록"/>
+                        android:text="MY ROOM"/>
 
                 </LinearLayout>
             </LinearLayout>
