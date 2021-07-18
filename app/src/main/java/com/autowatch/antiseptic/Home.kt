@@ -117,11 +117,13 @@ class Home : AppCompatActivity() {
             builder.show()
 
         }
-//        btn_home_inner.setOnClickListener {
-//            if (edit_join_roomname.text.toString() != null && edit_join_password.text.toString() != null) {
-//                enterroom(edit_join_roomname.text.toString(), edit_join_password.text.toString())
-//            }
-//        }
+        //방 만들기
+
+        btn_home_create.setOnClickListener {
+            startActivity(Intent(this, ManagerRoomPopUp::class.java))
+        }
+
+
         //도움말 버튼 애니메이션
         val animation = AnimationUtils.loadAnimation(this, R.anim.home_highlight)
         image_home_highlight.startAnimation(animation)
@@ -172,9 +174,7 @@ class Home : AppCompatActivity() {
         btn_home_changeimage.setOnClickListener {
             PhotoSelect()
         }
-        btn_home_create.setOnClickListener {
-            startActivity(Intent(this, ManagerRoomPopUp::class.java))
-        }
+
 
 
 
@@ -224,14 +224,14 @@ class Home : AppCompatActivity() {
                     //3번이면 방이 없음.
                     if(body!=null) {
 //                        btn_home_inner.setText(""+body.roomname)
-                        if(body.roomname=="['int(2)', '3', '4', '5']") {
+                        if(body.roomname=="1") {
                             Toast.makeText(
                                 applicationContext,
                                 "얼굴 인식 페이지로 이동합니다.",
                                 Toast.LENGTH_LONG
                             ).show()
                             startActivity(Intent(applicationContext, Room::class.java))
-                        }else if(body.roomname=="['3']"){
+                        }else if(body.roomname=="2"){
                             //바로 방입장
                             Toast.makeText(
                                 applicationContext,

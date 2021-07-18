@@ -205,16 +205,68 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp">
+                        android:layout_marginTop="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="※EXAM MODE 선택시 명단 제출이 필수입니다." />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2"
+                                    android:layout_marginStart="6dp"
+                                    android:layout_marginLeft="6dp"
+                                    android:text="*mode"
+                                    android:textSize="15dp"
+                                    android:textColor="#c92a2a" />
+                                <RadioGroup
+                                    android:id="@+id/rg1"
+                                    android:layout_weight="8"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    >
+
+                                    <RadioButton
+                                        android:id="@+id/rb1"
+                                        android:textSize="18dp"
+                                        android:buttonTint="@color/blue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="STUDY MODE"
+                                        android:layout_weight="1"/>
+
+                                    <RadioButton
+                                        android:id="@+id/rb2"
+                                        android:textSize="18dp"
+                                        android:buttonTint="@color/blue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="EXAM MODE"
+                                        android:layout_weight="1"/>
+
+                                </RadioGroup>
+                            </LinearLayout>
+
                             <Button
                                 android:id="@+id/btn_manageroom_getfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
                                 android:background="@drawable/home_borderbox"
                                 android:text="명단 가져오기"
                                 android:textColor="#fff"
@@ -241,52 +293,10 @@
                                     android:layout_height="wrap_content"/>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:background="@drawable/login_borderbox"
-                                android:padding="4dp">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <CheckBox
-                                        android:id="@+id/checkbox1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="명단 속 회원 얼굴인식"/>
-                                    <CheckBox
-                                        android:id="@+id/checkbox2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="특정 프로그램 차단"/>
-                                    <CheckBox
-                                        android:id="@+id/checkbox3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="WEB 키보드 사용 금지"/>
-                                    <CheckBox
-                                        android:id="@+id/checkbox4"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="APP 움직임 감지"/>
-                                    <CheckBox
-                                        android:id="@+id/checkbox5"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="명단 속 회원 얼굴인식"/>
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
                     </LinearLayout>
+
                 </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btn_manageroom_makeroom"
@@ -303,7 +313,7 @@
 
             </LinearLayout>
 
-
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

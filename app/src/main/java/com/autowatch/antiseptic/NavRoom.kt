@@ -98,14 +98,13 @@ class NavRoom : AppCompatActivity() {
                     //3번이면 방이 없음.
                     if(body!=null) {
 //                        btn_home_inner.setText(""+body.roomname)
-                        if(body.roomname=="['int(2)', '3', '4', '5']") {  //room abc abc func(aaa)
+                        if(body.roomname=="1") {  //room abc abc func(aaa)
                             Toast.makeText(
                                 applicationContext,
-                                "얼굴 인식 페이지로 이동합니다.",
+                                "방 입장합니다",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Room::class.java))
-                        }else if(body.roomname=="['3']"){   //room v v func(yulime0605)
+                        }else if(body.roomname=="2"){   //room v v func(yulime0605)
                             //바로 방입장
                             Toast.makeText(
                                 applicationContext,

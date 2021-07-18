@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +28,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
     private var filepath: Uri? = null
     private var dbemail: String? = null
     private var body : MultipartBody.Part?=null
-    private val mychecked :MutableList<String> = ArrayList()
+    private var mode : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manager_room_pop_up)
@@ -41,52 +42,8 @@ class ManagerRoomPopUp : AppCompatActivity() {
         } else {
 
         }
-        // 체크박스는 없어졌을때 다시 element를 리스트에서 제거 해야함.
-        checkbox1.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if(isChecked) {
-                    mychecked?.add("1")
-                }else {
-                    mychecked?.remove("1")
-                }
-            }
-        })
-        checkbox2.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if(isChecked) {
-                    mychecked?.add("2")
-                }else {
-                    mychecked?.remove("2")
-                }
-            }
-        })
-        checkbox3.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if(isChecked) {
-                    mychecked?.add("3")
-                }else {
-                    mychecked?.remove("3")
-                }
-            }
-        })
-        checkbox4.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if(isChecked) {
-                    mychecked?.add("4")
-                }else {
-                    mychecked?.remove("4")
-                }
-            }
-        })
-        checkbox5.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if(isChecked) {
-                    mychecked?.add("5")
-                }else {
-                    mychecked?.remove("5")
-                }
-            }
-        })
+
+
         //뒤로가기 버튼
         btn_mangerroom_backpress.setOnClickListener {
             onBackPressed()
@@ -97,13 +54,26 @@ class ManagerRoomPopUp : AppCompatActivity() {
         }
         //방만들기
         btn_manageroom_makeroom.setOnClickListener {
+
+            when (rg1.checkedRadioButtonId) {
+                R.id.rb1 -> mode = "1"
+                R.id.rb2 -> mode = "2"
+            }
             if(edit_manager_roomname.text.toString()!=null && edit_manager_roompassword.text.toString()!=null && body==null) {
-                NameandPassOnly(edit_manager_roomname.text.toString(),edit_manager_roompassword.text.toString(),mychecked)
+                NameandPassOnly(edit_manager_roomname.text.toString(),edit_manager_roompassword.text.toString(),mode.toString())
             }
             else if(edit_manager_roomname.text.toString()!=null && edit_manager_roompassword.text.toString()!=null&&body!=null){
-                makeroom(edit_manager_roomname.text.toString(),edit_manager_roompassword.text.toString(),mychecked)
+                makeroom(edit_manager_roomname.text.toString(),edit_manager_roompassword.text.toString(),mode.toString())
             }else {
                 Toast.makeText(this,"방이름 및 비번을 입력해주세요",Toast.LENGTH_LONG).show()
+            }
+        }
+
+        //라디오버튼(study exam mode)
+        rg1.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.rb1 -> mode = "1"
+                R.id.rb2 -> mode = "2"
             }
         }
         //edit listener
@@ -176,11 +146,18 @@ class ManagerRoomPopUp : AppCompatActivity() {
     }
 
     fun onPickDoc() {
-        checkbox1.isChecked = false
-        val intent = Intent()
-        intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
-        startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
+        Log.d("방 모드 확인!!!!!!",mode)
+        if(mode=="1")
+            Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()
+        else if (mode=="2") {
+            val intent = Intent()
+            intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            intent.setAction(Intent.ACTION_GET_CONTENT)
+            startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
+            Log.d("파일확인1",mode)
+        }
+        else
+            Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()
     }
 
 
@@ -192,24 +169,26 @@ class ManagerRoomPopUp : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (data != null) {
+                Log.d("파일확인2", data.toString())
                 filepath = data.data
+                Log.d("파일확인3", filepath.toString())
                 text_makeroom_cell.setText("회원명단목록")
                 filepath?.let { uploadFile(it) }
-                checkbox1.isChecked = true
             }
         }
     }
 
     fun uploadFile(fileUri: Uri) {
         val file = File(FileUtil.getPath(fileUri,this))
+        Log.d("파일확인4", file.toString())
         val requestFile =
             RequestBody.create(MediaType.parse(contentResolver.getType(fileUri)), file)
         body = MultipartBody.Part.createFormData("files", file.name, requestFile)
-
+        Log.d("파일확인5", body.toString())
 
     }
-    //앱 이름 명단 모두 제출시
-    fun makeroom(name:String,pass:String,checkbox:MutableList<String>) {
+    //exam 모드
+    fun makeroom(name:String,pass:String,mode:String) {
         val description =
             RequestBody.create(
                 okhttp3.MultipartBody.FORM, name)
@@ -221,7 +200,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
                 okhttp3.MultipartBody.FORM, dbemail)
         val description4 =
             RequestBody.create(
-                okhttp3.MultipartBody.FORM, checkbox.toString())
+                okhttp3.MultipartBody.FORM, mode)
         if(body!=null) {
             RetrofitClient.signupservice.requestMakeRoom(body!!,description,description2,description3,description4)
                 .enqueue(object :
@@ -240,9 +219,10 @@ class ManagerRoomPopUp : AppCompatActivity() {
             Toast.makeText(applicationContext, "회원 명단을 업로드 해주세요.", Toast.LENGTH_LONG).show()
         }
     }
-    //앱 이름 비번만 제출시
-    fun NameandPassOnly(name:String,pass:String,checkbox:MutableList<String>) {
-        RetrofitClient.signupservice.requestRoomNumberPass(name,pass,dbemail!!,checkbox.toString())
+    //study 모드
+    fun NameandPassOnly(name:String,pass:String,mode:String) {
+        Log.d("방생성확인!!!!!!",mode)
+        RetrofitClient.signupservice.requestRoomNumberPass(name,pass,dbemail!!,mode)
             .enqueue(object :
                 retrofit2.Callback<DataRoomNamePass> {
                 override fun onFailure(call: Call<DataRoomNamePass>, t: Throwable) {
