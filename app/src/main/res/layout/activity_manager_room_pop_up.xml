@@ -301,13 +301,13 @@
                 <Button
                     android:id="@+id/btn_manageroom_makeroom"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="32dp"
-                    android:background="@drawable/roomenter_box"
+                    android:background="@drawable/loginbuttonbox"
                     android:elevation="10dp"
                     android:shadowColor="#263f70"
-                    android:text="방 입장"
+                    android:text="방 생성"
                     android:textColor="#fff"
                     android:theme="@style/MyButton" />
 

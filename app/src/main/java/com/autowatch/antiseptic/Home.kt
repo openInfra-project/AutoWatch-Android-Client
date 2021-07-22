@@ -331,6 +331,7 @@ class Home : AppCompatActivity() {
         val progressDialog: ProgressDialog = ProgressDialog(this)
         progressDialog.setTitle("업로드중...")
         progressDialog.show()
+        Log.d("확인", item.toString())
         RetrofitClient.signupservice.requestImage(item).enqueue(object : Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
                 progressDialog.cancel()
@@ -339,6 +340,7 @@ class Home : AppCompatActivity() {
                     "통신 실패",
                     Toast.LENGTH_LONG
                 ).show()
+
             }
 
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
@@ -348,6 +350,8 @@ class Home : AppCompatActivity() {
                     "변경 완료",
                     Toast.LENGTH_LONG
                 ).show()
+                val body = response.body()
+                Log.d("변경",body?.image)
 
             }
         })

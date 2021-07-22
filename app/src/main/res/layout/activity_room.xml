@@ -51,34 +51,38 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
         <SurfaceView
             android:id="@+id/sv_viewFinder"
-            android:layout_width="match_parent"
-            android:layout_height="200dip"
-            />
+            android:layout_width="310dip"
+            android:layout_height="400dip"
+            android:layout_gravity="center_horizontal"/>
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/room_countlottie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:lottie_fileName="count.json"
+            android:layout_gravity="center_horizontal"
             app:lottie_loop="false"
             app:lottie_autoPlay="true"/>
+
         <ImageView
-            android:layout_marginTop="24dp"
             android:id="@+id/iv_preview"
             android:layout_width="match_parent"
-            android:layout_height="200dip"
-            />
+            android:layout_height="250dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
+
         <Button
             android:layout_marginTop="12dp"
             android:layout_gravity="center"
             android:id="@+id/btn_shutter"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:textSize="24dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:textSize="15dp"
             android:textColor="#fff"
-            android:background="@drawable/home_hightlight_background"
-            android:text="Shutter" />
+            android:background="@drawable/loginbuttonbox"
+            android:text="재촬영" />
 
     </LinearLayout>
 

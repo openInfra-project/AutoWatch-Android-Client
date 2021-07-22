@@ -2,6 +2,7 @@ package com.autowatch.antiseptic
 
 import android.animation.Animator
 import android.app.Activity
+import android.app.ProgressDialog
 import android.graphics.BitmapFactory
 import android.hardware.Camera
 import android.hardware.Camera.CameraInfo
@@ -83,6 +84,8 @@ class Room : Activity() {
                     (dbemail + ".jpg"), a
                 )
                 goimage(body)
+                Log.d("사진전송", myfile.toString())
+                Log.d("사진전송", body.toString())
 
 
             } else {
@@ -106,31 +109,37 @@ class Room : Activity() {
         val tt: TimerTask = object : TimerTask() {
             override fun run() {
                 startTakePicture()
+
             }
         }
         timer.schedule(tt, 3000)
     }
 
     fun goimage(item: MultipartBody.Part) {
-        Toast.makeText(this, "" + item, Toast.LENGTH_LONG).show()
-        RetrofitClient.signupservice.myrequestImage2(item).enqueue(object :
-            Callback<DataImage2> {
+        val progressDialog: ProgressDialog = ProgressDialog(this)
+        progressDialog.setTitle("본인 확인 중...")
+        progressDialog.show()
+        Log.d("확인", item.toString())
+        RetrofitClient.signupservice.myrequestImage2(item).enqueue(object : Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
-                room_secondrocket_lottie.visibility = View.GONE
+                progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "인증이 실패하였습니다 다시 전송바랍니다." + t.message,
+                    "통신 실패",
                     Toast.LENGTH_LONG
                 ).show()
+
             }
 
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
-                room_secondrocket_lottie.visibility = View.GONE
+                progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "인증 성공 방으로 입장합니다",
+                    "변경 완료",
                     Toast.LENGTH_LONG
                 ).show()
+                val body = response.body()
+                Log.d("변경",body?.image)
 
             }
         })
@@ -146,6 +155,8 @@ class Room : Activity() {
             Log.i("1", "sufraceListener 카메라 미리보기 활성")
             val parameters = camera!!.parameters
             parameters.setPreviewSize(width, height)
+            camera!!.setDisplayOrientation(90)
+
             camera!!.startPreview()
         }
 
@@ -165,6 +176,7 @@ class Room : Activity() {
                 //if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) int_cameraID = i
             }
             camera = Camera.open(int_cameraID)
+
             try {
                 camera?.setPreviewDisplay(sh_viewFinder)
             } catch (e: IOException) {
