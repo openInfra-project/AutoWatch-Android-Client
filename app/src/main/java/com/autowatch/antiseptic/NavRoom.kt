@@ -64,6 +64,7 @@ class NavRoom : AppCompatActivity() {
                             enterroom(it.fields.room_name,it.fields.room_ps)
                             Log.d("방 입장",it.fields.room_name)
                             Log.d("방 입장",it.fields.room_ps)
+
                         })
                         recycler_view.adapter = adapter
                         recycler_view.layoutManager = LinearLayoutManager(applicationContext)

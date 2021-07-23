@@ -140,8 +140,8 @@ class Home : AppCompatActivity() {
         }
 
         //nav 학생정보입력
-        btn_nav_info.setOnClickListener {
-            startActivity(Intent(this, UserInfo::class.java))
+        btn_nav_mypage.setOnClickListener {
+            startActivity(Intent(this, Mypage::class.java))
         }
         //로그아웃
         btn_nav_logout.setOnClickListener {

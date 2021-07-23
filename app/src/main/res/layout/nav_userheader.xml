@@ -70,12 +70,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/btn_nav_info"
+                android:id="@+id/btn_nav_mypage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:textSize="24dp"
-                android:text="회원 정보 수정"
+                android:text="MY PAGE"
                 android:textColor="#000" />
 
             <TextView
