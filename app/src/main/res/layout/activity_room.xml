@@ -12,12 +12,24 @@
         android:orientation="horizontal"
         android:paddingLeft="12dp"
         android:paddingTop="8dp"
+
         android:paddingRight="12dp">
         <ImageView
             android:id="@+id/btn_room_backpress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <Button
+            android:layout_marginLeft="113dp"
+            android:id="@+id/btn_shutter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:textSize="15dp"
+            android:textColor="#fff"
+            android:background="@drawable/ic_baseline_photo_camera_24" />
+
 
 
 
@@ -66,6 +78,7 @@
             app:lottie_loop="false"
             app:lottie_autoPlay="true"/>
 
+
         <ImageView
             android:id="@+id/iv_preview"
             android:layout_width="match_parent"
@@ -73,16 +86,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp" />
 
-        <Button
-            android:layout_marginTop="12dp"
-            android:layout_gravity="center"
-            android:id="@+id/btn_shutter"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:textSize="15dp"
-            android:textColor="#fff"
-            android:background="@drawable/loginbuttonbox"
-            android:text="재촬영" />
+
 
     </LinearLayout>
 

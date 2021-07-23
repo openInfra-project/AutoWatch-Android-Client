@@ -135,11 +135,11 @@ class Room : Activity() {
                 progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "변경 완료",
+                    "본인 확인 완료",
                     Toast.LENGTH_LONG
                 ).show()
                 val body = response.body()
-                Log.d("변경",body?.image)
+                Log.d("사진 본인확인",body?.image)
 
             }
         })
