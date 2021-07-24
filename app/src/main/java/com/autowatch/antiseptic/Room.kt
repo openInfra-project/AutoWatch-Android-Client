@@ -36,6 +36,8 @@ class Room : Activity() {
     var camera: Camera? = null
     var myfile:File?=null
     var btn_shutter: Button? = null
+    var btn_again: Button? = null
+    var room_sendlottie :Button? =null
     var iv_preview: ImageView? = null
     var fos: FileOutputStream? = null
     private var dbemail: String? = null
@@ -50,6 +52,17 @@ class Room : Activity() {
         if (dbjson.length() > 0) {
             dbemail = dbjson.getString("email") ?: null
         }
+
+        // findViewById
+        sv_viewFinder = findViewById<View>(R.id.sv_viewFinder) as SurfaceView
+        sh_viewFinder = sv_viewFinder!!.holder
+        sh_viewFinder?.addCallback(surfaceListener)
+        sh_viewFinder?.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        btn_shutter = findViewById<View>(R.id.btn_shutter) as Button
+        room_sendlottie = findViewById<View>(R.id.room_sendlottie) as Button
+        btn_again = findViewById<View>(R.id.btn_again) as Button
+
+        iv_preview = findViewById<View>(R.id.iv_preview) as ImageView
         //카운트 애니메이션 끝날때 할 작업
         room_countlottie.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
@@ -57,7 +70,13 @@ class Room : Activity() {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
+
+                startTakePicture()
                 room_countlottie.visibility = View.GONE
+                btn_again?.setVisibility(View.VISIBLE);
+                room_sendlottie?.setVisibility(View.VISIBLE);
+
+
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -65,6 +84,10 @@ class Room : Activity() {
             }
 
             override fun onAnimationStart(animation: Animator?) {
+                btn_shutter?.setVisibility(View.GONE);
+                btn_again?.setVisibility(View.GONE);
+                room_sendlottie?.setVisibility(View.GONE);
+
 
             }
         })
@@ -72,8 +95,15 @@ class Room : Activity() {
         btn_room_backpress.setOnClickListener {
             onBackPressed()
         }
+
+        btn_again!!.setOnClickListener {
+            camera!!.startPreview()
+            btn_shutter?.setVisibility(View.VISIBLE);
+            btn_again?.setVisibility(View.GONE);
+            room_sendlottie?.setVisibility(View.GONE);
+        }
         //이미지 서버로 전송
-        room_sendlottie.setOnClickListener {
+        room_sendlottie?.setOnClickListener {
 
             if (myfile != null) {
                 room_secondrocket_lottie.visibility = View.VISIBLE
@@ -93,26 +123,13 @@ class Room : Activity() {
             }
         }
 
-        // findViewById
-        sv_viewFinder = findViewById<View>(R.id.sv_viewFinder) as SurfaceView
-        sh_viewFinder = sv_viewFinder!!.holder
-        sh_viewFinder?.addCallback(surfaceListener)
-        sh_viewFinder?.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
-        btn_shutter = findViewById<View>(R.id.btn_shutter) as Button
-        iv_preview = findViewById<View>(R.id.iv_preview) as ImageView
+
 
         // setListener
-        btn_shutter!!.setOnClickListener(onClickListener_btn_shutter)
+        btn_shutter!!.setOnClickListener(
+            onClickListener_btn_shutter)
 
-        // 3초 뒤 자동촬영
-        val timer = Timer()
-        val tt: TimerTask = object : TimerTask() {
-            override fun run() {
-                startTakePicture()
 
-            }
-        }
-        timer.schedule(tt, 3000)
     }
 
     fun goimage(item: MultipartBody.Part) {
@@ -199,16 +216,23 @@ class Room : Activity() {
     }
 
     var onClickListener_btn_shutter =
-        View.OnClickListener { startTakePicture() }
+        View.OnClickListener {
+            btn_shutter?.setVisibility(View.GONE);
+            btn_again?.setVisibility(View.VISIBLE);
+            room_sendlottie?.setVisibility(View.VISIBLE);
+            startTakePicture() }
     var takePicture = PictureCallback { data, camera ->
         Log.d("1", "=== takePicture ===")
         if (data != null) {
             Log.v("1", "takePicture JPEG 사진 찍음")
             val bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
             iv_preview!!.setImageBitmap(bitmap)
+            iv_preview!!.setVisibility(View.GONE);
+
             camera.startPreview()
             inProgress = false
             bytearraytoFile(data)
+            camera.stopPreview()
 
         } else {
             Log.e("1", "takePicture data null")
@@ -232,5 +256,3 @@ class Room : Activity() {
 
     }
 }
-
-

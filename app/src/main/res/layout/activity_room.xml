@@ -21,14 +21,7 @@
 
             android:src="@drawable/ic_baseline_arrow_back_24" />
 
-        <Button
-            android:layout_marginLeft="113dp"
-            android:id="@+id/btn_shutter"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:textSize="15dp"
-            android:textColor="#fff"
-            android:background="@drawable/ic_baseline_photo_camera_24" />
+
 
 
 
@@ -38,14 +31,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/room_sendlottie"
-                android:layout_gravity="center"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                app:lottie_fileName="room_rocket.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"/>
+<!--            <com.airbnb.lottie.LottieAnimationView-->
+<!--                android:id="@+id/room_sendlottie"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                app:lottie_fileName="room_rocket.json"-->
+<!--                app:lottie_loop="true"-->
+<!--                app:lottie_autoPlay="true"/>-->
 
 
         </LinearLayout>
@@ -65,9 +58,10 @@
             android:layout_height="match_parent"/>
 
         <SurfaceView
+            android:layout_marginTop="10dp"
             android:id="@+id/sv_viewFinder"
-            android:layout_width="310dip"
-            android:layout_height="400dip"
+            android:layout_width="400dip"
+            android:layout_height="510dp"
             android:layout_gravity="center_horizontal"/>
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/room_countlottie"
@@ -77,7 +71,38 @@
             android:layout_gravity="center_horizontal"
             app:lottie_loop="false"
             app:lottie_autoPlay="true"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_shutter"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/ic_baseline_photo_camera_24"
+            android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:textColor="#ffffff"
+                android:id="@+id/btn_again"
+                android:text="재촬영"
+                android:textSize="15dp"
+                android:background="@drawable/loginbuttonbox" />
+            <Button
+                android:layout_marginLeft="10dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:textSize="15dp"
+                android:textColor="#ffffff"
+                android:id="@+id/room_sendlottie"
+                android:text="완료"
+                android:background="@drawable/loginbuttonbox" />
 
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_preview"

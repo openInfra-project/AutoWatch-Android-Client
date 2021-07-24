@@ -65,7 +65,9 @@
             android:name=".User_SignUp_PopUp"
             android:theme="@style/Transparent" />
         <activity android:name=".SignUp" />
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login">
+
+        </activity>
         <activity android:name=".MainActivity" />
     </application>
 
