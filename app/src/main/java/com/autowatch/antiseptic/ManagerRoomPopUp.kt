@@ -61,6 +61,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
             }
             if(edit_manager_roomname.text.toString()!=null && edit_manager_roompassword.text.toString()!=null && body==null) {
                 NameandPassOnly(edit_manager_roomname.text.toString(),edit_manager_roompassword.text.toString(),mode.toString())
+
             }
             else if(edit_manager_roomname.text.toString()!=null && edit_manager_roompassword.text.toString()!=null&&body!=null){
                 makeroom(edit_manager_roomname.text.toString(),edit_manager_roompassword.text.toString(),mode.toString())
@@ -172,46 +173,56 @@ class ManagerRoomPopUp : AppCompatActivity() {
                 Log.d("파일확인2", data.toString())
                 filepath = data.data
                 Log.d("파일확인3", filepath.toString())
-                text_makeroom_cell.setText("회원명단목록")
+
                 filepath?.let { uploadFile(it) }
             }
         }
     }
 
     fun uploadFile(fileUri: Uri) {
-        val file = File(FileUtil.getPath(fileUri,this))
+        val file = File(FileUtil.getFilePath(this,fileUri))
         Log.d("파일확인4", file.toString())
+        Log.d("파일확인4", file.nameWithoutExtension)
+        text_makeroom_cell.setText(file.name)
         val requestFile =
-            RequestBody.create(MediaType.parse(contentResolver.getType(fileUri)), file)
+            RequestBody.create(MediaType.parse(contentResolver.getType(fileUri)), file.name)
         body = MultipartBody.Part.createFormData("files", file.name, requestFile)
         Log.d("파일확인5", body.toString())
 
     }
     //exam 모드
     fun makeroom(name:String,pass:String,mode:String) {
+        Log.d("방생성확인!!!!!!",mode)
         val description =
             RequestBody.create(
                 okhttp3.MultipartBody.FORM, name)
+        Log.d("방생성1", description?.toString())
         val description2 =
             RequestBody.create(
                 okhttp3.MultipartBody.FORM, pass)
+        Log.d("방생성2", description2?.toString())
         val description3 =
             RequestBody.create(
-                okhttp3.MultipartBody.FORM, dbemail)
+                okhttp3.MultipartBody.FORM, dbemail!!)
+        Log.d("방생성3", dbemail)
         val description4 =
             RequestBody.create(
                 okhttp3.MultipartBody.FORM, mode)
+        Log.d("방생성4", description4?.toString())
+        Log.d("방생성5", body?.toString())
         if(body!=null) {
-            RetrofitClient.signupservice.requestMakeRoom(body!!,description,description2,description3,description4)
+            RetrofitClient.signupservice.requestMakeRoom(description,description2,description3,description4,body!!)
                 .enqueue(object :
                     retrofit2.Callback<DataMakeRoom> {
                     override fun onFailure(call: Call<DataMakeRoom>, t: Throwable) {
-
+                        Log.d("방생성실패 1 씨벌왜안대 ", t.toString())
                     }
+                    @SuppressLint("ResourceAsColor")
                     override fun onResponse(
                         call: Call<DataMakeRoom>,
                         response: Response<DataMakeRoom>
                     ) {
+                        Log.d("방생성성공", body?.toString())
 
                     }
                 })
@@ -242,6 +253,3 @@ class ManagerRoomPopUp : AppCompatActivity() {
     }
 
 }
-
-
-
