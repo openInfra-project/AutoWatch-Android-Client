@@ -135,11 +135,13 @@
                             android:text="*방이름"
                             android:textColor="#c92a2a" />
 
-                        <EditText
-                            android:id="@+id/edit_manager_roomname"
+                        <TextView
+                            android:id="@+id/text_manager_roomname"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="15dp"
                             android:layout_marginLeft="6dp"
                             android:layout_weight="60"
                             android:background="@drawable/login_borderbox"
@@ -152,24 +154,21 @@
                             android:layout_weight="25"
                             android:gravity="center">
 
-                            <Switch
-                                android:id="@+id/switch_switch"
+                            <Button
+
+                                android:id="@+id/btn_remake"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track_selector" />
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="10dp"
+                                android:background="@drawable/loginbuttonbox"
+                                android:text="click"
+                                android:textSize="12dp"
+                                android:textColor="#ffffff" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_marginTop="5dp"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:id="@+id/text_managerroom_check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="중복체크 해주시기 바랍니다" />
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -193,6 +192,7 @@
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
+                            android:gravity="center"
                             android:layout_marginLeft="6dp"
                             android:background="@drawable/login_borderbox"
                             android:textColorHint="#000" />

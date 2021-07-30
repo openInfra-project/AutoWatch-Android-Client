@@ -8,7 +8,7 @@ import com.autowatch.antiseptic.data.DataRoomNumber
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_manager_room_pop_up.*
 import kotlinx.android.synthetic.main.activity_manager_room_pop_up.drawer_view
-import kotlinx.android.synthetic.main.activity_manager_room_pop_up.text_managerroom_check
+
 import kotlinx.android.synthetic.main.activity_successroom.*
 import kotlinx.android.synthetic.main.nav_roomheader.*
 import retrofit2.Call
