@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Mypage"></activity>
+        <activity android:name=".Successroom"></activity>
+        <activity android:name=".Mypage" />
 
         <service
             android:name=".Accessibility"
@@ -65,9 +66,7 @@
             android:name=".User_SignUp_PopUp"
             android:theme="@style/Transparent" />
         <activity android:name=".SignUp" />
-        <activity android:name=".Login">
-
-        </activity>
+        <activity android:name=".Login"></activity>
         <activity android:name=".MainActivity" />
     </application>
 

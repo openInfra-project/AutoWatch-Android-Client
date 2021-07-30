@@ -68,6 +68,11 @@ class ManagerRoomPopUp : AppCompatActivity() {
             }else {
                 Toast.makeText(this,"방이름 및 비번을 입력해주세요",Toast.LENGTH_LONG).show()
             }
+            val sucessintent = Intent(this, Successroom::class.java)
+            sucessintent.putExtra("roomname",edit_manager_roomname.text.toString())
+            sucessintent.putExtra("roompassword",edit_manager_roompassword.text.toString())
+            sucessintent.putExtra("roommode",mode.toString())
+            startActivity(sucessintent)
         }
 
         //라디오버튼(study exam mode)
