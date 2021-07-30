@@ -104,71 +104,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
                 R.id.rb2 -> mode = "2"
             }
         }
-        //edit listener
-//        edit_manager_roomname.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-////                switch_switch.left
-////                switch_switch.isChecked = false
-////                switch_switch.isClickable = true
-////                text_managerroom_check.setText("중복체크 해주시기 바랍니다")
-//            }
 
-//        })
-//        //edit 수정하거나 다시 입력하면 swtich 원상복구 되야함.
-//        switch_switch.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-//            @SuppressLint("ResourceAsColor")
-//            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-//                if (isChecked) {
-//                    switch_switch.isClickable = false
-//                    if (edit_manager_roomname.text.toString() != null) {
-//                        RetrofitClient.signupservice.requestRoomNumber(edit_manager_roomname.text.toString())
-//                            .enqueue(object :
-//                                retrofit2.Callback<DataRoomNumber> {
-//                                override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {
-//                                    Toast.makeText(
-//                                        applicationContext,
-//                                        "전송 실패",
-//                                        Toast.LENGTH_LONG
-//                                    ).show()
-//                                }
-//
-//                                @SuppressLint("ResourceAsColor")
-//                                override fun onResponse(
-//                                    call: Call<DataRoomNumber>,
-//                                    response: Response<DataRoomNumber>
-//                                ) {
-//                                    Toast.makeText(
-//                                        applicationContext,
-//                                        "중복체크 완료",
-//                                        Toast.LENGTH_LONG
-//                                    ).show()
-//                                    text_managerroom_check.setText("중복체크 완료")
-//                                    text_managerroom_check.setTextColor(R.color.ourColor)
-//
-//                                }
-//                            })
-//                    } else {
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "빈칸없이 입력해주시기 바랍니다",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                    }
-//                } else {
-//                    //체크된 상태로 만들 시 코드
-//
-//
-//                }
-//            }
-//        })
 
 
     }
