@@ -3,6 +3,7 @@ package com.autowatch.antiseptic
 import android.animation.Animator
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.hardware.Camera
 import android.hardware.Camera.CameraInfo
@@ -15,6 +16,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.autowatch.antiseptic.data.DataImage2
 import kotlinx.android.synthetic.main.activity_room.*
 import okhttp3.MediaType
@@ -34,10 +37,10 @@ class Room : Activity() {
     var sv_viewFinder: SurfaceView? = null
     var sh_viewFinder: SurfaceHolder? = null
     var camera: Camera? = null
-    var myfile:File?=null
+    var myfile: File? = null
     var btn_shutter: Button? = null
     var btn_again: Button? = null
-    var room_sendlottie :Button? =null
+    var room_sendlottie: Button? = null
     var iv_preview: ImageView? = null
     var fos: FileOutputStream? = null
     private var dbemail: String? = null
@@ -52,6 +55,17 @@ class Room : Activity() {
         if (dbjson.length() > 0) {
             dbemail = dbjson.getString("email") ?: null
         }
+
+            //카메라 권한의 승인 상태 가져오기
+        val cameraPermission = ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
+
+
+        while(cameraPermission != PackageManager.PERMISSION_GRANTED){
+                //승인되지 않았다면 권한 요청 프로세스 진행
+                requestPermission()
+        }
+        //학번 수험번호
+        val number = intent.getStringExtra("number")
 
         // findViewById
         sv_viewFinder = findViewById<View>(R.id.sv_viewFinder) as SurfaceView
@@ -111,7 +125,7 @@ class Room : Activity() {
                     RequestBody.create(MediaType.parse("image/jpeg"), myfile)
                 body = MultipartBody.Part.createFormData(
                     "image",
-                    (dbemail + ".jpg"), a
+                    ("capture"+number + ".png"), a
                 )
                 goimage(body)
                 Log.d("사진전송", myfile.toString())
@@ -253,6 +267,26 @@ class Room : Activity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+    }
+    private fun requestPermission() {
+        //ActivityCompat.requestPermissions을 사용하면 사용자에게 권한을 요청하는 팝업을 보여줍니다.
+        //사용자가 선택한 값은 onRequestPermissionsResult메서드를 통해서 전달되어 집니다.
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA),99)
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            99 -> {
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }else{
+                    finish()
+                }
+            }
+        }
+
 
     }
 }

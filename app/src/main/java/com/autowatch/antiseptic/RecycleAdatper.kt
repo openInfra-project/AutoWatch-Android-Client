@@ -36,14 +36,11 @@ class RecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if (itemList[position].fields.room_func =="1"){
-            Log.d("방모드",itemList[position].fields.room_func)
-            holder.mode.setText("STUDY MODE")}
-        else
-            holder.mode.setText("EXAM MODE")
+
         //아이템 하나에 대한 접근
+        holder.mode.setText(""+itemList[position].fields.mode)
         holder.title.setText(""+itemList[position].fields.room_name)
-        holder.description.setText(itemList[position].fields.room_ps)
+        holder.description.setText(itemList[position].fields.room_password)
 
         holder.linear.setOnClickListener {
             onClick.invoke(itemList[position])

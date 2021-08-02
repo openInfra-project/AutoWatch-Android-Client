@@ -17,7 +17,7 @@ object RetrofitClient {
 
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://a1f73af18093.ngrok.io")
+        .baseUrl("https://ff2e41d58f24.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -41,7 +41,7 @@ interface SignUpService {
     ): Call<DataImage2>
 //    @Headers("Content-Type: application/json")
     @Multipart
-    @POST("home/app_images")
+    @POST("main/app_images")
     fun myrequestImage2(
         @Part image: MultipartBody.Part
     ): Call<DataImage2>
@@ -65,14 +65,9 @@ interface SignUpService {
         @Field("email") email: String,
         @Field("name") name: String
     ):Call<DataSignUp>
-    @FormUrlEncoded
-    @POST("home/app_roomnumber")
-    fun requestRoomNumber(
-        @Field("roomname") roomname:String
-    ):Call<DataRoomNumber>
 
     @Multipart
-    @POST("home/app_makeroom")
+    @POST("main/app_makeroom")
     fun requestMakeRoom(
         @Part("name") name : RequestBody,
         @Part("pass")  pass : RequestBody,
@@ -81,7 +76,7 @@ interface SignUpService {
         @Part files: MultipartBody.Part
     ): Call<DataMakeRoom>
     @FormUrlEncoded
-    @POST("home/app_makemyroom")
+    @POST("main/app_makemyroom")
     fun requestRoomNumberPass(
         @Field("roomname") roomname:String,
         @Field("password") password:String,
@@ -90,16 +85,17 @@ interface SignUpService {
     ):Call<DataRoomNamePass>
 
     @FormUrlEncoded
-    @POST("home/app_myroom")
+    @POST("main/app_myroom")
     fun requestmyroom(
         @Field("email") email: String
     ):Call<List<DataMyRoomInfo>>
     @FormUrlEncoded
-    @POST("home/app_enter_room")
+    @POST("main/app_enter_room")
     fun requestenterroom(
         @Field("roomname") roomname: String,
         @Field("password") password: String
     ):Call<DataRoomNumber>
+
     fun requestentermyroom(
         @Field("roomname") roomname: String
     ):Call<DataRoomNumber>
@@ -109,4 +105,11 @@ interface SignUpService {
     fun requestMypage(
         @Field("email") email: String
     ): Call<DataMypage>
+
+    @FormUrlEncoded
+    @POST("main/app_check_myinfo")
+    fun requestcheckmyinfo(
+        @Field("number") number: String,
+        @Field("name") name: String
+    ):Call<DataRoomNumber>
 }

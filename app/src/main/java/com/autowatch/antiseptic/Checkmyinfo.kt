@@ -1,42 +1,34 @@
 package com.autowatch.antiseptic
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.autowatch.antiseptic.data.DataRoomNumber
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_checkmyinfo.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_manager_room_pop_up.*
-import kotlinx.android.synthetic.main.activity_manager_room_pop_up.drawer_view
-
-import kotlinx.android.synthetic.main.activity_successroom.*
-import kotlinx.android.synthetic.main.nav_roomheader.*
 import retrofit2.Call
 import retrofit2.Response
 
-class Successroom : AppCompatActivity() {
+class Checkmyinfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_successroom)
-        val name = intent.getStringExtra("roomname")
-        val pw = intent.getStringExtra("roompassword")
-        val mode= intent.getStringExtra("roommode")
+        setContentView(R.layout.activity_checkmyinfo)
 
+        // 학번 수험번호, 이름 확인
 
-
-        text_title.setText(name)
-        text_password.setText(pw)
-        text_mode.setText(mode)
-
-        btn_enterroom.setOnClickListener {
-            enterroom(name,pw)
+        enter.setOnClickListener {
+            checkinfo(std_number.text.toString(),std_name.text.toString())
         }
+
 
     }
 
 
-    fun enterroom(roomname: String, password: String) {
-        RetrofitClient.signupservice.requestenterroom(roomname, password)
+    fun checkinfo(number: String, name: String) {
+        RetrofitClient.signupservice.requestcheckmyinfo(number, name)
             .enqueue(object :
                 retrofit2.Callback<DataRoomNumber> {
                 override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {
@@ -56,44 +48,35 @@ class Successroom : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
                     val body = response.body()
-                    Log.d("방입장",body?.roomname)
-                    //1번이면 얼굴인식 후 방입장
-                    //2번이면 바로 방입장
-                    //3번이면 방이 없음.
-                    if(body!=null) {
-//                        btn_home_inner.setText(""+body.roomname)
-                        if(body.roomname=="STUDY") {  //room abc abc func(aaa)
+                    Log.d("신원확인",body?.roomname)
+
+                    if (body != null) {
+                        //학번 이름 일치
+                        if(body.roomname=="yes") {
                             Toast.makeText(
                                 applicationContext,
-                                "방 입장합니다",
+                                "얼굴 인식 페이지로 이동합니다.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }else if(body.roomname=="EXAM"){   //room v v func(yulime0605)
-                            //바로 방입장
+                            val sucessintent = Intent(applicationContext, Room::class.java)
+                            sucessintent.putExtra("number", number)
+
+                            startActivity(sucessintent)
+                        }else if(body.roomname=="no"){
+                            //학번 이름 불일치
                             Toast.makeText(
                                 applicationContext,
-                                "방 입장합니다",
+                                "학번과 이름이 일치하지 않습니다.",
                                 Toast.LENGTH_LONG
                             ).show()
                         }else if(body.roomname=="Fail") {
+                            //명단에 없음
                             Toast.makeText(
                                 applicationContext,
-                                "방 비밀번호가 틀립니다.",
+                                "명단에 존재하지 않습니다.",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }else if(body.roomname=="None") {
-                            Toast.makeText(
-                                applicationContext,
-                                "해당 방이 없습니다.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }else {
-                            Toast.makeText(
-                                applicationContext,
-                                "?",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+                    }
                     }else {
                         Toast.makeText(
                             applicationContext,

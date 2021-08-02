@@ -219,19 +219,17 @@ class Home : AppCompatActivity() {
                     ).show()
                     val body = response.body()
                     Log.d("방입장",body?.roomname)
-                    //1번이면 얼굴인식 후 방입장
-                    //2번이면 바로 방입장
-                    //3번이면 방이 없음.
+
                     if(body!=null) {
 //                        btn_home_inner.setText(""+body.roomname)
-                        if(body.roomname=="1") {
+                        if(body.roomname=="EXAM") {
                             Toast.makeText(
                                 applicationContext,
                                 "얼굴 인식 페이지로 이동합니다.",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Room::class.java))
-                        }else if(body.roomname=="2"){
+                            startActivity(Intent(applicationContext, Checkmyinfo::class.java))
+                        }else if(body.roomname=="STUDY"){
                             //바로 방입장
                             Toast.makeText(
                                 applicationContext,

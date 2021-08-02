@@ -65,8 +65,8 @@ class ManagerRoomPopUp : AppCompatActivity() {
         btn_manageroom_makeroom.setOnClickListener {
 
             when (rg1.checkedRadioButtonId) {
-                R.id.rb1 -> mode = "1"
-                R.id.rb2 -> mode = "2"
+                R.id.rb1 -> mode = "STUDY"
+                R.id.rb2 -> mode = "EXAM"
             }
             if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!=null && body==null) {
                 NameandPassOnly(
@@ -100,8 +100,8 @@ class ManagerRoomPopUp : AppCompatActivity() {
         //라디오버튼(study exam mode)
         rg1.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
-                R.id.rb1 -> mode = "1"
-                R.id.rb2 -> mode = "2"
+                R.id.rb1 -> mode = "STUDY"
+                R.id.rb2 -> mode = "EXAM"
             }
         }
 
@@ -127,9 +127,9 @@ class ManagerRoomPopUp : AppCompatActivity() {
 
     fun onPickDoc() {
         Log.d("방 모드 확인!!!!!!", mode)
-        if(mode=="1")
+        if(mode=="STUDY")
             Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()
-        else if (mode=="2") {
+        else if (mode=="EXAM") {
             val intent = Intent()
             intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             intent.setAction(Intent.ACTION_GET_CONTENT)
@@ -213,6 +213,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
                         response: Response<DataMakeRoom>
                     ) {
                         Log.d("방생성성공", body?.toString())
+
 
                     }
                 })

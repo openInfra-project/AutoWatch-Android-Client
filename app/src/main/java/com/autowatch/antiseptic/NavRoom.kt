@@ -61,9 +61,9 @@ class NavRoom : AppCompatActivity() {
                     if (body != null) {
                         roominfo_loading.visibility= View.GONE
                         val adapter = RecyclerAdapter(body, LayoutInflater.from(applicationContext),onClick = {
-                            enterroom(it.fields.room_name,it.fields.room_ps)
+                            enterroom(it.fields.room_name,it.fields.room_password)
                             Log.d("방 입장",it.fields.room_name)
-                            Log.d("방 입장",it.fields.room_ps)
+                            Log.d("방 입장",it.fields.room_password)
 
                         })
                         recycler_view.adapter = adapter
@@ -94,18 +94,18 @@ class NavRoom : AppCompatActivity() {
                     ).show()
                     val body = response.body()
                     Log.d("방입장",body?.roomname)
-                    //1번이면 얼굴인식 후 방입장
+                    //1번이면 바로 방입장
                     //2번이면 바로 방입장
                     //3번이면 방이 없음.
                     if(body!=null) {
 //                        btn_home_inner.setText(""+body.roomname)
-                        if(body.roomname=="1") {  //room abc abc func(aaa)
+                        if(body.roomname=="STUDY") {  //room abc abc func(aaa)
                             Toast.makeText(
                                 applicationContext,
                                 "방 입장합니다",
                                 Toast.LENGTH_LONG
                             ).show()
-                        }else if(body.roomname=="2"){   //room v v func(yulime0605)
+                        }else if(body.roomname=="EXAM"){   //room v v func(yulime0605)
                             //바로 방입장
                             Toast.makeText(
                                 applicationContext,
