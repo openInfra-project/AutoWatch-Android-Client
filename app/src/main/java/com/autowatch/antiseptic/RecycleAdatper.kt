@@ -1,5 +1,6 @@
 package com.autowatch.antiseptic
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,10 +35,13 @@ class RecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+
         //아이템 하나에 대한 접근
+        holder.mode.setText(""+itemList[position].fields.mode)
         holder.title.setText(""+itemList[position].fields.room_name)
-        holder.description.setText(itemList[position].fields.room_ps)
-        holder.mode.setText(itemList[position].fields.room_func)
+        holder.description.setText(itemList[position].fields.room_password)
+
         holder.linear.setOnClickListener {
             onClick.invoke(itemList[position])
         }

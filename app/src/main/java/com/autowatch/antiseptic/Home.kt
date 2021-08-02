@@ -117,11 +117,13 @@ class Home : AppCompatActivity() {
             builder.show()
 
         }
-//        btn_home_inner.setOnClickListener {
-//            if (edit_join_roomname.text.toString() != null && edit_join_password.text.toString() != null) {
-//                enterroom(edit_join_roomname.text.toString(), edit_join_password.text.toString())
-//            }
-//        }
+        //방 만들기
+
+        btn_home_create.setOnClickListener {
+            startActivity(Intent(this, ManagerRoomPopUp::class.java))
+        }
+
+
         //도움말 버튼 애니메이션
         val animation = AnimationUtils.loadAnimation(this, R.anim.home_highlight)
         image_home_highlight.startAnimation(animation)
@@ -138,8 +140,8 @@ class Home : AppCompatActivity() {
         }
 
         //nav 학생정보입력
-        btn_nav_info.setOnClickListener {
-            startActivity(Intent(this, UserInfo::class.java))
+        btn_nav_mypage.setOnClickListener {
+            startActivity(Intent(this, Mypage::class.java))
         }
         //로그아웃
         btn_nav_logout.setOnClickListener {
@@ -172,9 +174,7 @@ class Home : AppCompatActivity() {
         btn_home_changeimage.setOnClickListener {
             PhotoSelect()
         }
-        btn_home_create.setOnClickListener {
-            startActivity(Intent(this, ManagerRoomPopUp::class.java))
-        }
+
 
 
 
@@ -219,25 +219,24 @@ class Home : AppCompatActivity() {
                     ).show()
                     val body = response.body()
                     Log.d("방입장",body?.roomname)
-                    //1번이면 얼굴인식 후 방입장
-                    //2번이면 바로 방입장
-                    //3번이면 방이 없음.
+
                     if(body!=null) {
 //                        btn_home_inner.setText(""+body.roomname)
-                        if(body.roomname=="['int(2)', '3', '4', '5']") {
+                        if(body.roomname=="EXAM") {
                             Toast.makeText(
                                 applicationContext,
                                 "얼굴 인식 페이지로 이동합니다.",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Room::class.java))
-                        }else if(body.roomname=="['3']"){
+                            startActivity(Intent(applicationContext, Checkmyinfo::class.java))
+                        }else if(body.roomname=="STUDY"){
                             //바로 방입장
                             Toast.makeText(
                                 applicationContext,
                                 "방 입장합니다",
                                 Toast.LENGTH_LONG
                             ).show()
+                            startActivity(Intent(applicationContext, Test::class.java))
                         }else if(body.roomname=="Fail") {
                             Toast.makeText(
                                 applicationContext,
@@ -331,6 +330,7 @@ class Home : AppCompatActivity() {
         val progressDialog: ProgressDialog = ProgressDialog(this)
         progressDialog.setTitle("업로드중...")
         progressDialog.show()
+        Log.d("확인", item.toString())
         RetrofitClient.signupservice.requestImage(item).enqueue(object : Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
                 progressDialog.cancel()
@@ -339,6 +339,7 @@ class Home : AppCompatActivity() {
                     "통신 실패",
                     Toast.LENGTH_LONG
                 ).show()
+
             }
 
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
@@ -348,6 +349,8 @@ class Home : AppCompatActivity() {
                     "변경 완료",
                     Toast.LENGTH_LONG
                 ).show()
+                val body = response.body()
+                Log.d("변경",body?.image)
 
             }
         })

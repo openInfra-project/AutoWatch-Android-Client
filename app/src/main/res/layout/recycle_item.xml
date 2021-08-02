@@ -4,9 +4,13 @@
     android:id="@+id/Linear_recycler"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:orientation="horizontal"
-    android:weightSum="100">
-
+    android:orientation="vertical"
+>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/room_sendlottie"
         android:layout_width="48dp"
@@ -35,21 +39,21 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:gravity="center"
-                android:text="방이름:"
+                android:layout_weight="40"
+                android:gravity="center_vertical"
+                android:text="NAME:"
                 android:textColor="#000"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/text_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="70"
+                android:layout_weight="60"
                 android:gravity="center"
                 android:text="title"
                 android:textColor="#3c5b9a"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,23 +64,23 @@
             android:weightSum="100">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:gravity="center"
-                android:text="비밀번호:"
+                android:layout_weight="40"
+                android:gravity="center_vertical"
+                android:text="PASSWORD:"
                 android:textColor="#000"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/text_description"
-                android:layout_width="215dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="70"
+                android:layout_weight="60"
                 android:gravity="center"
                 android:text="비밀번호"
                 android:textColor="#3c5b9a"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,26 +91,30 @@
             android:weightSum="100">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:gravity="center"
-                android:text="mode:"
+                android:layout_weight="40"
+                android:gravity="center_vertical"
+                android:text="MODE:"
                 android:textColor="#000"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/text_mode"
-                android:layout_width="239dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="70"
+                android:layout_weight="60"
                 android:gravity="center"
                 android:text="비밀번호"
                 android:textColor="#3c5b9a"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
     </LinearLayout>
+    </LinearLayout>
+    <ImageView android:src="@drawable/line_shape" android:layout_width="match_parent" android:layout_height="0.6dp"  />
+
+
 
     <!--    <ImageView-->
     <!--        android:id="@+id/image_tuto2"-->

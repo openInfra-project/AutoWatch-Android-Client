@@ -2,6 +2,8 @@ package com.autowatch.antiseptic
 
 import android.animation.Animator
 import android.app.Activity
+import android.app.ProgressDialog
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.hardware.Camera
 import android.hardware.Camera.CameraInfo
@@ -14,6 +16,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.autowatch.antiseptic.data.DataImage2
 import kotlinx.android.synthetic.main.activity_room.*
 import okhttp3.MediaType
@@ -33,8 +37,10 @@ class Room : Activity() {
     var sv_viewFinder: SurfaceView? = null
     var sh_viewFinder: SurfaceHolder? = null
     var camera: Camera? = null
-    var myfile:File?=null
+    var myfile: File? = null
     var btn_shutter: Button? = null
+    var btn_again: Button? = null
+    var room_sendlottie: Button? = null
     var iv_preview: ImageView? = null
     var fos: FileOutputStream? = null
     private var dbemail: String? = null
@@ -49,46 +55,17 @@ class Room : Activity() {
         if (dbjson.length() > 0) {
             dbemail = dbjson.getString("email") ?: null
         }
-        //카운트 애니메이션 끝날때 할 작업
-        room_countlottie.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {
 
-            }
+            //카메라 권한의 승인 상태 가져오기
+        val cameraPermission = ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
 
-            override fun onAnimationEnd(animation: Animator?) {
-                room_countlottie.visibility = View.GONE
-            }
 
-            override fun onAnimationCancel(animation: Animator?) {
-
-            }
-
-            override fun onAnimationStart(animation: Animator?) {
-
-            }
-        })
-        //뒤로가기
-        btn_room_backpress.setOnClickListener {
-            onBackPressed()
+        while(cameraPermission != PackageManager.PERMISSION_GRANTED){
+                //승인되지 않았다면 권한 요청 프로세스 진행
+                requestPermission()
         }
-        //이미지 서버로 전송
-        room_sendlottie.setOnClickListener {
-
-            if (myfile != null) {
-                room_secondrocket_lottie.visibility = View.VISIBLE
-                val a: RequestBody =
-                    RequestBody.create(MediaType.parse("image/jpeg"), myfile)
-                body = MultipartBody.Part.createFormData(
-                    "image",
-                    (dbemail + ".jpg"), a
-                )
-                goimage(body)
-
-
-            } else {
-                Toast.makeText(this, "이미지를 찍어주세요", Toast.LENGTH_SHORT).show()
-            }
-        }
+        //학번 수험번호
+        val number = intent.getStringExtra("number")
 
         // findViewById
         sv_viewFinder = findViewById<View>(R.id.sv_viewFinder) as SurfaceView
@@ -96,41 +73,104 @@ class Room : Activity() {
         sh_viewFinder?.addCallback(surfaceListener)
         sh_viewFinder?.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
         btn_shutter = findViewById<View>(R.id.btn_shutter) as Button
+        room_sendlottie = findViewById<View>(R.id.room_sendlottie) as Button
+        btn_again = findViewById<View>(R.id.btn_again) as Button
+
         iv_preview = findViewById<View>(R.id.iv_preview) as ImageView
+        //카운트 애니메이션 끝날때 할 작업
+        room_countlottie.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
 
-        // setListener
-        btn_shutter!!.setOnClickListener(onClickListener_btn_shutter)
+            }
 
-        // 3초 뒤 자동촬영
-        val timer = Timer()
-        val tt: TimerTask = object : TimerTask() {
-            override fun run() {
+            override fun onAnimationEnd(animation: Animator?) {
+
                 startTakePicture()
+                room_countlottie.visibility = View.GONE
+                btn_again?.setVisibility(View.VISIBLE);
+                room_sendlottie?.setVisibility(View.VISIBLE);
+
+
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+                btn_shutter?.setVisibility(View.GONE);
+                btn_again?.setVisibility(View.GONE);
+                room_sendlottie?.setVisibility(View.GONE);
+
+
+            }
+        })
+        //뒤로가기
+        btn_room_backpress.setOnClickListener {
+            onBackPressed()
+        }
+
+        btn_again!!.setOnClickListener {
+            camera!!.startPreview()
+            btn_shutter?.setVisibility(View.VISIBLE);
+            btn_again?.setVisibility(View.GONE);
+            room_sendlottie?.setVisibility(View.GONE);
+        }
+        //이미지 서버로 전송
+        room_sendlottie?.setOnClickListener {
+
+            if (myfile != null) {
+                room_secondrocket_lottie.visibility = View.VISIBLE
+                val a: RequestBody =
+                    RequestBody.create(MediaType.parse("image/jpeg"), myfile)
+                body = MultipartBody.Part.createFormData(
+                    "image",
+                    ("capture"+number + ".png"), a
+                )
+                goimage(body)
+                Log.d("사진전송", myfile.toString())
+                Log.d("사진전송", body.toString())
+
+
+            } else {
+                Toast.makeText(this, "이미지를 찍어주세요", Toast.LENGTH_SHORT).show()
             }
         }
-        timer.schedule(tt, 3000)
+
+
+
+        // setListener
+        btn_shutter!!.setOnClickListener(
+            onClickListener_btn_shutter)
+
+
     }
 
     fun goimage(item: MultipartBody.Part) {
-        Toast.makeText(this, "" + item, Toast.LENGTH_LONG).show()
-        RetrofitClient.signupservice.myrequestImage2(item).enqueue(object :
-            Callback<DataImage2> {
+        val progressDialog: ProgressDialog = ProgressDialog(this)
+        progressDialog.setTitle("본인 확인 중...")
+        progressDialog.show()
+        Log.d("확인", item.toString())
+        RetrofitClient.signupservice.myrequestImage2(item).enqueue(object : Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
-                room_secondrocket_lottie.visibility = View.GONE
+                progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "인증이 실패하였습니다 다시 전송바랍니다." + t.message,
+                    "통신 실패",
                     Toast.LENGTH_LONG
                 ).show()
+
             }
 
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
-                room_secondrocket_lottie.visibility = View.GONE
+                progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "인증 성공 방으로 입장합니다",
+                    "본인 확인 완료",
                     Toast.LENGTH_LONG
                 ).show()
+                val body = response.body()
+                Log.d("사진 본인확인",body?.image)
 
             }
         })
@@ -146,6 +186,8 @@ class Room : Activity() {
             Log.i("1", "sufraceListener 카메라 미리보기 활성")
             val parameters = camera!!.parameters
             parameters.setPreviewSize(width, height)
+            camera!!.setDisplayOrientation(90)
+
             camera!!.startPreview()
         }
 
@@ -165,6 +207,7 @@ class Room : Activity() {
                 //if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) int_cameraID = i
             }
             camera = Camera.open(int_cameraID)
+
             try {
                 camera?.setPreviewDisplay(sh_viewFinder)
             } catch (e: IOException) {
@@ -187,16 +230,23 @@ class Room : Activity() {
     }
 
     var onClickListener_btn_shutter =
-        View.OnClickListener { startTakePicture() }
+        View.OnClickListener {
+            btn_shutter?.setVisibility(View.GONE);
+            btn_again?.setVisibility(View.VISIBLE);
+            room_sendlottie?.setVisibility(View.VISIBLE);
+            startTakePicture() }
     var takePicture = PictureCallback { data, camera ->
         Log.d("1", "=== takePicture ===")
         if (data != null) {
             Log.v("1", "takePicture JPEG 사진 찍음")
             val bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
             iv_preview!!.setImageBitmap(bitmap)
+            iv_preview!!.setVisibility(View.GONE);
+
             camera.startPreview()
             inProgress = false
             bytearraytoFile(data)
+            camera.stopPreview()
 
         } else {
             Log.e("1", "takePicture data null")
@@ -219,6 +269,24 @@ class Room : Activity() {
         }
 
     }
+    private fun requestPermission() {
+        //ActivityCompat.requestPermissions을 사용하면 사용자에게 권한을 요청하는 팝업을 보여줍니다.
+        //사용자가 선택한 값은 onRequestPermissionsResult메서드를 통해서 전달되어 집니다.
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA),99)
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            99 -> {
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }else{
+                    finish()
+                }
+            }
+        }
+
+
+    }
 }
-
-

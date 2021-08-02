@@ -2,6 +2,7 @@ package com.autowatch.antiseptic
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 
@@ -12,22 +13,23 @@ class Accessibility : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        val TAG = "앱차단"
         val denyApp = false;
         if (event?.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            if ("com.kakao.talk".equals(event.packageName) || "com.sec.android.app.sbrowser".equals(event.packageName)) {
+            if ("com.kakao.talk".equals(event.packageName)|| "com.sec.android.app.sbrowser".equals(event.packageName)||"com.instagram.android".equals(event.packageName)) {
                 Toast.makeText(
                     applicationContext,
-                    "앱이 거부되었습니다" + event.packageName,
+                    "앱이 거부되었습니다" ,
                     Toast.LENGTH_LONG
                 ).show()
                 gotoHome();
             }
 
-//            Log.e(TAG, "Catch Event Package Name : " + event.getPackageName());
-//            Log.e(TAG, "Catch Event TEXT : " + event.getText());
-//            Log.e(TAG, "Catch Event ContentDescription : " + event.getContentDescription());
-//            Log.e(TAG, "Catch Event getSource : " + event.getSource());
-//            Log.e(TAG, "=========================================================================");
+            Log.e(TAG, "Catch Event Package Name : " + event.getPackageName());
+            Log.e(TAG, "Catch Event TEXT : " + event.getText());
+            Log.e(TAG, "Catch Event ContentDescription : " + event.getContentDescription());
+            Log.e(TAG, "Catch Event getSource : " + event.getSource());
+            Log.e(TAG, "=========================================================================");
         }
     }
 

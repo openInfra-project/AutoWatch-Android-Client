@@ -9,9 +9,9 @@ data class DataMyRoomInfo(
     val fields:hash
 )
 data class hash(
-    val room_func:String,
+    val mode:String,
     val room_name:String,
-    val room_ps:String
+    val room_password:String
 )
 
 

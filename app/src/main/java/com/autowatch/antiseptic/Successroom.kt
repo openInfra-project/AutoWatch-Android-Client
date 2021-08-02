@@ -1,77 +1,40 @@
 package com.autowatch.antiseptic
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.autowatch.antiseptic.data.DataMyRoomInfo
 import com.autowatch.antiseptic.data.DataRoomNumber
-import kotlinx.android.synthetic.main.activity_nav_room.*
-import org.json.JSONObject
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_manager_room_pop_up.*
+import kotlinx.android.synthetic.main.activity_manager_room_pop_up.drawer_view
+
+import kotlinx.android.synthetic.main.activity_successroom.*
+import kotlinx.android.synthetic.main.nav_roomheader.*
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
-class NavRoom : AppCompatActivity() {
-    private var dbemail: String? = null
+class Successroom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nav_room)
-        val loginDB = loginDB(context = applicationContext)
-        val dbjson: JSONObject = loginDB.getloginDB()
-        if (dbjson.length() > 0) {
-            dbemail = dbjson.getString("email") ?: null
-            dbemail?.let { go(it) }
-        } else {
+        setContentView(R.layout.activity_successroom)
+        val name = intent.getStringExtra("roomname")
+        val pw = intent.getStringExtra("roompassword")
+        val mode= intent.getStringExtra("roommode")
 
-        }
-        btn_roominfo_backpress.setOnClickListener {
-            onBackPressed()
+
+
+        text_title.setText(name)
+        text_password.setText(pw)
+        text_mode.setText(mode)
+
+        btn_enterroom.setOnClickListener {
+            enterroom(name,pw)
         }
 
     }
 
-    fun go(item: String) {
-        roominfo_loading.visibility= View.VISIBLE
-        RetrofitClient.signupservice.requestmyroom(item)
-            .enqueue(object : Callback<List<DataMyRoomInfo>> {
 
-
-                override fun onFailure(call: Call<List<DataMyRoomInfo>>, t: Throwable) {
-                    Toast.makeText(
-                        applicationContext,
-                        "통신 실패",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    roominfo_loading.visibility= View.GONE
-
-                }
-
-                override fun onResponse(
-                    call: Call<List<DataMyRoomInfo>>,
-                    response: Response<List<DataMyRoomInfo>>
-                ) {
-                    val body = response.body()
-                    Log.d("내방 보여주기1", response.toString())
-                    Log.d("내방 보여주기2", body.toString())
-                    if (body != null) {
-                        roominfo_loading.visibility= View.GONE
-                        val adapter = RecyclerAdapter(body, LayoutInflater.from(applicationContext),onClick = {
-                            enterroom(it.fields.room_name,it.fields.room_password)
-                            Log.d("방 입장",it.fields.room_name)
-                            Log.d("방 입장",it.fields.room_password)
-
-                        })
-                        recycler_view.adapter = adapter
-                        recycler_view.layoutManager = LinearLayoutManager(applicationContext)
-                    }
-                }
-            })
-    }
     fun enterroom(roomname: String, password: String) {
         RetrofitClient.signupservice.requestenterroom(roomname, password)
             .enqueue(object :
@@ -94,7 +57,7 @@ class NavRoom : AppCompatActivity() {
                     ).show()
                     val body = response.body()
                     Log.d("방입장",body?.roomname)
-                    //1번이면 바로 방입장
+                    //1번이면 얼굴인식 후 방입장
                     //2번이면 바로 방입장
                     //3번이면 방이 없음.
                     if(body!=null) {
