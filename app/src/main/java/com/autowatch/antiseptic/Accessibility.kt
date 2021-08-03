@@ -7,7 +7,15 @@ import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 
 
+
+
 class Accessibility : AccessibilityService() {
+
+    companion object {
+        var count : Int=0
+    }
+
+//    var count:Int=0
     override fun onInterrupt() {
 
     }
@@ -23,6 +31,8 @@ class Accessibility : AccessibilityService() {
                     Toast.LENGTH_LONG
                 ).show()
                 gotoHome();
+                Accessibility.count++
+                Log.d("앱차단횟수", count?.toString())
             }
 
             Log.e(TAG, "Catch Event Package Name : " + event.getPackageName());
@@ -44,6 +54,7 @@ class Accessibility : AccessibilityService() {
                     or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
         )
         startActivity(intent)
+        intent.putExtra("count",count)
     }
 
 }

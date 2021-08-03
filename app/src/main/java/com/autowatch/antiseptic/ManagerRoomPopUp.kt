@@ -1,9 +1,15 @@
 package com.autowatch.antiseptic
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -25,6 +31,9 @@ import java.util.*
 
 
 class ManagerRoomPopUp : AppCompatActivity() {
+
+    val STORAGE_PERMISSOIN_CODE: Int = 1000
+    var url = ""
     private var dbname: String? = null
     private var filepath: Uri? = null
     private var dbemail: String? = null
@@ -52,6 +61,12 @@ class ManagerRoomPopUp : AppCompatActivity() {
             randomname()
         }
 
+        //명단양식 다운로드
+        btn_download.setOnClickListener {
+            checkVersion("https://docs.google.com/spreadsheets/d/1vd6kFxQnzd-ktx5c29MKMTzQOMctrd15/edit?usp=sharing&ouid=116136621880172225562&rtpof=true&sd=true")
+        }
+
+
 
         //뒤로가기 버튼
         btn_mangerroom_backpress.setOnClickListener {
@@ -68,28 +83,35 @@ class ManagerRoomPopUp : AppCompatActivity() {
                 R.id.rb1 -> mode = "STUDY"
                 R.id.rb2 -> mode = "EXAM"
             }
-            if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!=null && body==null) {
+            if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!="" && body==null) {
                 NameandPassOnly(
                     randomroomname.toString(),
                     edit_manager_roompassword.text.toString(),
                     mode.toString()
                 )
+                Log.d("룸비번",edit_manager_roompassword.getText().toString())
+                val sucessintent = Intent(this, Successroom::class.java)
+                sucessintent.putExtra("roomname", randomroomname)
+                sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
+                sucessintent.putExtra("roommode", mode.toString())
+                startActivity(sucessintent)
 
             }
-            else if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!=null&&body!=null){
+            else if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!=""&&body!=null){
                 makeroom(
                     randomroomname.toString(),
                     edit_manager_roompassword.text.toString(),
                     mode.toString()
                 )
+                val sucessintent = Intent(this, Successroom::class.java)
+                sucessintent.putExtra("roomname", randomroomname)
+                sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
+                sucessintent.putExtra("roommode", mode.toString())
+                startActivity(sucessintent)
             }else {
                 Toast.makeText(this, "방이름 및 비번을 입력해주세요", Toast.LENGTH_LONG).show()
             }
-            val sucessintent = Intent(this, Successroom::class.java)
-            sucessintent.putExtra("roomname", randomroomname)
-            sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
-            sucessintent.putExtra("roommode", mode.toString())
-            startActivity(sucessintent)
+
 
 
 
@@ -107,6 +129,51 @@ class ManagerRoomPopUp : AppCompatActivity() {
 
 
 
+    }
+    private fun checkVersion(url : String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSOIN_CODE)
+            }
+            else {
+                Log.e("다운시작", url)
+                startDownloading(url)
+                Log.e("다운완료", url)
+            }
+        }
+        else {
+            Log.e("다운시작", url)
+            startDownloading(url)
+            Log.e("다운완료", url)
+        }
+    }
+
+    private fun startDownloading(url:String) {
+
+        val request = DownloadManager.Request(Uri.parse(url))
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            .setTitle("명단 양식")
+            .setDescription("The file is downloading..")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}")
+            .allowScanningByMediaScanner()
+
+        val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        manager.enqueue(request)
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode) {
+            STORAGE_PERMISSOIN_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startDownloading(url)
+                }
+                else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
     fun randomname() {
         val rnd = Random()
@@ -150,7 +217,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 Log.d("파일확인2", data.toString())
-                filepath = data.data
+                filepath = data.getData()
                 Log.d("파일확인3", filepath.toString())
 
                 filepath?.let { uploadFile(it) }
@@ -159,12 +226,13 @@ class ManagerRoomPopUp : AppCompatActivity() {
     }
 
     fun uploadFile(fileUri: Uri) {
-        val file = File(FileUtil.getFilePath(this, fileUri))
+        val file = File(FileUtil.getRealPath(this, fileUri))
+
         Log.d("파일확인4", file.toString())
         Log.d("파일확인4", file.nameWithoutExtension)
         text_makeroom_cell.setText(file.name)
         val requestFile =
-            RequestBody.create(MediaType.parse(contentResolver.getType(fileUri)), file.name)
+            RequestBody.create(MediaType.parse("*/*"), file)
         body = MultipartBody.Part.createFormData("files", file.name, requestFile)
         Log.d("파일확인5", body.toString())
 

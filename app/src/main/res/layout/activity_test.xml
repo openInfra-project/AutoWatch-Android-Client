@@ -46,5 +46,11 @@
         android:textColor="@color/ourColor"
         android:textStyle="bold"
         android:gravity="center"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:id="@+id/btn_test"/>
 </LinearLayout>
 </LinearLayout>
