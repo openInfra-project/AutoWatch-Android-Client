@@ -271,6 +271,7 @@
                                 android:layout_marginTop="12dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/btn_download"
                                 android:background="@drawable/login_borderbox"
                                 android:text="명단 양식 다운로드"
                                 android:textColor="#000"
