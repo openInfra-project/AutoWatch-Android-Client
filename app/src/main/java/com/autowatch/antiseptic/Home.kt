@@ -2,6 +2,7 @@ package com.autowatch.antiseptic
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.autowatch.antiseptic.data.DataImage2
 import com.autowatch.antiseptic.data.DataRoomNumber
 import com.autowatch.antiseptic.data.DataViewModel
+import kotlinx.android.synthetic.main.activity_delete_dialog.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home.drawer_view
 import kotlinx.android.synthetic.main.nav_roomheader.*
@@ -54,6 +56,7 @@ class Home : AppCompatActivity() {
     private var dbname: String? = null
     private var roompassword: String? = null
     private var roomname: String? = null
+    private var custom : Dialog? =null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,9 +158,16 @@ class Home : AppCompatActivity() {
         }
         //회원탈퇴
         btn_home_deleteuser.setOnClickListener {
-            val custom = DeleteDialog(context = this)
-            custom.show()
-            startActivity(Intent(this,Login::class.java))
+            custom = DeleteDialog(context = this)
+            (custom as DeleteDialog).show()
+            (custom as DeleteDialog).btn_yes.setOnClickListener{
+                    deleteUser()
+                    startActivities(arrayOf(Intent(this, Login::class.java)))
+
+
+            }
+
+
         }
 
 
@@ -411,7 +421,27 @@ class Home : AppCompatActivity() {
         quickIntent.setAnimStyle(me.piruin.quickaction.QuickAction.Animation.GROW_FROM_CENTER)
         quickAction.show(frame_highlight)
     }
+    fun deleteUser() {
+        //dialog 로 확인메세지 한번 표시해주기
 
+        RetrofitClient.signupservice.requestDelete(dbemail!!).enqueue(object : Callback<Int> {
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                Toast.makeText(applicationContext, "회원탈퇴 실패", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                if (response.body() == 200) {
+                    Toast.makeText(applicationContext, "회원탈퇴 완료되었습니다", Toast.LENGTH_SHORT).show()
+                    custom?.dismiss()
+
+                } else {
+                    Toast.makeText(applicationContext, "회원탈퇴 실패", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        })
+
+    }
 
 }
 
