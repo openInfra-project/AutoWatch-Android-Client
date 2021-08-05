@@ -8,15 +8,27 @@ import android.os.Bundle
 import android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS
 import android.util.Log
 import android.view.accessibility.AccessibilityManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.autowatch.antiseptic.data.DataRoomNumber
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_test.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
 
 
 class Test : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private var dbemail: String? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val loginDB = loginDB(context = applicationContext)
+//        code_visible.visibility = View.GONE
+        val dbjson: JSONObject = loginDB.getloginDB()
+        if (dbjson.length() > 0) {
+            dbemail = dbjson.getString("email") ?: null
+        }
 
 
         super.onCreate(savedInstanceState)
@@ -28,6 +40,7 @@ class Test : AppCompatActivity() {
         btn_test.setOnClickListener {
             startActivity(Intent(this, Endroom::class.java))
         }
+        check(dbemail.toString())
 
     }
 
@@ -58,5 +71,46 @@ class Test : AppCompatActivity() {
                 startActivity(Intent(ACTION_ACCESSIBILITY_SETTINGS))   //접근성
                 return@OnClickListener
             }).create().show()
+    }
+
+    fun check(email: String) {
+        RetrofitClient.signupservice.requestcheck(email)
+            .enqueue(object :
+                retrofit2.Callback<DataRoomNumber> {
+                override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {
+                    Toast.makeText(
+                        applicationContext,
+                        "전송 실패"+t.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                override fun onResponse(
+                    call: Call<DataRoomNumber>,
+                    response: Response<DataRoomNumber>
+                ) {
+                    Toast.makeText(
+                        applicationContext,
+                        "앱 인증 완료"+response.body(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    val body = response.body()
+                    Log.d("앱 인증 완료",body?.roomname)
+
+                    if(body!=null) {
+                        Toast.makeText(
+                            applicationContext,
+                            "앱 인증 완료.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }else {
+                        Toast.makeText(
+                            applicationContext,
+                            "앱 인증 실패",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                }
+            })
     }
 }
