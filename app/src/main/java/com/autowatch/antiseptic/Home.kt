@@ -246,7 +246,7 @@ class Home : AppCompatActivity() {
                                 "방 입장합니다",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Test::class.java))
+                            startActivity(Intent(applicationContext, Opencv::class.java))
                         }else if(body.roomname=="Fail") {
                             Toast.makeText(
                                 applicationContext,

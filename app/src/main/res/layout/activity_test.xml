@@ -52,5 +52,14 @@
             android:layout_height="wrap_content"
             android:text="test"
             android:id="@+id/btn_test"/>
-</LinearLayout>
+<!--        <com.airbnb.lottie.LottieAnimationView-->
+<!--            android:id="@+id/room_countlottie"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            app:lottie_fileName="loading-bar.json"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            app:lottie_loop="false"-->
+<!--            app:lottie_autoPlay="true"/>-->
+
+    </LinearLayout>
 </LinearLayout>
