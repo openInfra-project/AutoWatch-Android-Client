@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ class RecyclerAdapter(
         val description = view.findViewById<TextView>(R.id.text_description)
         val mode = view.findViewById<TextView>(R.id.text_mode)
         val linear = view.findViewById<LinearLayout>(R.id.Linear_recycler)
+        val img = view.findViewById<ImageView>(R.id.picture)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +43,9 @@ class RecyclerAdapter(
         holder.mode.setText(""+itemList[position].fields.mode)
         holder.title.setText(""+itemList[position].fields.room_name)
         holder.description.setText(itemList[position].fields.room_password)
+        if (itemList[position].fields.mode=="EXAM"){
+            holder.img.setImageResource(R.drawable.exam);
+        }
 
         holder.linear.setOnClickListener {
             onClick.invoke(itemList[position])

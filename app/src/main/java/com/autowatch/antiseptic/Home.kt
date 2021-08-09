@@ -127,13 +127,7 @@ class Home : AppCompatActivity() {
         }
 
 
-        //도움말 버튼 애니메이션
-        val animation = AnimationUtils.loadAnimation(this, R.anim.home_highlight)
-        image_home_highlight.startAnimation(animation)
-        val animationbackground =
-            AnimationUtils.loadAnimation(this, R.anim.home_highlight_background)
-        Linear_background.startAnimation(animationbackground)
-        //도움말 Dialog 여기서 구현.
+
         //menu 애니메이션
         btn_home_menu.setOnClickListener {
             drawer_view.openDrawer(nav_view)
@@ -177,9 +171,7 @@ class Home : AppCompatActivity() {
         drawer_view.setOnTouchListener { v, event -> true }
 
 
-        frame_highlight.setOnClickListener {
-            quickActivity()
-        }
+
         //사진선택기능
         btn_home_changeimage.setOnClickListener {
             PhotoSelect()
@@ -246,7 +238,7 @@ class Home : AppCompatActivity() {
                                 "방 입장합니다",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Opencv::class.java))
+                            startActivity(Intent(applicationContext, Test::class.java))
                         }else if(body.roomname=="Fail") {
                             Toast.makeText(
                                 applicationContext,
@@ -400,27 +392,27 @@ class Home : AppCompatActivity() {
     }
 
 
-    fun quickActivity() {
-        QuickAction?.setColor(999)
-        QuickAction?.setTextColor(333)
-        val item = ActionItem(1, "튜토리얼을 뭘적지 ??")
-        val quickAction = QuickAction(this, me.piruin.quickaction.QuickAction.VERTICAL)
-        quickAction.setColorRes(R.color.colorPrimary)
-        quickAction.setTextColorRes(R.color.colorAccent)
-        quickAction.addActionItem(item)
-        quickAction.setOnActionItemClickListener(object : QuickAction.OnActionItemClickListener {
-            override fun onItemClick(item: ActionItem?) {
-
-            }
-        })
-        val intent = Intent()
-        intent.setAction(Intent.ACTION_SEND)
-        val quickIntent = QuickIntentAction(this)
-            .setActivityIntent(intent)
-            .create()
-        quickIntent.setAnimStyle(me.piruin.quickaction.QuickAction.Animation.GROW_FROM_CENTER)
-        quickAction.show(frame_highlight)
-    }
+//    fun quickActivity() {
+//        QuickAction?.setColor(999)
+//        QuickAction?.setTextColor(333)
+//        val item = ActionItem(1, "튜토리얼을 뭘적지 ??")
+//        val quickAction = QuickAction(this, me.piruin.quickaction.QuickAction.VERTICAL)
+//        quickAction.setColorRes(R.color.colorPrimary)
+//        quickAction.setTextColorRes(R.color.colorAccent)
+//        quickAction.addActionItem(item)
+//        quickAction.setOnActionItemClickListener(object : QuickAction.OnActionItemClickListener {
+//            override fun onItemClick(item: ActionItem?) {
+//
+//            }
+//        })
+//        val intent = Intent()
+//        intent.setAction(Intent.ACTION_SEND)
+//        val quickIntent = QuickIntentAction(this)
+//            .setActivityIntent(intent)
+//            .create()
+//        quickIntent.setAnimStyle(me.piruin.quickaction.QuickAction.Animation.GROW_FROM_CENTER)
+//        quickAction.show(frame_highlight)
+//    }
     fun deleteUser() {
         //dialog 로 확인메세지 한번 표시해주기
 

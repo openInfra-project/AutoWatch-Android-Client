@@ -11,15 +11,14 @@
         android:layout_height="115dp"
         android:orientation="horizontal"
         android:weightSum="100">
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/room_sendlottie"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_weight="15"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="door.json"
-        app:lottie_loop="true" />
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/study"/>
 
     <LinearLayout
         android:id="@+id/linear_tuto"
@@ -27,6 +26,7 @@
         android:layout_height="match_parent"
         android:layout_weight="80"
         android:orientation="vertical"
+        android:layout_marginLeft="20dp"
         android:weightSum="10">
 
         <LinearLayout

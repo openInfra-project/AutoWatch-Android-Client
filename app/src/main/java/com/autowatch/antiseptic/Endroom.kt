@@ -16,8 +16,13 @@ class Endroom : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_endroom)
 
+        val nonperson:Int
         var realcount = Accessibility.count
         Log.d("횟수", realcount.toString())
+        val person = intent.getStringExtra("nonperson")
+        nonperson=person.toInt()
+        Log.d("자리이탈횟수", nonperson.toString())
+
 
 
         val loginDB = loginDB(context = applicationContext)
@@ -26,13 +31,13 @@ class Endroom : AppCompatActivity() {
             dbemail = dbjson.getString("email") ?: null
         }
 
-        send_count(dbemail.toString(),realcount)
+        send_count(dbemail.toString(),realcount,nonperson)
         Accessibility.count =0
     }
 
 
-    fun send_count(email:String,count: Int) {
-        RetrofitClient.signupservice.requestsendcount(email,count)
+    fun send_count(email:String,count: Int,nonperson:Int) {
+        RetrofitClient.signupservice.requestsendcount(email,count,nonperson)
             .enqueue(object :
                 retrofit2.Callback<DataRoomNumber> {
                 override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {

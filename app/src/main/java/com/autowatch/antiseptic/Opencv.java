@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.annotation.TargetApi;
@@ -12,8 +13,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
@@ -120,14 +127,25 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
 
         setContentView(R.layout.activity_opencv);
 
+
+        ImageView btn_endroom = (ImageView)findViewById(R.id.btn_endroom);
+
         mOpenCvCameraView = (CameraBridgeViewBase)findViewById(R.id.activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.setCameraIndex(1); // front-camera(1),  back-camera(0)
 
+        Toast mytoast= Toast.makeText(
+                this.getApplicationContext(),
+                "20초 후 자리 이탈 확인이 실행됩니다",
+                Toast.LENGTH_LONG);
+//        mytoast.setGravity(Gravity.CENTER, 0,0 );
+        mytoast.show();
+
         TimerTask T = new TimerTask() {
             @Override
             public void run() {
+
 
                 TimerTask TT = new TimerTask() {
                     @Override
@@ -144,7 +162,20 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
         };
         timer.schedule(T,20000);     //20초후 실행
 
+        btn_endroom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Endroom.class);
+                if (nonperson>=0)
+                    intent.putExtra("nonperson",Integer.toString(nonperson));
 
+                Log.d("nonperson", String.valueOf(nonperson));
+                startActivity(intent);//액티비티 띄우기
+                timer.cancel();
+            }
+
+
+        });
     }
 
     @Override
@@ -253,7 +284,8 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
                 // Draw rectangle around detected object.
                 Imgproc.rectangle(frame, new Point(left, top), new Point(right, bottom),
                         new Scalar(0, 255, 0));
-                String label = classNames[classId] + ": " + String.format("%,4.2f", confidence);;
+//                String label = classNames[classId] + ": " + String.format("%,4.2f", confidence);;
+                String label = "";
                 Log.d("얼굴 인식",classNames[classId]);
 
                 if (classNames[classId]=="person"){

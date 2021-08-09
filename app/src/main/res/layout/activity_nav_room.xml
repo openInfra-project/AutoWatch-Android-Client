@@ -45,14 +45,14 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/roominfo_loading"
-                app:lottie_loop="false"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="roominfo_loading.json"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+<!--            <com.airbnb.lottie.LottieAnimationView-->
+<!--                android:id="@+id/roominfo_loading"-->
+<!--                app:lottie_loop="false"-->
+<!--                app:lottie_autoPlay="true"-->
+<!--                app:lottie_fileName="roominfo_loading.json"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"/>-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"

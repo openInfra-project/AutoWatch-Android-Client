@@ -36,7 +36,7 @@ class NavRoom : AppCompatActivity() {
     }
 
     fun go(item: String) {
-        roominfo_loading.visibility= View.VISIBLE
+//        roominfo_loading.visibility= View.VISIBLE
         RetrofitClient.signupservice.requestmyroom(item)
             .enqueue(object : Callback<List<DataMyRoomInfo>> {
 
@@ -47,7 +47,7 @@ class NavRoom : AppCompatActivity() {
                         "통신 실패",
                         Toast.LENGTH_LONG
                     ).show()
-                    roominfo_loading.visibility= View.GONE
+//                    roominfo_loading.visibility= View.GONE
 
                 }
 
@@ -59,7 +59,7 @@ class NavRoom : AppCompatActivity() {
                     Log.d("내방 보여주기1", response.toString())
                     Log.d("내방 보여주기2", body.toString())
                     if (body != null) {
-                        roominfo_loading.visibility= View.GONE
+//                        roominfo_loading.visibility= View.GONE
                         val adapter = RecyclerAdapter(body, LayoutInflater.from(applicationContext),onClick = {
                             enterroom(it.fields.room_name)
                             Log.d("방 입장",it.fields.room_name)

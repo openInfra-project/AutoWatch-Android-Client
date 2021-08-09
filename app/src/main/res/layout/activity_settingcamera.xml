@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Test">
+    tools:context=".Settingcamera">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,41 +38,61 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:text="---------SNS 앱이 차단 되었습니다---------"
-            android:textColor="@color/ourColor"
-            android:textSize="22dp"
-            android:textStyle="bold" />
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="자리 이탈 확인을 위한 카메라가 실행됩니다."
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:layout_marginTop="45dp"/>
         <ImageView
+            android:layout_marginTop="30dp"
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:layout_marginTop="35dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/no_phone"/>
+            android:background="@drawable/mainimg"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="다음 단계로 이동해 주세요."
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_marginTop="45dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위의 사진을 참고하여 핸드폰을 본인을 향해 "
+                android:textSize="13dp"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가로"
+                android:textStyle="bold"
+                android:textColor="#234CC8"
+                android:textSize="13dp"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로 배치해 주세요."
+                android:textSize="13dp"
+                android:layout_marginTop="20dp"/>
+
+
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_test"
+            android:id="@+id/btn_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
+            android:text="Done"
             android:layout_marginTop="40dp"
             android:textColor="#ffffff"
             android:background="@drawable/home_borderbox"
             android:layout_gravity="center_horizontal" />
 
-
     </LinearLayout>
+
 </LinearLayout>

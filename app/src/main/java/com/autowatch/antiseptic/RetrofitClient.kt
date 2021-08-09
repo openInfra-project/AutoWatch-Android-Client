@@ -17,7 +17,7 @@ object RetrofitClient {
 
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://7acbc969cbde.ngrok.io")
+        .baseUrl("https://e08aed782cd9.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -125,6 +125,7 @@ interface SignUpService {
     @POST("/app_sendcount")
     fun requestsendcount(
         @Field("email") email: String,
-        @Field("count") count:Int
+        @Field("count") count:Int,
+        @Field("nonperson") nonperson:Int
     ): Call<DataRoomNumber>
 }

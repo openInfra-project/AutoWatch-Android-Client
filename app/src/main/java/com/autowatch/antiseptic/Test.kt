@@ -34,13 +34,17 @@ class Test : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
         var result= checkAccessibilityPermissions()
-        if(result==false)
+        Log.d("접근성확인", result.toString())
+        if(result==false) {
             setAccessibilityPermissions()
 
+        }
         btn_test.setOnClickListener {
-            startActivity(Intent(this, Endroom::class.java))
+            startActivity(Intent(this, Settingcamera::class.java))
         }
         check(dbemail.toString())
+        result = checkAccessibilityPermissions()
+        Log.d("접근성확인", result.toString())
 
     }
 

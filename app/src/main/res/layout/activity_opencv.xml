@@ -9,6 +9,36 @@
     android:orientation="vertical"
     tools:context=".Opencv">
 
+    <LinearLayout
+        android:background="#3c5b9a"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:gravity="right">
+
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/mark1" />
+
+
+        <ImageView
+            android:id="@+id/btn_endroom"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:gravity="bottom"
+            android:layout_marginLeft="265dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/exit" />
+
+
+    </LinearLayout>
+
+
     <org.opencv.android.JavaCameraView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
