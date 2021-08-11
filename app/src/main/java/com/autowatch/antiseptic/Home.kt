@@ -230,7 +230,10 @@ class Home : AppCompatActivity() {
                                 "얼굴 인식 페이지로 이동합니다.",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Checkmyinfo::class.java))
+                            Log.d("방입장!!!!!!!!!!",roomname)
+                            val intent = Intent(applicationContext, Checkmyinfo::class.java)
+                            intent.putExtra("roomname", roomname)
+                            startActivity(intent)
                         }else if(body.roomname=="STUDY"){
                             //바로 방입장
                             Toast.makeText(

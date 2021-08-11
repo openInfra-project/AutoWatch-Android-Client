@@ -17,11 +17,12 @@ import kotlinx.android.synthetic.main.activity_test.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import java.util.*
 
 
 class Test : AppCompatActivity() {
     private var dbemail: String? = null
-
+    var result:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         val loginDB = loginDB(context = applicationContext)
 //        code_visible.visibility = View.GONE
@@ -33,18 +34,40 @@ class Test : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
-        var result= checkAccessibilityPermissions()
+        result= checkAccessibilityPermissions()
         Log.d("접근성확인", result.toString())
         if(result==false) {
             setAccessibilityPermissions()
 
+        }else {
+            android.setImageResource(R.drawable.no_phone)
+            block.setText("---------SNS 앱이 차단 되었습니다---------")
         }
         btn_test.setOnClickListener {
-            startActivity(Intent(this, Settingcamera::class.java))
+            if(result==true)
+                startActivity(Intent(this, Settingcamera::class.java))
+            else
+                Toast.makeText(
+                    applicationContext,
+                    "접근성 허용해주세요",
+                    Toast.LENGTH_LONG
+                ).show()
+                setAccessibilityPermissions()
+
+
         }
         check(dbemail.toString())
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         result = checkAccessibilityPermissions()
-        Log.d("접근성확인", result.toString())
+        Log.d("접근성확인!!!!", result.toString())
+        if(result==true) {
+            android.setImageResource(R.drawable.no_phone)
+            block.setText("---------SNS 앱이 차단 되었습니다---------")
+        }
 
     }
 
@@ -72,9 +95,12 @@ class Test : AppCompatActivity() {
         permissionDialog.setMessage("차단 서비스를 위해 접근성 권한이 필요합니다.")
         permissionDialog.setPositiveButton("허용",
             DialogInterface.OnClickListener { dialog, which ->
+
                 startActivity(Intent(ACTION_ACCESSIBILITY_SETTINGS))   //접근성
                 return@OnClickListener
+
             }).create().show()
+
     }
 
     fun check(email: String) {
@@ -84,32 +110,29 @@ class Test : AppCompatActivity() {
                 override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {
                     Toast.makeText(
                         applicationContext,
-                        "전송 실패"+t.message,
+                        "전송 실패" + t.message,
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
                 override fun onResponse(
                     call: Call<DataRoomNumber>,
                     response: Response<DataRoomNumber>
                 ) {
-                    Toast.makeText(
-                        applicationContext,
-                        "앱 인증 완료"+response.body(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    val body = response.body()
-                    Log.d("앱 인증 완료",body?.roomname)
 
-                    if(body!=null) {
+                    val body = response.body()
+                    Log.d("앱 인증 완료", body?.roomname)
+
+                    if (body != null) {
                         Toast.makeText(
                             applicationContext,
-                            "앱 인증 완료.",
+                            "방 입장",
                             Toast.LENGTH_LONG
                         ).show()
-                    }else {
+                    } else {
                         Toast.makeText(
                             applicationContext,
-                            "앱 인증 실패",
+                            "방 입장 실패",
                             Toast.LENGTH_LONG
                         ).show()
                     }

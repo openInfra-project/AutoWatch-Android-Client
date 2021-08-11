@@ -13,6 +13,7 @@ import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -53,7 +54,14 @@ class ManagerRoomPopUp : AppCompatActivity() {
         } else {
 
         }
+
+        btn_manageroom_getfile?.setVisibility(View.GONE);
+        btn_download?.setVisibility(View.GONE);
+        text_makeroom_cell_border?.setVisibility(View.GONE);
+        text_makeroom_cell?.setVisibility(View.GONE);
+
         randomname()
+
 
 
         //방이름 다시
@@ -82,8 +90,9 @@ class ManagerRoomPopUp : AppCompatActivity() {
             when (rg1.checkedRadioButtonId) {
                 R.id.rb1 -> mode = "STUDY"
                 R.id.rb2 -> mode = "EXAM"
+
             }
-            if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!="" && body==null) {
+            if(mode=="STUDY") {
                 NameandPassOnly(
                     randomroomname.toString(),
                     edit_manager_roompassword.text.toString(),
@@ -97,7 +106,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
                 startActivity(sucessintent)
 
             }
-            else if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!=""&&body!=null){
+            else if(mode=="EXAM"){
                 makeroom(
                     randomroomname.toString(),
                     edit_manager_roompassword.text.toString(),
@@ -122,8 +131,16 @@ class ManagerRoomPopUp : AppCompatActivity() {
         //라디오버튼(study exam mode)
         rg1.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
-                R.id.rb1 -> mode = "STUDY"
-                R.id.rb2 -> mode = "EXAM"
+                R.id.rb1 -> {mode = "STUDY"
+                    btn_manageroom_getfile?.setVisibility(View.GONE);
+                    text_makeroom_cell_border?.setVisibility(View.GONE);
+                    btn_download?.setVisibility(View.GONE);
+                    text_makeroom_cell?.setVisibility(View.GONE);}
+                R.id.rb2 -> {mode = "EXAM"
+                    btn_manageroom_getfile?.setVisibility(View.VISIBLE);
+                    text_makeroom_cell_border?.setVisibility(View.VISIBLE);
+                    btn_download?.setVisibility(View.VISIBLE);
+                    text_makeroom_cell?.setVisibility(View.VISIBLE);}
             }
         }
 

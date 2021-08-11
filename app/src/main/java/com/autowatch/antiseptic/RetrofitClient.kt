@@ -3,11 +3,15 @@ package com.autowatch.antiseptic
 import com.autowatch.antiseptic.data.*
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.util.concurrent.TimeUnit
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 object RetrofitClient {
@@ -15,9 +19,16 @@ object RetrofitClient {
         .setLenient()
         .create()
 
+    var okHttpClient = OkHttpClient().newBuilder()
+        .connectTimeout(40, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .build()
+
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .baseUrl("https://e08aed782cd9.ngrok.io")
+        .client(okHttpClient)
+        .baseUrl("https://8655439ed44e.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
@@ -43,8 +54,8 @@ interface SignUpService {
     @Multipart
     @POST("main/app_images")
     fun myrequestImage2(
-        @Part image: MultipartBody.Part
-    ): Call<DataImage2>
+    @Part image: MultipartBody.Part
+): Call<DataImage2>
 
     //방 생성 POST 요청
     //방 입장 POST 요청
@@ -69,19 +80,19 @@ interface SignUpService {
     @Multipart
     @POST("main/app_makeroom")
     fun requestMakeRoom(
-        @Part("name") name : RequestBody,
-        @Part("pass")  pass : RequestBody,
-        @Part("admin")  admin : RequestBody,
-        @Part("checkbox")  checkbox : RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("pass") pass: RequestBody,
+        @Part("admin") admin: RequestBody,
+        @Part("checkbox") checkbox: RequestBody,
         @Part files: MultipartBody.Part
     ): Call<DataMakeRoom>
     @FormUrlEncoded
     @POST("main/app_makemyroom")
     fun requestRoomNumberPass(
-        @Field("roomname") roomname:String,
-        @Field("password") password:String,
-        @Field("admin") admin:String,
-        @Field("checkbox") checkbox:String
+        @Field("roomname") roomname: String,
+        @Field("password") password: String,
+        @Field("admin") admin: String,
+        @Field("checkbox") checkbox: String
     ):Call<DataRoomNamePass>
 
     @FormUrlEncoded
@@ -111,9 +122,11 @@ interface SignUpService {
     @FormUrlEncoded
     @POST("main/app_check_myinfo")
     fun requestcheckmyinfo(
+
+        @Field("room") room: String,
         @Field("number") number: String,
         @Field("name") name: String
-    ):Call<DataRoomNumber>
+    ):Call<DataRoomNamePass>
 
     @FormUrlEncoded
     @POST("/app_check")
@@ -125,7 +138,7 @@ interface SignUpService {
     @POST("/app_sendcount")
     fun requestsendcount(
         @Field("email") email: String,
-        @Field("count") count:Int,
-        @Field("nonperson") nonperson:Int
+        @Field("count") count: Int,
+        @Field("nonperson") nonperson: Int
     ): Call<DataRoomNumber>
 }

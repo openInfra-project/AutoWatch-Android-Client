@@ -278,6 +278,7 @@
                                 android:theme="@style/MyButton" />
                             <LinearLayout
                                 android:padding="6dp"
+                                android:id="@+id/text_makeroom_cell_border"
                                 android:layout_marginTop="12dp"
                                 android:background="@drawable/login_borderbox"
                                 android:layout_width="match_parent"

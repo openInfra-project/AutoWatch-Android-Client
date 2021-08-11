@@ -62,7 +62,8 @@ class Mypage : AppCompatActivity() {
                         Toast.makeText(applicationContext,""+response.body(), Toast.LENGTH_LONG).show()
                         user_email.setText(body.email)
                         user_name.setText(body.name)
-                        imageurl ="https://b171fe78f3a4.ngrok.io/media/"+body.image
+                        user_date.setText(body.date)
+                        imageurl ="https://01faa988f0ce.ngrok.io/media/"+body.image
                         Log.d("사용자이미지1",body.image)
                         Log.d("사용자이미지2",imageurl)
 

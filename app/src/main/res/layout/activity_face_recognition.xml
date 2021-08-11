@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Face_recognition">
+
+    <LinearLayout
+        android:background="@color/ourColor"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+        <ImageView
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:gravity="center"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/logo"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/result_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="얼굴 인식 성공 ! "
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_marginTop="35dp"/>
+
+    <ImageView
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="40dp"
+        android:id="@+id/face"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ok"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사용자 핸드폰 인증 완료했습니다."
+        android:id="@+id/result_text3"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginTop="45dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="다음 단계로 이동해 주세요."
+        android:id="@+id/result_text2"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:layout_marginTop="25dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/button"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

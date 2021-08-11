@@ -5,7 +5,7 @@
     android:id="@+id/drawer_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3c5b9a"
+    android:background="#B20C5FA6"
     android:orientation="horizontal"
     android:fitsSystemWindows="true"
     tools:context=".Home"
@@ -50,6 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:background="#fff" />
 
@@ -57,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             android:padding="24dp">
 
 
