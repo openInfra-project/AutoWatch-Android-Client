@@ -124,6 +124,11 @@ class Room : Activity() {
 
             if (myfile != null) {
                 room_secondrocket_lottie.visibility = View.VISIBLE
+                Toast.makeText(
+                            applicationContext,
+                            "본인 학인 중 입니다.",
+                            Toast.LENGTH_LONG
+                        ).show()
 
                 val a: RequestBody =
                     RequestBody.create(MediaType.parse("image/jpeg"), myfile)
@@ -183,30 +188,6 @@ class Room : Activity() {
                 val sucessintent = Intent(applicationContext, Face_recognition::class.java)
                 sucessintent.putExtra("result", body?.image)
                 startActivity(sucessintent)
-//                if (body != null) {
-//                    //학번 이름 일치
-//                    if(body.image=="ok") {
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "얼굴 비교 성공",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//
-//                    }else if(body.image=="no"){
-//                        //학번 이름 불일치
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "얼굴 비교 실패.",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                    }
-//                }else {
-//                    Toast.makeText(
-//                        applicationContext,
-//                        "실패"+response.body(),
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
 
             }
         })

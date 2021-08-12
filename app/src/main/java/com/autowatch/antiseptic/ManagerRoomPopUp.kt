@@ -59,6 +59,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
         btn_download?.setVisibility(View.GONE);
         text_makeroom_cell_border?.setVisibility(View.GONE);
         text_makeroom_cell?.setVisibility(View.GONE);
+        download_txt.setVisibility(View.GONE);
 
         randomname()
 
@@ -77,7 +78,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
 
 
         //뒤로가기 버튼
-        btn_mangerroom_backpress.setOnClickListener {
+        btn_roominfo_backpress.setOnClickListener {
             onBackPressed()
         }
         //명단 가져오기
@@ -92,34 +93,42 @@ class ManagerRoomPopUp : AppCompatActivity() {
                 R.id.rb2 -> mode = "EXAM"
 
             }
-            if(mode=="STUDY") {
-                NameandPassOnly(
-                    randomroomname.toString(),
-                    edit_manager_roompassword.text.toString(),
-                    mode.toString()
-                )
-                Log.d("룸비번",edit_manager_roompassword.getText().toString())
-                val sucessintent = Intent(this, Successroom::class.java)
-                sucessintent.putExtra("roomname", randomroomname)
-                sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
-                sucessintent.putExtra("roommode", mode.toString())
-                startActivity(sucessintent)
+            if(edit_manager_roompassword.text.toString()!="") {
+                if (mode == "STUDY") {
+                    NameandPassOnly(
+                        randomroomname.toString(),
+                        edit_manager_roompassword.text.toString(),
+                        mode.toString()
+                    )
+                    Log.d("룸비번", edit_manager_roompassword.getText().toString())
+                    val sucessintent = Intent(this, Successroom::class.java)
+                    sucessintent.putExtra("roomname", randomroomname)
+                    sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
+                    sucessintent.putExtra("roommode", mode.toString())
+                    startActivity(sucessintent)
 
-            }
-            else if(mode=="EXAM"){
-                makeroom(
-                    randomroomname.toString(),
-                    edit_manager_roompassword.text.toString(),
-                    mode.toString()
-                )
-                val sucessintent = Intent(this, Successroom::class.java)
-                sucessintent.putExtra("roomname", randomroomname)
-                sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
-                sucessintent.putExtra("roommode", mode.toString())
-                startActivity(sucessintent)
-            }else {
-                Toast.makeText(this, "방이름 및 비번을 입력해주세요", Toast.LENGTH_LONG).show()
-            }
+                } else if (mode == "EXAM") {
+                    if(body!=null) {
+                        makeroom(
+                            randomroomname.toString(),
+                            edit_manager_roompassword.text.toString(),
+                            mode.toString()
+                        )
+                        val sucessintent = Intent(this, Successroom::class.java)
+                        sucessintent.putExtra("roomname", randomroomname)
+                        sucessintent.putExtra(
+                            "roompassword",
+                            edit_manager_roompassword.text.toString()
+                        )
+                        sucessintent.putExtra("roommode", mode.toString())
+                        startActivity(sucessintent)
+                    }else
+                        Toast.makeText(this, "명단을 제출해주세요", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "방 mode를 선택해주세요", Toast.LENGTH_LONG).show()
+                }
+            }else
+                Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_LONG).show()
 
 
 
@@ -135,12 +144,14 @@ class ManagerRoomPopUp : AppCompatActivity() {
                     btn_manageroom_getfile?.setVisibility(View.GONE);
                     text_makeroom_cell_border?.setVisibility(View.GONE);
                     btn_download?.setVisibility(View.GONE);
-                    text_makeroom_cell?.setVisibility(View.GONE);}
+                    text_makeroom_cell?.setVisibility(View.GONE);
+                    download_txt.setVisibility(View.GONE);}
                 R.id.rb2 -> {mode = "EXAM"
                     btn_manageroom_getfile?.setVisibility(View.VISIBLE);
                     text_makeroom_cell_border?.setVisibility(View.VISIBLE);
                     btn_download?.setVisibility(View.VISIBLE);
-                    text_makeroom_cell?.setVisibility(View.VISIBLE);}
+                    text_makeroom_cell?.setVisibility(View.VISIBLE);
+                    download_txt.setVisibility(View.VISIBLE);}
             }
         }
 

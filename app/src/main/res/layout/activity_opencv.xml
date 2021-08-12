@@ -10,7 +10,7 @@
     tools:context=".Opencv">
 
     <LinearLayout
-        android:background="#3c5b9a"
+        android:background="@color/ourColor"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -23,7 +23,7 @@
         <ImageView
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/mark1" />
+            android:background="@drawable/logo" />
 
 
         <ImageView
@@ -32,6 +32,7 @@
             android:layout_height="55dp"
             android:gravity="bottom"
             android:layout_marginLeft="265dp"
+            android:layout_marginBottom="2dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/exit" />
 

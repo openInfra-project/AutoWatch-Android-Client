@@ -86,7 +86,7 @@ class SignUp : AppCompatActivity() {
                 val body = response.body()
                 if(response.body()?.name!="Fail") {
                     val loginDB = loginDB(context = applicationContext)
-                    loginDB.insertDB(body!!.email,body!!.password,body!!.name)
+                    loginDB.insertDB(body!!.email,body!!.password,body!!.name,body.image)
                     Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
                     startActivity(Intent(applicationContext, Home::class.java))
                     progressDialog.cancel()

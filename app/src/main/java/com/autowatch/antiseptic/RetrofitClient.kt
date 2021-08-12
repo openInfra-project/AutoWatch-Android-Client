@@ -28,7 +28,7 @@ object RetrofitClient {
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
         .client(okHttpClient)
-        .baseUrl("https://8655439ed44e.ngrok.io")
+        .baseUrl("https://f897a6392c92.ngrok.io")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)

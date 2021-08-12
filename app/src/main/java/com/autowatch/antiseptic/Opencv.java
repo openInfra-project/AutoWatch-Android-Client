@@ -373,6 +373,7 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
         builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 finish();
+                onBackPressed();
             }
         });
         builder.create().show();

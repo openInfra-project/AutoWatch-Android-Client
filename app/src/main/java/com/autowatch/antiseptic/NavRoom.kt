@@ -61,8 +61,10 @@ class NavRoom : AppCompatActivity() {
                     if (body != null) {
 //                        roominfo_loading.visibility= View.GONE
                         val adapter = RecyclerAdapter(body, LayoutInflater.from(applicationContext),onClick = {
-                            enterroom(it.fields.room_name)
-                            Log.d("방 입장",it.fields.room_name)
+                            if(it.fields.mode=="STUDY") {
+                                enterroom(it.fields.room_name)
+                                Log.d("방 입장", it.fields.room_name)
+                            }
 
                         })
                         recycler_view.adapter = adapter

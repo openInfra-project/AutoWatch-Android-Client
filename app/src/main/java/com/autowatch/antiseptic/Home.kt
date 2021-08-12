@@ -11,30 +11,31 @@ import android.os.Bundle
 import android.util.Log
 
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.autowatch.antiseptic.data.DataImage2
 import com.autowatch.antiseptic.data.DataRoomNumber
 import com.autowatch.antiseptic.data.DataViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_delete_dialog.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_home.drawer_view
-import kotlinx.android.synthetic.main.nav_roomheader.*
+import kotlinx.android.synthetic.main.activity_manager_room_pop_up.*
+import kotlinx.android.synthetic.main.activity_mypage.*
+import kotlinx.android.synthetic.main.activity_test.*
+import kotlinx.android.synthetic.main.main_drawer_header_logged_in.*
+import kotlinx.android.synthetic.main.main_drawer_header_logged_in.view.*
+import kotlinx.android.synthetic.main.main_drawer_header_logged_out.*
+import kotlinx.android.synthetic.main.main_include_drawer.*
 import kotlinx.android.synthetic.main.nav_userheader.*
 import kotlinx.android.synthetic.main.nav_userheader.btn_nav_close
-import kotlinx.android.synthetic.main.nav_roomheader.btn_nav_room
-import kotlinx.android.synthetic.main.nav_userheader.btn_nav_visible
-import kotlinx.android.synthetic.main.nav_userheader.linear_nav_login
-import kotlinx.android.synthetic.main.nav_userheader.text_nav_login
-import kotlinx.android.synthetic.main.nav_userheader.text_nav_name
-import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
-import me.piruin.quickaction.QuickIntentAction
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -54,6 +55,7 @@ class Home : AppCompatActivity() {
     private var dbemail: String? = null
     private var dbpassword: String? = null
     private var dbname: String? = null
+    private var dbimage: String? = null
     private var roompassword: String? = null
     private var roomname: String? = null
     private var custom : Dialog? =null
@@ -61,7 +63,7 @@ class Home : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.main_include_drawer)
         val loginDB = loginDB(context = applicationContext)
 //        code_visible.visibility = View.GONE
         val dbjson: JSONObject = loginDB.getloginDB()
@@ -69,6 +71,7 @@ class Home : AppCompatActivity() {
             dbemail = dbjson.getString("email") ?: null
             dbpassword = dbjson.getString("password") ?: null
             dbname = dbjson.getString("name") ?: null
+            dbimage = dbjson.getString("image") ?: null
         } else {
 
         }
@@ -79,10 +82,7 @@ class Home : AppCompatActivity() {
         } else {
             logout()
         }
-        //테스트
-//        testtest.setOnClickListener {
-//            startActivity(Intent(this,EnterMyRoom::class.java))
-//        }
+
 
 
         //뒤로가기 버튼
@@ -101,16 +101,17 @@ class Home : AppCompatActivity() {
                 var edit1: EditText? = alert.findViewById<EditText>(R.id.editText)
                 var edit2: EditText? = alert.findViewById<EditText>(R.id.editText2)
 
-                if (edit1 != null) {
-                    roomname = edit1.text.toString()
-                }
-                if (edit2 != null) {
-                    roompassword = edit2.text.toString()
-                }
+                if(edit1?.text.toString()!=""){
+                    if(edit2?.text.toString()!=""){
 
-                    Log.d("룸이름",roomname)
-                    Log.d("룸비번",roompassword)
-                    enterroom(roomname!!, roompassword!!)
+                        enterroom(edit1?.text.toString(), edit2?.text.toString())
+                    }else{
+                        Toast.makeText(this, "방 비밀번호를 입력해주세요", Toast.LENGTH_LONG).show()
+                    }
+                }else
+                    Toast.makeText(this, "방 이름을 입력해주세요", Toast.LENGTH_LONG).show()
+
+
 
             }
 
@@ -130,67 +131,98 @@ class Home : AppCompatActivity() {
 
         //menu 애니메이션
         btn_home_menu.setOnClickListener {
-            drawer_view.openDrawer(nav_view)
+            main_drawer_layout.openDrawer((GravityCompat.START))
+            val imageurl ="https://7d46ea31ac55.ngrok.io/media/"+dbimage
+            Log.d("사용자이미지1",dbimage)
+            Log.d("사용자이미지2",imageurl)
+            Glide.with(this@Home).load(imageurl).apply(
+                RequestOptions()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+            ).into(main_header_include_logged_in.iv_image);
         }
         btn_nav_close.setOnClickListener {
-            drawer_view.closeDrawers()
+            main_drawer_layout.closeDrawers()
         }
 
-        //nav 학생정보입력
-        btn_nav_mypage.setOnClickListener {
-            startActivity(Intent(this, Mypage::class.java))
-        }
-        //로그아웃
-        btn_nav_logout.setOnClickListener {
+        main_navigation_btn3.setOnClickListener {
             loginDB.deleteDB()
             logout()
-            startActivity(Intent(this, Home::class.java))
-        }
-        //로그인하러 가기
-        btn_nav_visible.setOnClickListener {
             startActivity(Intent(this, Login::class.java))
         }
-        //회원탈퇴
-        btn_home_deleteuser.setOnClickListener {
+
+        navigation_header_login_btn.setOnClickListener {
+            startActivity(Intent(this, Login::class.java))
+        }
+
+        main_navigation_btn1.setOnClickListener {
+            //버튼1 클릭 시  마이페이지
+            startActivity(Intent(this, Mypage::class.java))
+        }
+
+        main_navigation_btn2.setOnClickListener {
+            //버튼2 클릭 시 이미지변경
+            PhotoSelect()
+        }
+
+        main_navigation_btn4.setOnClickListener {
+            //버튼3 클릭 시 회원탈퇴
             custom = DeleteDialog(context = this)
             (custom as DeleteDialog).show()
             (custom as DeleteDialog).btn_yes.setOnClickListener{
-                    deleteUser()
-                    startActivities(arrayOf(Intent(this, Login::class.java)))
+                deleteUser()
+                startActivities(arrayOf(Intent(this, Login::class.java)))
 
 
             }
 
-
         }
+//        //nav 학생정보입력
+//        btn_nav_mypage.setOnClickListener {
+//            startActivity(Intent(this, Mypage::class.java))
+//        }
+
+//        //로그아웃
+//        btn_nav_logout.setOnClickListener {
+//            loginDB.deleteDB()
+//            logout()
+//            startActivity(Intent(this, Home::class.java))
+//        }
+//        //로그인하러 가기
+//        btn_nav_visible.setOnClickListener {
+//            startActivity(Intent(this, Login::class.java))
+//        }
+        //회원탈퇴
+//        btn_home_deleteuser.setOnClickListener {
+//            custom = DeleteDialog(context = this)
+//            (custom as DeleteDialog).show()
+//            (custom as DeleteDialog).btn_yes.setOnClickListener{
+//                    deleteUser()
+//                    startActivities(arrayOf(Intent(this, Login::class.java)))
+//
+//
+//            }
+//
+//
+//        }
 
 
         //deleteUser()
 
 
-        drawer_view.setOnTouchListener { v, event -> true }
+//        drawer_view.setOnTouchListener { v, event -> true }
+
+
+//
+//        //사진선택기능
+//        btn_home_changeimage.setOnClickListener {
+//            PhotoSelect()
+//        }
 
 
 
-        //사진선택기능
-        btn_home_changeimage.setOnClickListener {
-            PhotoSelect()
-        }
-
-
-
-
-        btn_myroom.setOnClickListener {
-            drawer_view.openDrawer(nav_view_room)
-        }
-        btn_nav_room_close.setOnClickListener {
-            drawer_view.closeDrawers()
-        }
-        btn_nav_room_visible.setOnClickListener {
-            startActivity(Intent(this, Login::class.java))
-        }
         //방목록
-        btn_nav_room.setOnClickListener {
+        btn_myroom.setOnClickListener {
             startActivity(Intent(this, NavRoom::class.java))
         }
 
@@ -274,27 +306,31 @@ class Home : AppCompatActivity() {
     }
 
     fun logout() {
-        text_nav_login.setText("로그인하러가기")
-        text_nav_room_login.setText("로그인하러가기")
-        text_nav_name.visibility = View.GONE
-        text_nav_room_name.visibility = View.GONE
-        linear_nav_login.visibility = View.GONE
-        linear_nav_room_login.visibility = View.GONE
-        btn_nav_visible.visibility = View.VISIBLE
-        btn_nav_room_visible.visibility = View.VISIBLE
+        main_header_include_logged_in.visibility = View.INVISIBLE
+        main_header_include_logged_out.visibility = View.VISIBLE
+        main_navigation_btn1.visibility = View.INVISIBLE
+        main_navigation_btn2.visibility = View.INVISIBLE
+        main_navigation_btn3.visibility = View.INVISIBLE
+        main_navigation_btn4.visibility = View.INVISIBLE
     }
 
     fun login() {
-        //로그인시 화면
-        text_nav_login.setText("환영합니다")
-        text_nav_name.setText("" + dbname + "님")
-        text_nav_room_login.setText("환영합니다")
-        text_nav_room_name.setText("" + dbname + "님")
-        //로그아웃 시 다시 Home 으로 이동 후 바뀐 nav 보여줌
-        linear_nav_login.visibility = View.VISIBLE
-        btn_nav_visible.visibility = View.GONE
-        linear_nav_room_login.visibility = View.VISIBLE
-        btn_nav_room_visible.visibility = View.GONE
+
+
+        main_header_include_logged_in.iv_image.setImageResource(R.drawable.no_phone)
+        main_header_include_logged_in.visibility = View.VISIBLE
+        main_header_include_logged_out.visibility = View.INVISIBLE
+        main_header_include_logged_in.tv_name.setText(dbname)
+        main_navigation_btn1.isEnabled = true
+        main_navigation_btn2.isEnabled = true
+        main_navigation_btn3.isEnabled = true
+        main_navigation_btn4.isEnabled = true
+//        //로그인시 화면
+//        text_nav_login.setText("환영합니다")
+//        text_nav_name.setText("" + dbname + "님")
+//        //로그아웃 시 다시 Home 으로 이동 후 바뀐 nav 보여줌
+//        linear_nav_login.visibility = View.VISIBLE
+//        btn_nav_visible.visibility = View.GONE
     }
 
     //사진 선택
@@ -356,6 +392,17 @@ class Home : AppCompatActivity() {
                 ).show()
                 val body = response.body()
                 Log.d("변경",body?.image)
+                val imageurl ="https://7d46ea31ac55.ngrok.io/media/"+body?.image
+                Log.d("사용자이미지2",imageurl)
+                Glide.with(this@Home).load(imageurl).apply(
+                    RequestOptions()
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                ).into(main_header_include_logged_in.iv_image);
+//                val loginDB = loginDB(context = applicationContext)
+//                if (body != null) {
+//                    loginDB.alterDB(dbemail.toString(),body.image)
+//                }
 
             }
         })
@@ -395,27 +442,6 @@ class Home : AppCompatActivity() {
     }
 
 
-//    fun quickActivity() {
-//        QuickAction?.setColor(999)
-//        QuickAction?.setTextColor(333)
-//        val item = ActionItem(1, "튜토리얼을 뭘적지 ??")
-//        val quickAction = QuickAction(this, me.piruin.quickaction.QuickAction.VERTICAL)
-//        quickAction.setColorRes(R.color.colorPrimary)
-//        quickAction.setTextColorRes(R.color.colorAccent)
-//        quickAction.addActionItem(item)
-//        quickAction.setOnActionItemClickListener(object : QuickAction.OnActionItemClickListener {
-//            override fun onItemClick(item: ActionItem?) {
-//
-//            }
-//        })
-//        val intent = Intent()
-//        intent.setAction(Intent.ACTION_SEND)
-//        val quickIntent = QuickIntentAction(this)
-//            .setActivityIntent(intent)
-//            .create()
-//        quickIntent.setAnimStyle(me.piruin.quickaction.QuickAction.Animation.GROW_FROM_CENTER)
-//        quickAction.show(frame_highlight)
-//    }
     fun deleteUser() {
         //dialog 로 확인메세지 한번 표시해주기
 

@@ -24,7 +24,7 @@ class Checkmyinfo : AppCompatActivity() {
 
         roomname= intent.getStringExtra("roomname")
         Log.d("신원확인!!!!!!!!!!!!",roomname)
-        enter.setOnClickListener {
+        btn_next.setOnClickListener {
             checkinfo(std_number.text.toString(),std_name.text.toString())
         }
 

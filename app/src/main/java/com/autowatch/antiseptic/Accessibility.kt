@@ -11,7 +11,9 @@ import kotlinx.android.synthetic.main.activity_test.*
 class Accessibility : AccessibilityService() {
 
     companion object {
+        @kotlin.jvm.JvmField
         var count : Int=0
+
     }
 
 //    var count:Int=0

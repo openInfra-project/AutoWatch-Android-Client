@@ -87,8 +87,7 @@
     </LinearLayout>
 
 
-   <include layout="@layout/nav_userheader" />
-    <include layout="@layout/nav_roomheader" />
+<!--   <include layout="@layout/nav_userheader" />-->
 
 
 
