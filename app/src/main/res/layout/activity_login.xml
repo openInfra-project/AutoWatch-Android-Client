@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263f70"
+    android:background="@color/ourColor"
     tools:context=".Login">
 
     <LinearLayout
@@ -20,50 +20,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#3c5b9a"
             android:orientation="vertical"
             android:padding="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="12dp"
-                    android:src="@drawable/mark1" />
+                    android:src="@drawable/logo" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#fff"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_height="wrap_content">
+
+                android:padding="12dp">
+
                 <LinearLayout
-                    android:layout_marginTop="30dp"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_person_outline_24" />
+                        android:layout_width="40dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/user1" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="80dp"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="left"
                         android:text="Login"
-                        android:layout_gravity="center"
-                        android:gravity="center"
                         android:textColor="#fff"
                         android:textSize="32dp" />
 
@@ -79,20 +81,20 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="35dp"
                         android:background="@drawable/login_borderbox">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="6dp"
-                            android:src="@drawable/ic_baseline_person_24" />
+                            android:src="@drawable/email" />
 
                         <EditText
                             android:id="@+id/edit_login_email"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="45dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="6dp"
                             android:background="@null"
@@ -103,20 +105,20 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/login_borderbox">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="6dp"
-                            android:src="@drawable/ic_baseline_lock_24" />
+                            android:src="@drawable/padlock" />
 
                         <EditText
                             android:id="@+id/edit_login_password"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="45dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="6dp"
                             android:background="@null"
@@ -132,29 +134,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/loginbuttonbox"
                     android:text="Login"
                     android:textColor="#fff"
                     android:textSize="24dp" />
 
 
-                <Button
-                    android:id="@+id/btn_goSignUp"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/loginbuttonbox"
-                    android:text="Sign Up"
-                    android:textColor="#fff"
-                    android:textSize="24dp" />
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="Don't you have ID?"
+                        android:textColor="#040000"
+                        android:textSize="15dp" />
+
+                    <Button
+                        android:id="@+id/btn_goSignUp"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:background="#00ff0000"
+                        android:text="Sign Up"
+                        android:textColor="#fff"
+                        android:textSize="17dp" />
+                </LinearLayout>
             </LinearLayout>
+
+        </LinearLayout>
 
 
 
         </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>

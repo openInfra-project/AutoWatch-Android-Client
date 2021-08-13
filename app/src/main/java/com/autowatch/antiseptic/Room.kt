@@ -1,8 +1,10 @@
+
 package com.autowatch.antiseptic
 
 import android.animation.Animator
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.hardware.Camera
@@ -33,6 +35,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
+
 class Room : Activity() {
     var sv_viewFinder: SurfaceView? = null
     var sh_viewFinder: SurfaceHolder? = null
@@ -47,6 +50,8 @@ class Room : Activity() {
     private lateinit var body: MultipartBody.Part
     var inProgress = false
     var myimage: File? = null
+    var index:String? =null
+    var roomname:String? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
@@ -64,8 +69,9 @@ class Room : Activity() {
                 //승인되지 않았다면 권한 요청 프로세스 진행
                 requestPermission()
         }
-        //학번 수험번호
-        val number = intent.getStringExtra("number")
+        //인덱스, 룸이름
+        index = intent.getStringExtra("index")
+        roomname = intent.getStringExtra("roomname")
 
         // findViewById
         sv_viewFinder = findViewById<View>(R.id.sv_viewFinder) as SurfaceView
@@ -86,6 +92,7 @@ class Room : Activity() {
             override fun onAnimationEnd(animation: Animator?) {
 
                 startTakePicture()
+
                 room_countlottie.visibility = View.GONE
                 btn_again?.setVisibility(View.VISIBLE);
                 room_sendlottie?.setVisibility(View.VISIBLE);
@@ -105,10 +112,6 @@ class Room : Activity() {
 
             }
         })
-        //뒤로가기
-        btn_room_backpress.setOnClickListener {
-            onBackPressed()
-        }
 
         btn_again!!.setOnClickListener {
             camera!!.startPreview()
@@ -121,15 +124,22 @@ class Room : Activity() {
 
             if (myfile != null) {
                 room_secondrocket_lottie.visibility = View.VISIBLE
+                Toast.makeText(
+                            applicationContext,
+                            "본인 학인 중 입니다.",
+                            Toast.LENGTH_LONG
+                        ).show()
+
                 val a: RequestBody =
                     RequestBody.create(MediaType.parse("image/jpeg"), myfile)
                 body = MultipartBody.Part.createFormData(
                     "image",
-                    ("capture"+number + ".png"), a
+                    (roomname+"_"+index+"_capture" + ".png"), a
                 )
                 goimage(body)
                 Log.d("사진전송", myfile.toString())
                 Log.d("사진전송", body.toString())
+                Log.d("사진전송", roomname+"_"+index+"_capture" + ".png")
 
 
             } else {
@@ -145,32 +155,44 @@ class Room : Activity() {
 
 
     }
+    //back 키 누르면 홈으로
+    override fun onBackPressed() {
+        startActivity(Intent(this, Home::class.java))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        room_secondrocket_lottie.visibility = View.GONE
+        btn_shutter?.setVisibility(View.VISIBLE);
+        btn_again?.setVisibility(View.GONE);
+        room_sendlottie?.setVisibility(View.GONE);
+
+
+
+
+    }
 
     fun goimage(item: MultipartBody.Part) {
-        val progressDialog: ProgressDialog = ProgressDialog(this)
-        progressDialog.setTitle("본인 확인 중...")
-        progressDialog.show()
+
         Log.d("확인", item.toString())
         RetrofitClient.signupservice.myrequestImage2(item).enqueue(object : Callback<DataImage2> {
             override fun onFailure(call: Call<DataImage2>, t: Throwable) {
-                progressDialog.cancel()
                 Toast.makeText(
                     applicationContext,
-                    "통신 실패",
+                    "통신 실패"+t.message,
                     Toast.LENGTH_LONG
                 ).show()
+
 
             }
 
             override fun onResponse(call: Call<DataImage2>, response: Response<DataImage2>) {
-                progressDialog.cancel()
-                Toast.makeText(
-                    applicationContext,
-                    "본인 확인 완료",
-                    Toast.LENGTH_LONG
-                ).show()
+
                 val body = response.body()
                 Log.d("사진 본인확인",body?.image)
+                val sucessintent = Intent(applicationContext, Face_recognition::class.java)
+                sucessintent.putExtra("result", body?.image)
+                startActivity(sucessintent)
 
             }
         })

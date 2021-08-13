@@ -9,6 +9,8 @@ import android.widget.Toast
 import com.autowatch.antiseptic.data.DataMypage
 import com.autowatch.antiseptic.data.DataSignUp
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.activity_mypage.btn_roominfo_backpress
 import kotlinx.android.synthetic.main.activity_nav_room.*
@@ -62,11 +64,18 @@ class Mypage : AppCompatActivity() {
                         Toast.makeText(applicationContext,""+response.body(), Toast.LENGTH_LONG).show()
                         user_email.setText(body.email)
                         user_name.setText(body.name)
-                        imageurl ="https://b171fe78f3a4.ngrok.io/media/"+body.image
+                        user_date.setText(body.date)
+                        imageurl ="https://118.67.131.138:30000/media/"+body.image
                         Log.d("사용자이미지1",body.image)
                         Log.d("사용자이미지2",imageurl)
 
-                        Glide.with(this@Mypage).load(imageurl).into(user_image);
+                        //glide사용할 경우 url이 바뀌지 않으면 갱신되지 않는 문제 발생
+                        //디스크캐쉬, 메모리캐쉬 초기화 필요
+                        Glide.with(this@Mypage).load(imageurl).apply(
+                            RequestOptions()
+                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        ).into(user_image);
                     }
 
                 }

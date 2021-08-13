@@ -5,14 +5,15 @@ import android.content.Intent
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
-
-
+import kotlinx.android.synthetic.main.activity_test.*
 
 
 class Accessibility : AccessibilityService() {
 
     companion object {
+        @kotlin.jvm.JvmField
         var count : Int=0
+
     }
 
 //    var count:Int=0
@@ -34,6 +35,7 @@ class Accessibility : AccessibilityService() {
                 Accessibility.count++
                 Log.d("앱차단횟수", count?.toString())
             }
+
 
             Log.e(TAG, "Catch Event Package Name : " + event.getPackageName());
             Log.e(TAG, "Catch Event TEXT : " + event.getText());

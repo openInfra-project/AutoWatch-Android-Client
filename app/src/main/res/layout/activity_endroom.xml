@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Endroom">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="@color/ourColor"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:gravity="center"
+                android:layout_marginBottom="2dp"
+                android:src="@drawable/logo"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STUDY MODE가 종료되었습니다."
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginTop="45dp"/>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:id="@+id/android"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/analytics"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Auto Watch web에서 집중도 그래프를 확인해주세요."
+            android:textSize="15dp"
+            android:gravity="center"
+            android:layout_marginTop="45dp"/>
+
+
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HOME"
+            android:layout_marginTop="40dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/button"
+            android:layout_gravity="center_horizontal" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

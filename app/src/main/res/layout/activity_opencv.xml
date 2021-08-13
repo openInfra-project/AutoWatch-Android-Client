@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:opencv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context=".Opencv">
+
+    <LinearLayout
+        android:background="@color/ourColor"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:gravity="right">
+
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/logo" />
+
+
+        <ImageView
+            android:id="@+id/btn_endroom"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:gravity="bottom"
+            android:layout_marginLeft="265dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/exit" />
+
+
+    </LinearLayout>
+
+
+    <org.opencv.android.JavaCameraView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        opencv:camera_id="any"
+        android:visibility="gone"
+        android:id="@+id/activity_surface_view" />
+
+
+</LinearLayout>

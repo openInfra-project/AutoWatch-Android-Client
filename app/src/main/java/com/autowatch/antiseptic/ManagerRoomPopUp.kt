@@ -13,6 +13,7 @@ import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -53,7 +54,15 @@ class ManagerRoomPopUp : AppCompatActivity() {
         } else {
 
         }
+
+        btn_manageroom_getfile?.setVisibility(View.GONE);
+        btn_download?.setVisibility(View.GONE);
+        text_makeroom_cell_border?.setVisibility(View.GONE);
+        text_makeroom_cell?.setVisibility(View.GONE);
+        download_txt.setVisibility(View.GONE);
+
         randomname()
+
 
 
         //방이름 다시
@@ -69,7 +78,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
 
 
         //뒤로가기 버튼
-        btn_mangerroom_backpress.setOnClickListener {
+        btn_roominfo_backpress.setOnClickListener {
             onBackPressed()
         }
         //명단 가져오기
@@ -82,35 +91,44 @@ class ManagerRoomPopUp : AppCompatActivity() {
             when (rg1.checkedRadioButtonId) {
                 R.id.rb1 -> mode = "STUDY"
                 R.id.rb2 -> mode = "EXAM"
-            }
-            if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!="" && body==null) {
-                NameandPassOnly(
-                    randomroomname.toString(),
-                    edit_manager_roompassword.text.toString(),
-                    mode.toString()
-                )
-                Log.d("룸비번",edit_manager_roompassword.getText().toString())
-                val sucessintent = Intent(this, Successroom::class.java)
-                sucessintent.putExtra("roomname", randomroomname)
-                sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
-                sucessintent.putExtra("roommode", mode.toString())
-                startActivity(sucessintent)
 
             }
-            else if(randomroomname.toString()!=null && edit_manager_roompassword.text.toString()!=""&&body!=null){
-                makeroom(
-                    randomroomname.toString(),
-                    edit_manager_roompassword.text.toString(),
-                    mode.toString()
-                )
-                val sucessintent = Intent(this, Successroom::class.java)
-                sucessintent.putExtra("roomname", randomroomname)
-                sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
-                sucessintent.putExtra("roommode", mode.toString())
-                startActivity(sucessintent)
-            }else {
-                Toast.makeText(this, "방이름 및 비번을 입력해주세요", Toast.LENGTH_LONG).show()
-            }
+            if(edit_manager_roompassword.text.toString()!="") {
+                if (mode == "STUDY") {
+                    NameandPassOnly(
+                        randomroomname.toString(),
+                        edit_manager_roompassword.text.toString(),
+                        mode.toString()
+                    )
+                    Log.d("룸비번", edit_manager_roompassword.getText().toString())
+                    val sucessintent = Intent(this, Successroom::class.java)
+                    sucessintent.putExtra("roomname", randomroomname)
+                    sucessintent.putExtra("roompassword", edit_manager_roompassword.text.toString())
+                    sucessintent.putExtra("roommode", mode.toString())
+                    startActivity(sucessintent)
+
+                } else if (mode == "EXAM") {
+                    if(body!=null) {
+                        makeroom(
+                            randomroomname.toString(),
+                            edit_manager_roompassword.text.toString(),
+                            mode.toString()
+                        )
+                        val sucessintent = Intent(this, Successroom::class.java)
+                        sucessintent.putExtra("roomname", randomroomname)
+                        sucessintent.putExtra(
+                            "roompassword",
+                            edit_manager_roompassword.text.toString()
+                        )
+                        sucessintent.putExtra("roommode", mode.toString())
+                        startActivity(sucessintent)
+                    }else
+                        Toast.makeText(this, "명단을 제출해주세요", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "방 mode를 선택해주세요", Toast.LENGTH_LONG).show()
+                }
+            }else
+                Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_LONG).show()
 
 
 
@@ -122,8 +140,18 @@ class ManagerRoomPopUp : AppCompatActivity() {
         //라디오버튼(study exam mode)
         rg1.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
-                R.id.rb1 -> mode = "STUDY"
-                R.id.rb2 -> mode = "EXAM"
+                R.id.rb1 -> {mode = "STUDY"
+                    btn_manageroom_getfile?.setVisibility(View.GONE);
+                    text_makeroom_cell_border?.setVisibility(View.GONE);
+                    btn_download?.setVisibility(View.GONE);
+                    text_makeroom_cell?.setVisibility(View.GONE);
+                    download_txt.setVisibility(View.GONE);}
+                R.id.rb2 -> {mode = "EXAM"
+                    btn_manageroom_getfile?.setVisibility(View.VISIBLE);
+                    text_makeroom_cell_border?.setVisibility(View.VISIBLE);
+                    btn_download?.setVisibility(View.VISIBLE);
+                    text_makeroom_cell?.setVisibility(View.VISIBLE);
+                    download_txt.setVisibility(View.VISIBLE);}
             }
         }
 
@@ -167,7 +195,6 @@ class ManagerRoomPopUp : AppCompatActivity() {
         when(requestCode) {
             STORAGE_PERMISSOIN_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startDownloading(url)
                 }
                 else {
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
@@ -197,11 +224,26 @@ class ManagerRoomPopUp : AppCompatActivity() {
         if(mode=="STUDY")
             Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()
         else if (mode=="EXAM") {
-            val intent = Intent()
-            intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            intent.setAction(Intent.ACTION_GET_CONTENT)
-            startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
-            Log.d("파일확인1", mode)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSOIN_CODE)
+                }
+                else {
+                    val intent = Intent()
+                    intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    intent.setAction(Intent.ACTION_GET_CONTENT)
+                    startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
+                    Log.d("파일확인1", mode)
+                }
+            }
+            else {
+                val intent = Intent()
+                intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                intent.setAction(Intent.ACTION_GET_CONTENT)
+                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
+                Log.d("파일확인1", mode)
+            }
+
         }
         else
             Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()

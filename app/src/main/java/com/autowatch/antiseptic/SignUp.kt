@@ -60,9 +60,9 @@ class SignUp : AppCompatActivity() {
     ) {
 
         //업로드 중이라는 Dialog 띄어줌
-        val progressDialog: ProgressDialog = ProgressDialog(this)
-        progressDialog.setTitle("업로드중...")
-        progressDialog.show()
+//        val progressDialog: ProgressDialog = ProgressDialog(this)
+//        progressDialog.setTitle("업로드중...")
+//        progressDialog.show()
 
         RetrofitClient.signupservice.requestSignUp(
             email,
@@ -86,13 +86,13 @@ class SignUp : AppCompatActivity() {
                 val body = response.body()
                 if(response.body()?.name!="Fail") {
                     val loginDB = loginDB(context = applicationContext)
-                    loginDB.insertDB(body!!.email,body!!.password,body!!.name)
-                    Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
+                    loginDB.insertDB(body!!.email,body!!.password,body!!.name,body!!.image)
+                    Toast.makeText(applicationContext, "홈 화면으로 이동합니다", Toast.LENGTH_LONG).show()
                     startActivity(Intent(applicationContext, Home::class.java))
-                    progressDialog.cancel()
+//                    progressDialog.cancel()
                 }else {
-                    Toast.makeText(applicationContext, "이메일이 중복됩니다", Toast.LENGTH_SHORT).show()
-                    progressDialog.cancel()
+                    Toast.makeText(applicationContext, "해당 이메일은 이미 가입되어 있습니다", Toast.LENGTH_SHORT).show()
+//                    progressDialog.cancel()
                 }
 
             }

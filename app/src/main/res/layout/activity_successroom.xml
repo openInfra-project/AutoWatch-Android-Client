@@ -11,27 +11,26 @@
         android:layout_height="match_parent">
 
     <LinearLayout
-        android:background="#3c5b9a"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp">
-
-
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:background="@color/ourColor"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center">
 
+
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:background="@drawable/mark1"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:gravity="center"
-                android:textSize="32dp" />
+                android:layout_marginBottom="2dp"
+                android:src="@drawable/logo"/>
 
         </LinearLayout>
 
@@ -50,28 +49,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ROOM INFO"
-            android:layout_marginTop="60dp"
-            android:textSize="16dp"
-            android:textColor="#92969F"
-            android:textStyle="bold"
-            android:layout_marginLeft="28dp"/>
+            android:layout_marginTop="40dp"
+            android:textSize="19dp"
+            android:textColor="#33ccc5"
+            android:gravity="center"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:padding="1dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginRight="30dp"
             android:weightSum="100">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/door_name"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:gravity="center_vertical"
-                android:text="NAME:"
-                android:textColor="#000"
+                android:layout_weight="45"
+                android:gravity="center"
+                android:text="Room Name :"
+                android:textStyle="bold"
+                android:paddingLeft="4dp"
                 android:textSize="16dp" />
 
             <TextView
@@ -89,18 +93,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="1dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginRight="30dp"
             android:weightSum="100">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/keys"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:gravity="center_vertical"
-                android:text="PASSWORD:"
-                android:textColor="#000"
+                android:layout_weight="45"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:paddingLeft="4dp"
+                android:text="Room Password :"
                 android:textSize="16dp" />
 
             <TextView
@@ -118,18 +127,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="1dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginRight="30dp"
             android:weightSum="100">
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/openbook"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:gravity="center_vertical"
-                android:text="MODE:"
-                android:textColor="#000"
+                android:layout_weight="45"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:paddingLeft="4dp"
+                android:text="Mode :"
                 android:textSize="16dp" />
 
             <TextView
@@ -144,6 +158,39 @@
     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="30dp"
+            android:weightSum="100">
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/name"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:paddingLeft="4dp"
+                android:text="ID :"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/text_id"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:gravity="center"
+                android:text="id"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             >
@@ -154,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/loginbuttonbox"
+                android:background="@drawable/button"
                 android:text="입장하기"
                 android:textColor="#fff"
                 android:theme="@style/MyButton" />

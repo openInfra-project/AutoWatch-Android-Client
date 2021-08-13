@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_drawer_layout"
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--fitsSystemWindows를 true로 지정할 경우
+    뷰가 차지할 수 있는 영역을 소프트키, 상태바를 제외한 영역까지 넓혀줍니다.-->
+
+
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/activity_home"/>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:orientation="vertical"
+        android:background="#FBFBFB"
+        android:layout_gravity = "left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/main_header_include_logged_in"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/main_drawer_header_logged_in"/>
+
+            <include
+                android:id="@+id/main_header_include_logged_out"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/main_drawer_header_logged_out"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/main_header_include_logged_in"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/main_navigation_btn1"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:layout_marginTop="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_marginLeft="40dp"
+                    android:text="MY PAGE"
+                    android:textSize="20dp"
+                    android:textColor="#777777"/>
+
+                <Button
+                    android:id="@+id/main_navigation_btn2"
+                    android:clickable="true"
+                    android:layout_marginTop="20dp"
+                    android:enabled="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_marginLeft="40dp"
+                    android:text="CHANGE IMAGE"
+                    android:textSize="20dp"
+                    android:textColor="#777777"/>
+
+                <Button
+                    android:id="@+id/main_navigation_btn3"
+                    android:clickable="true"
+                    android:layout_marginTop="20dp"
+                    android:enabled="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_marginLeft="40dp"
+                    android:text="LOG OUT"
+                    android:textSize="20dp"
+                    android:textColor="#777777"/>
+                <Button
+                    android:id="@+id/main_navigation_btn4"
+                    android:clickable="true"
+                    android:layout_marginTop="20dp"
+                    android:enabled="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_marginLeft="40dp"
+                    android:text="DELETE ACCOUNT"
+                    android:textSize="20dp"
+                    android:textColor="#777777"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

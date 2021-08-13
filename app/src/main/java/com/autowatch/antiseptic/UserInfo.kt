@@ -61,7 +61,7 @@ class UserInfo : AppCompatActivity() {
                     Toast.makeText(applicationContext,""+response.body(),Toast.LENGTH_LONG).show()
                     val loginDB = loginDB(context = applicationContext)
                     edit_userinfo_name.setText(""+body.name)
-                    loginDB.insertDB(dbemail!!,dbpassword!!,body.name)
+                    loginDB.insertDB(dbemail!!,dbpassword!!,body.name,body.image)
                     progressDialog.cancel()
                     Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
                     startActivity(Intent(applicationContext, Home::class.java))

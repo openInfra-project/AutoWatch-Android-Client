@@ -9,17 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="115dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/room_sendlottie"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_weight="15"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="door.json"
-        app:lottie_loop="true" />
+        android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/study"/>
 
     <LinearLayout
         android:id="@+id/linear_tuto"
@@ -27,7 +25,10 @@
         android:layout_height="match_parent"
         android:layout_weight="80"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:weightSum="14">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,8 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="40"
                 android:gravity="center_vertical"
-                android:text="NAME:"
-                android:textColor="#000"
+                android:text="Name :"
                 android:textSize="16dp" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_weight="60"
                 android:gravity="center"
                 android:text="title"
-                android:textColor="#3c5b9a"
+                android:textColor="#000000"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -68,8 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="40"
                 android:gravity="center_vertical"
-                android:text="PASSWORD:"
-                android:textColor="#000"
+                android:text="Password :"
                 android:textSize="16dp" />
 
             <TextView
@@ -79,7 +78,7 @@
                 android:layout_weight="60"
                 android:gravity="center"
                 android:text="비밀번호"
-                android:textColor="#3c5b9a"
+                android:textColor="#000000"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -95,8 +94,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="40"
                 android:gravity="center_vertical"
-                android:text="MODE:"
-                android:textColor="#000"
+                android:text="Mode :"
                 android:textSize="16dp" />
 
             <TextView
@@ -105,8 +103,33 @@
                 android:layout_height="match_parent"
                 android:layout_weight="60"
                 android:gravity="center"
-                android:text="비밀번호"
-                android:textColor="#3c5b9a"
+                android:text="모드"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.3"
+            android:padding="1dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:gravity="center_vertical"
+                android:text="Date :"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:gravity="center"
+                android:text="생성 날짜"
+                android:textColor="#000000"
                 android:textSize="16dp" />
         </LinearLayout>
 
