@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_face_recognition.*
-import kotlinx.android.synthetic.main.activity_home.*
 
 
 class Face_recognition : AppCompatActivity() {
@@ -30,13 +29,14 @@ class Face_recognition : AppCompatActivity() {
 
         }else{
             btn_next.setOnClickListener {
-                startActivity(Intent(this, Test::class.java))
+                startActivity(Intent(this, Blockapp_exam::class.java))
             }
         }
     }
 
+    //back 키 누르면 홈으로
     override fun onBackPressed() {
-        super.onBackPressed()
+        startActivity(Intent(this, Home::class.java))
     }
 
 }

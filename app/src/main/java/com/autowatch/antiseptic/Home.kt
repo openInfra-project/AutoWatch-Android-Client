@@ -132,7 +132,7 @@ class Home : AppCompatActivity() {
         //menu 애니메이션
         btn_home_menu.setOnClickListener {
             main_drawer_layout.openDrawer((GravityCompat.START))
-            val imageurl ="https://7d46ea31ac55.ngrok.io/media/"+dbimage
+            val imageurl ="https://118.67.131.138:30000/media/"+dbimage
             Log.d("사용자이미지1",dbimage)
             Log.d("사용자이미지2",imageurl)
             Glide.with(this@Home).load(imageurl).apply(
@@ -273,7 +273,9 @@ class Home : AppCompatActivity() {
                                 "방 입장합니다",
                                 Toast.LENGTH_LONG
                             ).show()
-                            startActivity(Intent(applicationContext, Test::class.java))
+                            val intent = Intent(applicationContext, Blockapp_study::class.java)
+                            intent.putExtra("roomname", roomname)
+                            startActivity(intent)
                         }else if(body.roomname=="Fail") {
                             Toast.makeText(
                                 applicationContext,
@@ -392,7 +394,7 @@ class Home : AppCompatActivity() {
                 ).show()
                 val body = response.body()
                 Log.d("변경",body?.image)
-                val imageurl ="https://7d46ea31ac55.ngrok.io/media/"+body?.image
+                val imageurl ="https://118.67.131.138:30000/media/"+body?.image
                 Log.d("사용자이미지2",imageurl)
                 Glide.with(this@Home).load(imageurl).apply(
                     RequestOptions()

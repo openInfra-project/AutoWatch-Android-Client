@@ -195,7 +195,6 @@ class ManagerRoomPopUp : AppCompatActivity() {
         when(requestCode) {
             STORAGE_PERMISSOIN_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startDownloading(url)
                 }
                 else {
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
@@ -225,11 +224,26 @@ class ManagerRoomPopUp : AppCompatActivity() {
         if(mode=="STUDY")
             Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()
         else if (mode=="EXAM") {
-            val intent = Intent()
-            intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            intent.setAction(Intent.ACTION_GET_CONTENT)
-            startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
-            Log.d("파일확인1", mode)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSOIN_CODE)
+                }
+                else {
+                    val intent = Intent()
+                    intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    intent.setAction(Intent.ACTION_GET_CONTENT)
+                    startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
+                    Log.d("파일확인1", mode)
+                }
+            }
+            else {
+                val intent = Intent()
+                intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                intent.setAction(Intent.ACTION_GET_CONTENT)
+                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요"), 0)
+                Log.d("파일확인1", mode)
+            }
+
         }
         else
             Toast.makeText(applicationContext, "EXAM MODE 선택시에만 가능합니다.", Toast.LENGTH_LONG).show()

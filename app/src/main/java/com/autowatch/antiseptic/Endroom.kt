@@ -1,10 +1,13 @@
 package com.autowatch.antiseptic
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.autowatch.antiseptic.data.DataRoomNumber
+import kotlinx.android.synthetic.main.activity_endroom.*
+import kotlinx.android.synthetic.main.activity_settingcamera.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -22,6 +25,7 @@ class Endroom : AppCompatActivity() {
         val person = intent.getStringExtra("nonperson")
         nonperson=person.toInt()
         Log.d("자리이탈횟수", nonperson.toString())
+        val roomname = intent.getStringExtra("roomname")
 
 
 
@@ -31,13 +35,23 @@ class Endroom : AppCompatActivity() {
             dbemail = dbjson.getString("email") ?: null
         }
 
-        send_count(dbemail.toString(),realcount,nonperson)
+        send_count(dbemail.toString(),realcount,nonperson,roomname)
         Accessibility.count =0
+
+        btn_home.setOnClickListener {
+            startActivity(Intent(this, Home::class.java))
+        }
+
+    }
+
+    //back 키 X
+    override fun onBackPressed() {
+//        startActivity(Intent(this, Home::class.java))
     }
 
 
-    fun send_count(email:String,count: Int,nonperson:Int) {
-        RetrofitClient.signupservice.requestsendcount(email,count,nonperson)
+    fun send_count(email:String,count: Int,nonperson:Int,roomname:String) {
+        RetrofitClient.signupservice.requestsendcount(email,count,nonperson,roomname)
             .enqueue(object :
                 retrofit2.Callback<DataRoomNumber> {
                 override fun onFailure(call: Call<DataRoomNumber>, t: Throwable) {

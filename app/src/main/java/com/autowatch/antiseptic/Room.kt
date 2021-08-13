@@ -155,6 +155,11 @@ class Room : Activity() {
 
 
     }
+    //back 키 누르면 홈으로
+    override fun onBackPressed() {
+        startActivity(Intent(this, Home::class.java))
+    }
+
     override fun onResume() {
         super.onResume()
         room_secondrocket_lottie.visibility = View.GONE

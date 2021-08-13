@@ -65,7 +65,7 @@ class Mypage : AppCompatActivity() {
                         user_email.setText(body.email)
                         user_name.setText(body.name)
                         user_date.setText(body.date)
-                        imageurl ="https://7d46ea31ac55.ngrok.io/media/"+body.image
+                        imageurl ="https://118.67.131.138:30000/media/"+body.image
                         Log.d("사용자이미지1",body.image)
                         Log.d("사용자이미지2",imageurl)
 

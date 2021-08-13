@@ -114,6 +114,8 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
             }
         }
     };
+    
+
 
 
     @Override
@@ -126,6 +128,10 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_opencv);
+
+        Intent intent = getIntent(); /*데이터 수신*/
+
+        String roomname = intent.getExtras().getString("roomname");
 
 
         ImageView btn_endroom = (ImageView)findViewById(R.id.btn_endroom);
@@ -157,7 +163,7 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
                         person=0;
                     }
                 };
-                timer.schedule(TT,0,10000);     //10초마다
+                timer.schedule(TT,0,5000);     //5초마다
             }
         };
         timer.schedule(T,20000);     //20초후 실행
@@ -168,6 +174,7 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
                 Intent intent = new Intent(getApplicationContext(), Endroom.class);
                 if (nonperson>=0)
                     intent.putExtra("nonperson",Integer.toString(nonperson));
+                    intent.putExtra("roomname",roomname);
 
                 Log.d("nonperson", String.valueOf(nonperson));
                 startActivity(intent);//액티비티 띄우기
@@ -221,6 +228,11 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
     @Override
     public void onCameraViewStopped() {
 
+    }
+
+    //back 키 막기
+    public void onBackPressed(){
+        return;
     }
 
 

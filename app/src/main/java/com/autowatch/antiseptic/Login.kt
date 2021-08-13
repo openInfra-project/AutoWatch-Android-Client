@@ -39,11 +39,10 @@ class Login : AppCompatActivity() {
 
     //로그인
     private fun login() {
-
-        if (edit_login_email.text.toString() != null && edit_login_password.text.toString() != null) {
-            val progressDialog: ProgressDialog = ProgressDialog(this)
-            progressDialog.setTitle("로그인중...")
-            progressDialog.show()
+        if (edit_login_email?.text.toString()!="" && edit_login_password?.text.toString()!="") {
+//            val progressDialog: ProgressDialog = ProgressDialog(this)
+//            progressDialog.setTitle("로그인중...")
+//            progressDialog.show()
             RetrofitClient.signupservice.requestLoginIn(
                 edit_login_email.text.toString(),
                 edit_login_password.text.toString()
@@ -56,13 +55,24 @@ class Login : AppCompatActivity() {
                     //로그인 성공시 홈으로 이동
                     val body = response.body()
                     if(response.body()?.name!="Fail") {
-                        val loginDB = loginDB(context = applicationContext)
-                        loginDB.insertDB(body!!.email,body!!.password,body!!.name,body!!.image)
-                        Toast.makeText(applicationContext, "홈화면으로 이동합니다", Toast.LENGTH_LONG).show()
-                        startActivity(Intent(applicationContext, Home::class.java))
+                        if(response.body()?.name=="no"){
+                            Toast.makeText(applicationContext, "해당 이메일은 가입되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
+//                            progressDialog.cancel()
+                        }else {
+                            val loginDB = loginDB(context = applicationContext)
+                            loginDB.insertDB(
+                                body!!.email,
+                                body!!.password,
+                                body!!.name,
+                                body!!.image
+                            )
+                            Toast.makeText(applicationContext, "홈 화면으로 이동합니다", Toast.LENGTH_LONG)
+                                .show()
+                            startActivity(Intent(applicationContext, Home::class.java))
+                        }
                     }else {
                         Toast.makeText(applicationContext, "이메일 및 패스워드가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-                        progressDialog.cancel()
+//                        progressDialog.cancel()
                     }
 
                 }
@@ -70,7 +80,7 @@ class Login : AppCompatActivity() {
 
 
         } else {
-            Toast.makeText(this, "이메일과 패스워드를 정확히 기입해주세요", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "이메일과 패스워드를 모두 기입해주세요", Toast.LENGTH_SHORT).show()
         }
 
     }

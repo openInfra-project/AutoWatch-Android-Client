@@ -30,6 +30,10 @@ class Checkmyinfo : AppCompatActivity() {
 
 
     }
+    //back 키 누르면 홈으로
+    override fun onBackPressed() {
+        startActivity(Intent(this, Home::class.java))
+    }
 
 
     fun checkinfo(number: String, name: String) {

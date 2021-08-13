@@ -21,6 +21,8 @@ class Settingcamera : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settingcamera)
 
+        val roomname = intent.getStringExtra("roomname")
+
         val loginDB = loginDB(context = applicationContext)
         val dbjson: JSONObject = loginDB.getloginDB()
         if (dbjson.length() > 0) {
@@ -32,10 +34,16 @@ class Settingcamera : AppCompatActivity() {
 
 
         btn_done.setOnClickListener {
-            val sucessintent = Intent(this, Opencv::class.java)
-            sucessintent.putExtra("email", dbemail)
-            startActivity(sucessintent)
+
+            val intent = Intent(applicationContext, Opencv::class.java)
+            intent.putExtra("roomname", roomname)
+            intent.putExtra("email", dbemail)
+            startActivity(intent)
         }
 
+    }
+    //back 키 누르면 홈으로
+    override fun onBackPressed() {
+        startActivity(Intent(this, Home::class.java))
     }
 }

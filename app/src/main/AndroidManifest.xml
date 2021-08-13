@@ -41,7 +41,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Face_recognition"></activity>
+<!--        <meta-data-->
+<!--            android:name="Replace_your_package_name.UnsafeOkHttpClient"-->
+<!--            android:value="MyGlideModule" />-->
+        <activity android:name=".Blockapp_exam"></activity>
+        <activity android:name=".Face_recognition" />
         <activity android:name=".Settingcamera" />
         <activity
             android:name=".Opencv"
@@ -49,7 +53,7 @@
             android:screenOrientation="landscape" />
         <activity android:name=".Endroom" />
         <activity android:name=".Checkmyinfo" />
-        <activity android:name=".Test" />
+        <activity android:name=".Blockapp_study" />
         <activity android:name=".Successroom" />
         <activity android:name=".Mypage" />
 
@@ -76,9 +80,10 @@
             android:theme="@style/Transparent" />
         <activity android:name=".ManagerRoomPopUp" />
         <activity android:name=".Room" />
-        <activity android:name=".Home">
+        <activity android:name=".Home" >
 
         </activity>
+
         <activity
             android:name=".User_SignUp_PopUp"
             android:theme="@style/Transparent" />

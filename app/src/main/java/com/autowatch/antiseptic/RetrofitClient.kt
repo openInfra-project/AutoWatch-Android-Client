@@ -9,9 +9,14 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import java.text.SimpleDateFormat
 import java.util.Date
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 
 object RetrofitClient {
@@ -19,18 +24,52 @@ object RetrofitClient {
         .setLenient()
         .create()
 
-    var okHttpClient = OkHttpClient().newBuilder()
-        .connectTimeout(40, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .writeTimeout(60, TimeUnit.SECONDS)
-        .build()
+//    var okHttpClient = OkHttpClient().newBuilder()
+//        .connectTimeout(40, TimeUnit.SECONDS)
+//        .readTimeout(60, TimeUnit.SECONDS)
+//        .writeTimeout(60, TimeUnit.SECONDS)
+//        .build()
 
     val retrofit = Retrofit.Builder()
         //url 은 ngrok 사용으로 계속 달라짐.
-        .client(okHttpClient)
-        .baseUrl("https://f897a6392c92.ngrok.io")
+//        .client(okHttpClient)
+        .baseUrl("https://118.67.131.138:30000")
         .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(getUnsafeOkHttpClient().build())
         .build()
+
+    fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+
+            }
+
+            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+
+            }
+
+            override fun getAcceptedIssuers(): Array<X509Certificate> {
+                return arrayOf()
+            }
+        })
+
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+
+        val sslSocketFactory = sslContext.socketFactory
+
+        val builder = OkHttpClient.Builder()
+        builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+        builder.hostnameVerifier { hostname, session -> true }
+            .connectTimeout(40, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build()
+
+
+        return builder
+    }
+
     val signupservice: SignUpService = retrofit.create(SignUpService::class.java)
 }
 
@@ -129,8 +168,14 @@ interface SignUpService {
     ):Call<DataRoomNamePass>
 
     @FormUrlEncoded
-    @POST("/app_check")
-    fun requestcheck(
+    @POST("/app_checkin")
+    fun requestcheckin(
+        @Field("email") email: String
+    ): Call<DataRoomNumber>
+
+    @FormUrlEncoded
+    @POST("/app_checkout")
+    fun requestcheckout(
         @Field("email") email: String
     ): Call<DataRoomNumber>
 
@@ -139,6 +184,7 @@ interface SignUpService {
     fun requestsendcount(
         @Field("email") email: String,
         @Field("count") count: Int,
-        @Field("nonperson") nonperson: Int
+        @Field("nonperson") nonperson: Int,
+        @Field("roomname") roomname: String
     ): Call<DataRoomNumber>
 }
