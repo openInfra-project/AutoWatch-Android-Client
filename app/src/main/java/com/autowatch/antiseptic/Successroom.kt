@@ -77,22 +77,22 @@ class Successroom : AppCompatActivity() {
                     call: Call<DataRoomNumber>,
                     response: Response<DataRoomNumber>
                 ) {
-                    Toast.makeText(
-                        applicationContext,
-                        "입장"+response.body(),
-                        Toast.LENGTH_LONG
-                    ).show()
+
                     val body = response.body()
                     Log.d("방입장",body?.roomname)
                     //1번이면 얼굴인식 후 방입장
                     //2번이면 바로 방입장
                     //3번이면 방이 없음.
+
                     if(body!=null) {
                         Toast.makeText(
                             applicationContext,
                             "방 입장합니다",
                             Toast.LENGTH_LONG
                         ).show()
+                        val intent = Intent(applicationContext, Blockapp_study::class.java)
+                        intent.putExtra("roomname", roomname)
+                        startActivity(intent)
 
                     }
                 }

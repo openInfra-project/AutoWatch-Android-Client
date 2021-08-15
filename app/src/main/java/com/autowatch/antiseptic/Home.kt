@@ -22,6 +22,7 @@ import com.autowatch.antiseptic.data.DataImage2
 import com.autowatch.antiseptic.data.DataRoomNumber
 import com.autowatch.antiseptic.data.DataViewModel
 import com.bumptech.glide.Glide
+//import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_delete_dialog.*
@@ -132,14 +133,14 @@ class Home : AppCompatActivity() {
         //menu 애니메이션
         btn_home_menu.setOnClickListener {
             main_drawer_layout.openDrawer((GravityCompat.START))
-            val imageurl ="https://118.67.131.138:30000/media/"+dbimage
-            Log.d("사용자이미지1",dbimage)
-            Log.d("사용자이미지2",imageurl)
-            Glide.with(this@Home).load(imageurl).apply(
-                RequestOptions()
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-            ).into(main_header_include_logged_in.iv_image);
+ //           val imageurl ="https://118.67.131.138:30000/media/"+dbimage
+  //          Log.d("사용자이미지1",dbimage)
+  //          Log.d("사용자이미지2",imageurl)
+ //           Glide.with(this@Home).load(imageurl).apply(
+ //               RequestOptions()
+ //                   .skipMemoryCache(true)
+  //                  .diskCacheStrategy(DiskCacheStrategy.NONE)
+  //          ).into(main_header_include_logged_in.iv_image);
         }
         btn_nav_close.setOnClickListener {
             main_drawer_layout.closeDrawers()
@@ -246,22 +247,14 @@ class Home : AppCompatActivity() {
                     call: Call<DataRoomNumber>,
                     response: Response<DataRoomNumber>
                 ) {
-                    Toast.makeText(
-                        applicationContext,
-                        "입장"+response.body(),
-                        Toast.LENGTH_LONG
-                    ).show()
+
                     val body = response.body()
                     Log.d("방입장",body?.roomname)
 
                     if(body!=null) {
 //                        btn_home_inner.setText(""+body.roomname)
                         if(body.roomname=="EXAM") {
-                            Toast.makeText(
-                                applicationContext,
-                                "얼굴 인식 페이지로 이동합니다.",
-                                Toast.LENGTH_LONG
-                            ).show()
+
                             Log.d("방입장!!!!!!!!!!",roomname)
                             val intent = Intent(applicationContext, Checkmyinfo::class.java)
                             intent.putExtra("roomname", roomname)
@@ -319,7 +312,6 @@ class Home : AppCompatActivity() {
     fun login() {
 
 
-        main_header_include_logged_in.iv_image.setImageResource(R.drawable.no_phone)
         main_header_include_logged_in.visibility = View.VISIBLE
         main_header_include_logged_out.visibility = View.INVISIBLE
         main_header_include_logged_in.tv_name.setText(dbname)
@@ -394,13 +386,13 @@ class Home : AppCompatActivity() {
                 ).show()
                 val body = response.body()
                 Log.d("변경",body?.image)
-                val imageurl ="https://118.67.131.138:30000/media/"+body?.image
-                Log.d("사용자이미지2",imageurl)
-                Glide.with(this@Home).load(imageurl).apply(
-                    RequestOptions()
-                        .skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                ).into(main_header_include_logged_in.iv_image);
+//                val imageurl ="https://118.67.131.138:30000/media/"+body?.image
+  //              Log.d("사용자이미지2",imageurl)
+ //               Glide.with(this@Home).load(imageurl).apply(
+ //                   RequestOptions()
+ //                       .skipMemoryCache(true)
+//                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+ //               ).into(main_header_include_logged_in.iv_image);
 //                val loginDB = loginDB(context = applicationContext)
 //                if (body != null) {
 //                    loginDB.alterDB(dbemail.toString(),body.image)

@@ -126,7 +126,7 @@ class Room : Activity() {
                 room_secondrocket_lottie.visibility = View.VISIBLE
                 Toast.makeText(
                             applicationContext,
-                            "본인 학인 중 입니다.",
+                            "본인 확인 중 입니다.",
                             Toast.LENGTH_LONG
                         ).show()
 

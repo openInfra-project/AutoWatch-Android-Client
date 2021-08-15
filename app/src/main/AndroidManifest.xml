@@ -7,9 +7,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" /> <!-- <uses-feature -->
-    <!-- android:name="android.hardware.camera" -->
-    <!-- android:required="true" /> -->
-    <!-- <uses-feature android:name="android.hardware.camera.autofocus" /> -->
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -33,17 +30,19 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_autowatch"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_autowatch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<!--        <meta-data-->
-<!--            android:name="Replace_your_package_name.UnsafeOkHttpClient"-->
-<!--            android:value="MyGlideModule" />-->
+        <meta-data
+            android:name="com.autowatch.antiseptic.OkHttpLibraryGlideModule"
+            tools:node="remove"/>
+
         <activity android:name=".Blockapp_exam"></activity>
         <activity android:name=".Face_recognition" />
         <activity android:name=".Settingcamera" />

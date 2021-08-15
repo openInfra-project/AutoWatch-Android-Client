@@ -132,6 +132,7 @@ public class Opencv extends AppCompatActivity implements CameraBridgeViewBase.Cv
         Intent intent = getIntent(); /*데이터 수신*/
 
         String roomname = intent.getExtras().getString("roomname");
+        Accessibility.count =0;
 
 
         ImageView btn_endroom = (ImageView)findViewById(R.id.btn_endroom);

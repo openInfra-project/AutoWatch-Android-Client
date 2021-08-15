@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient;
 public class UnsafeOkHttpClient {
     public static OkHttpClient getUnsafeOkHttpClient() {
         try {
-            // Create a trust manager that does not validate certificate chains
+// Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[] {
                     new X509TrustManager() {
                         @Override
@@ -32,11 +32,11 @@ public class UnsafeOkHttpClient {
                     }
             };
 
-            // Install the all-trusting trust manager
+// Install the all-trusting trust manager
             final SSLContext sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
 
-            // Create an ssl socket factory with our all-trusting manager
+// Create an ssl socket factory with our all-trusting manager
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
