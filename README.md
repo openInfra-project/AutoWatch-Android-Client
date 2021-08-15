@@ -21,7 +21,7 @@ Android Studio에서 열기
 
 ---
 
-https://user-images.githubusercontent.com/48875061/129483328-4ca294d3-f1f5-49c6-b592-3ed66d246a1c.mp4
+https://user-images.githubusercontent.com/64200000/129483739-72827a0b-02f4-472e-ba62-5c981f66bc5a.mp4
 
 
 
