@@ -6,15 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.autowatch.antiseptic.OkHttpLibraryGlideModule
 import com.autowatch.antiseptic.data.DataMypage
 import com.autowatch.antiseptic.data.DataSignUp
+import com.bumptech.glide.GenericTransitionOptions.with
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.with
+import com.bumptech.glide.module.LibraryGlideModule
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.activity_mypage.btn_roominfo_backpress
 import kotlinx.android.synthetic.main.activity_nav_room.*
 import kotlinx.android.synthetic.main.activity_user_info.*
+
 
 import org.json.JSONObject
 import retrofit2.Call
@@ -45,7 +52,7 @@ class Mypage : AppCompatActivity() {
             onBackPressed()
         }
 
-        Log.d("사용자이미지",imageurl.toString())
+        Log.d("사용자이미지", imageurl.toString())
     }
 
     private fun search() {
@@ -60,14 +67,13 @@ class Mypage : AppCompatActivity() {
 
                 override fun onResponse(call: Call<DataMypage>, response: Response<DataMypage>) {
                     val body = response.body()
-                    if (body!=null) {
-                        Toast.makeText(applicationContext,""+response.body(), Toast.LENGTH_LONG).show()
+                    if (body != null) {
                         user_email.setText(body.email)
                         user_name.setText(body.name)
                         user_date.setText(body.date)
-                        imageurl ="https://118.67.131.138:30000/media/"+body.image
-                        Log.d("사용자이미지1",body.image)
-                        Log.d("사용자이미지2",imageurl)
+                        imageurl = "https://118.67.131.138:30000/media/" + body.image
+                        Log.d("사용자이미지1", body.image)
+                        Log.d("사용자이미지2", imageurl)
 
                         //glide사용할 경우 url이 바뀌지 않으면 갱신되지 않는 문제 발생
                         //디스크캐쉬, 메모리캐쉬 초기화 필요

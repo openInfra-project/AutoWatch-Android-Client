@@ -99,11 +99,15 @@ class NavRoom : AppCompatActivity() {
                     //2번이면 바로 방입장
                     //3번이면 방이 없음.
                     if(body!=null) {
-                            Toast.makeText(
-                                applicationContext,
-                                "방 입장합니다",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "방 입장합니다",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        val intent = Intent(applicationContext, Blockapp_study::class.java)
+                        intent.putExtra("roomname", roomname)
+                        startActivity(intent)
+
 
                     }else {
                         Toast.makeText(

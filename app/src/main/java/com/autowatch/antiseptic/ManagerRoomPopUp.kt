@@ -72,7 +72,7 @@ class ManagerRoomPopUp : AppCompatActivity() {
 
         //명단양식 다운로드
         btn_download.setOnClickListener {
-            checkVersion("https://docs.google.com/spreadsheets/d/1vd6kFxQnzd-ktx5c29MKMTzQOMctrd15/edit?usp=sharing&ouid=116136621880172225562&rtpof=true&sd=true")
+            checkVersion("https://docs.google.com/spreadsheets/d/1EwpqfHTrwt8pPjsxCSdWstGUVSvbLxvX/edit?usp=sharing&ouid=116136621880172225562&rtpof=true&sd=true")
         }
 
 

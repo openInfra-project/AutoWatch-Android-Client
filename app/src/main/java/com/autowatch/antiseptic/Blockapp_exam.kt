@@ -90,12 +90,14 @@ class Blockapp_exam : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         result = checkAccessibilityPermissions()
-        btn_endroom.setVisibility(View.GONE);
+
         Log.d("접근성확인!!!!", result.toString())
         if(result==true) {
             android.setImageResource(R.drawable.no_phone)
             block.setText("---------SNS 앱이 차단 되었습니다---------")
-        }
+            btn_endroom.setVisibility(View.VISIBLE);
+        }else
+            btn_endroom.setVisibility(View.GONE);
 
     }
 

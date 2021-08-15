@@ -1,27 +1,23 @@
 package com.autowatch.antiseptic;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-import androidx.core.util.Preconditions;
-import androidx.recyclerview.widget.AsyncListUtil;
-
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.HttpException;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.util.ContentLengthInputStream;
-
+import com.bumptech.glide.util.Preconditions;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+/** Fetches an {@link InputStream} using the okhttp library. */
 public class OkHttpStreamFetcher implements DataFetcher<InputStream>, okhttp3.Callback {
     private static final String TAG = "OkHttpFetcher";
     private final Call.Factory client;
@@ -29,6 +25,8 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream>, okhttp3.Ca
     private InputStream stream;
     private ResponseBody responseBody;
     private DataCallback<? super InputStream> callback;
+    // call may be accessed on the main thread while the object is in use on other threads. All other
+    // accesses to variables may occur on different threads, but only one at a time.
     private volatile Call call;
 
     // Public API.

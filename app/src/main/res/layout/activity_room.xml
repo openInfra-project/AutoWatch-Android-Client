@@ -41,7 +41,7 @@
         <SurfaceView
             android:layout_marginTop="10dp"
             android:id="@+id/sv_viewFinder"
-            android:layout_width="350dp"
+            android:layout_width="340dp"
             android:layout_height="530dp"
             android:layout_gravity="center_horizontal"/>
         <com.airbnb.lottie.LottieAnimationView
