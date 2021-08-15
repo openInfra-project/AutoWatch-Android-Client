@@ -86,7 +86,7 @@ Android Studio에서 열기
   - *이미지 통신 구현*
 
 
-### Lisense
+### License
 ```
 MIT License
 
