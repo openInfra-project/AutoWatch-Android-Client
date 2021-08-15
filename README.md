@@ -21,6 +21,10 @@ Android Studio에서 열기
 
 ---
 
+https://user-images.githubusercontent.com/48875061/129483328-4ca294d3-f1f5-49c6-b592-3ed66d246a1c.mp4
+
+
+
 ### 🛠 **Development Stack**
 
 - Kotlin
