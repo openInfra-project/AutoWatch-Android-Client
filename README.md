@@ -41,6 +41,7 @@ Android Studio에서 열기
 3. Room을 EXAM/STUDY 2가지 모드로 생성 및 입장
     - AutoWatch 접근성 미허용시 다음 단계로 넘어갈 수 없음
     - room 생성시 생성한 room 정보 확인 및 바로 입장 가능
+    - 방 입장시 Back 키 사용불가
     - **EXAM모드**
         1. EXAM 모드 생성 시, 시험 명단 누락 방지
         2. 수험번호/학번, 이름 일치여부 확인 후 얼굴 인식
@@ -55,7 +56,7 @@ Android Studio에서 열기
 
 @김유림 
 
-     전체 Layout 구축
+전체 Layout 구축
 
 SQLite 로그인한 사용자 저장
 
@@ -67,7 +68,7 @@ exam 방 입장시 카메라 촬영 및 이미지 통신
 
 안드로이드 NDK + OpenCV를 활용한 사람 인지 기능
 
-     특정 앱 차단 구현
+특정 앱 차단 구현
 
  
 
