@@ -25,7 +25,7 @@ class Accessibility : AccessibilityService() {
         val TAG = "앱차단"
         val denyApp = false;
         if (event?.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            if ("com.kakao.talk".equals(event.packageName)|| "com.sec.android.app.sbrowser".equals(event.packageName)||"com.instagram.android".equals(event.packageName)) {
+            if ("com.kakao.talk".equals(event.packageName)|| "com.sec.android.app.sbrowser".equals(event.packageName)||"com.instagram.android".equals(event.packageName)||"com.facebook.katana".equals(event.packageName)||"com.google.android.youtube".equals(event.packageName)) {
                 Toast.makeText(
                     applicationContext,
                     "앱이 거부되었습니다" ,
